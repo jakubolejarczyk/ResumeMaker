@@ -1,7 +1,11 @@
-# Use Case Diagram
+# ResumeMaker
 
-![Use Case Diagram](./Documentation/Images/UseCaseDiagram.jpg)
+## 1 Diagrams
 
-# Entity Relationship Diagram
+### 1.1 Use Case
 
-![Entity Relationship Diagram](./Documentation/Images/EntityRelationshipDiagram.jpg)
+![Use Case](./Documentation/Images/UseCase.jpg)
+
+## 1.2 ERD
+
+![ERD](./Documentation/Images/ERD.jpg)
