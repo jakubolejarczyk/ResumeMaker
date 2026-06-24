@@ -1,0 +1,14 @@
+USE ResumeMaker;
+GO
+
+CREATE TABLE users (
+	id INT NOT NULL IDENTITY(1,1),
+	email VARCHAR(255) NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	first_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255) NOT NULL,
+	phone VARCHAR(255) NOT NULL,
+	city VARCHAR(255) NOT NULL,
+	country VARCHAR(255) NOT NULL,
+	CONSTRAINT pk_users PRIMARY KEY (id)
+);
