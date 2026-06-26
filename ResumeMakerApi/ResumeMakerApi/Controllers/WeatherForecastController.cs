@@ -11,7 +11,7 @@ namespace ResumeMakerApi.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         ];
 
-        // [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet(Name = "GetWeatherForecast")]
         public ActionResult<IEnumerable<WeatherForecast>> Get()
         {
             var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
