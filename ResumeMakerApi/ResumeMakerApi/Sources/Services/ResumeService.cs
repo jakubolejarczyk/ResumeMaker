@@ -1,13 +1,15 @@
-﻿using ResumeMakerApi.Sources.Models.Requests;
+﻿using ResumeMakerApi.Sources.Models.Responses;
 
 namespace ResumeMakerApi.Sources.Services;
 
 public class ResumeService : IResumeService
 {
-    public string GetResume(ResumeRequest request)
+    public ResumeResponse GetResume(int userId, int resumeId)
     {
-        int userId = request.UserId;
-        int resumeId = request.ResumeId;
-        return $"Resume for User ID: {userId}, Resume ID: {resumeId}";
+        return new ResumeResponse
+        {
+            UserId = userId,
+            ResumeId = resumeId
+        };
     }
 }

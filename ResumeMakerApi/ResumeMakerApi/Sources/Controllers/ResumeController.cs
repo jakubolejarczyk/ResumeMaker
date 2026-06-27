@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ResumeMakerApi.Sources.Models.Requests;
+using ResumeMakerApi.Sources.Models.Responses;
 using ResumeMakerApi.Sources.Services;
 
 namespace ResumeMakerApi.Sources.Controllers;
@@ -8,9 +8,9 @@ namespace ResumeMakerApi.Sources.Controllers;
 [Route("api/[controller]")]
 public class ResumeController(IResumeService service) : ControllerBase
 {
-    [HttpPost]
-    public ActionResult<string> GetResume(ResumeRequest request)
+    [HttpGet("{userId}/resumes/{resumeId}")]
+    public ActionResult<ResumeResponse> GetResume(int userId, int resumeId)
     {
-        return service.GetResume(request);
+        return Ok(service.GetResume(userId, resumeId));
     }
 }
