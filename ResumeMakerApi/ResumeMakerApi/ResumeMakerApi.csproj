@@ -17,4 +17,9 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.16.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sources\Models\Entities\" />
+    <Folder Include="Sources\Models\Responses\" />
+  </ItemGroup>
+
 </Project>

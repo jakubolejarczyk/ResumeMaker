@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using ResumeMakerApi.Data;
-using ResumeMakerApi.Services;
+using ResumeMakerApi.Sources.Data;
+using ResumeMakerApi.Sources.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
-builder.Services.AddScoped<IDogService, DogService>();
+builder.Services.AddScoped<IResumeService, ResumeService>();
 
 var app = builder.Build();
 
