@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ResumeMakerApi.Source.Context;
 using ResumeMakerApi.Sources.Services;
 using Scalar.AspNetCore;
 
@@ -10,6 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IResumeService, ResumeService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
