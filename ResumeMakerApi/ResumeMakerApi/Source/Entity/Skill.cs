@@ -7,5 +7,5 @@ public class Skill
     public int Order { get; set; }
     public int ResumeId { get; set; }
     public Resume Resume { get; set; } = null!;
-    public List<SkillItem> SkillItems { get; set; } = [];
+    public List<SkillElement> SkillElements { get; set; } = [];
 }

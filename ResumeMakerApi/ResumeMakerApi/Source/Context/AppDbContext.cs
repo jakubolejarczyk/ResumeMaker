@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<ExperienceDescription> ExperienceDescriptions { get; set; }
     public DbSet<Resume> Resumes { get; set; }
     public DbSet<Skill> Skills { get; set; }
-    public DbSet<SkillItem> SkillItems { get; set; }
+    public DbSet<SkillElement> SkillElements { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
     public DbSet<User> Users { get; set; }
 
