@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ResumeMakerApi.Source.Context;
-using ResumeMakerApi.Sources.Services;
+using ResumeMakerApi.Source.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
