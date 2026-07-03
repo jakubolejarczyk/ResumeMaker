@@ -12,9 +12,9 @@ public class Resume
 
     public User User { get; set; } = new();
 
-    public List<SocialMedia> SocialMedias { get; set; } = [];
-    
     public List<Education> Educations { get; set; } = [];
+
+    public List<SocialMedia> SocialMedias { get; set; } = [];
     
     public List<Experience> Experiences { get; set; } = [];
     

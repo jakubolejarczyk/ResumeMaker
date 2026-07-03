@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResumeMakerApi.Source.Context;
 
@@ -11,9 +12,11 @@ using ResumeMakerApi.Source.Context;
 namespace ResumeMakerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260703181101_RefactorTheEducationTable")]
+    partial class RefactorTheEducationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,35 +107,6 @@ namespace ResumeMakerApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Resumes");
-                });
-
-            modelBuilder.Entity("ResumeMakerApi.Source.Entities.SocialMedia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Link")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ResumeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
-
-                    b.ToTable("SocialMedias");
                 });
 
             modelBuilder.Entity("ResumeMakerApi.Source.Entities.User", b =>
@@ -275,6 +249,35 @@ namespace ResumeMakerApi.Migrations
                     b.ToTable("SkillElements");
                 });
 
+            modelBuilder.Entity("ResumeMakerApi.Source.Entity.SocialMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResumeId");
+
+                    b.ToTable("SocialMedias");
+                });
+
             modelBuilder.Entity("ResumeMakerApi.Source.Entities.Education", b =>
                 {
                     b.HasOne("ResumeMakerApi.Source.Entities.Resume", "Resume")
@@ -306,17 +309,6 @@ namespace ResumeMakerApi.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ResumeMakerApi.Source.Entities.SocialMedia", b =>
-                {
-                    b.HasOne("ResumeMakerApi.Source.Entities.Resume", "Resume")
-                        .WithMany("SocialMedias")
-                        .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("ResumeMakerApi.Source.Entity.Experience", b =>
@@ -361,6 +353,17 @@ namespace ResumeMakerApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Skill");
+                });
+
+            modelBuilder.Entity("ResumeMakerApi.Source.Entity.SocialMedia", b =>
+                {
+                    b.HasOne("ResumeMakerApi.Source.Entities.Resume", "Resume")
+                        .WithMany("SocialMedias")
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("ResumeMakerApi.Source.Entities.Resume", b =>

@@ -21,6 +21,12 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
+        <FileNode Name="Educations.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Educations.sql</FullPath>
+        </FileNode>
         <FileNode Name="Phone.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
@@ -32,6 +38,12 @@
           <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>Resumes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SocialMedias.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SocialMedias.sql</FullPath>
         </FileNode>
         <FileNode Name="Users.sql">
           <AssociatedConnectionMoniker />
