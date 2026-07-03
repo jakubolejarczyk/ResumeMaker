@@ -17,8 +17,22 @@ export class App {
 
   click() {
     this.http
-      .get(`https://localhost:7116/api/resume/${this.userId}/resumes/${this.resumeId}`)
-      .subscribe(res => console.log(res));
+      .get(`https://localhost:7116/api/resume/${this.userId}`, {
+        responseType: 'blob',
+      })
+      .subscribe((blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'resume.pdf'; // nazwa pobieranego pliku
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      });
     this.userId = '';
     this.resumeId = '';
   }

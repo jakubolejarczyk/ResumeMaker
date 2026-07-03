@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 using ResumeMakerApi.Source.Infrastructure;
 using ResumeMakerApi.Source.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Add services to the container.
 
