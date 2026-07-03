@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ResumeMakerApi.Source.Context;
+using ResumeMakerApi.Source.Infrastructure;
 using ResumeMakerApi.Source.Services;
 using Scalar.AspNetCore;
 

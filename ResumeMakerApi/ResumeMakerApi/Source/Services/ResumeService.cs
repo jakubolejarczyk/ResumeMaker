@@ -1,23 +1,20 @@
-﻿using ResumeMakerApi.Source.Context;
-using ResumeMakerApi.Source.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using ResumeMakerApi.Source.DTOs;
+using ResumeMakerApi.Source.Infrastructure;
 
 namespace ResumeMakerApi.Source.Services;
 
-public class ResumeService : IResumeService
+public class ResumeService(AppDbContext appDbContext) : IResumeService
 {
-    private readonly AppDbContext _appDbContext;
-
-    public ResumeService(AppDbContext appDbContext)
+    public ResumeDto? GetResume(int userId)
     {
-        _appDbContext = appDbContext;
-    }
-
-    public ResumeResponse GetResume(int resumeId, int userId)
-    {
-        var user = _appDbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
-        return new ResumeResponse()
+        var user = appDbContext.Users
+            .Where(u => u.Id == userId)
+            .FirstOrDefault();
+        return user == null ? null : new ResumeDto
         {
-            User = user
+            FirstName = user.FirstName,
+            LastName = user.LastName
         };
     }
 }

@@ -1,8 +1,8 @@
-﻿using ResumeMakerApi.Source.Model;
+﻿using ResumeMakerApi.Source.DTOs;
 
 namespace ResumeMakerApi.Source.Services;
 
 public interface IResumeService
 {
-    ResumeResponse GetResume(int resumeId, int userId);
+    ResumeDto? GetResume(int userId);
 }
