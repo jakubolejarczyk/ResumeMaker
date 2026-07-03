@@ -1,4 +1,6 @@
-﻿namespace ResumeMakerApi.Source.Entity;
+﻿using ResumeMakerApi.Source.Entities;
+
+namespace ResumeMakerApi.Source.Entity;
 
 public class Resume
 {
