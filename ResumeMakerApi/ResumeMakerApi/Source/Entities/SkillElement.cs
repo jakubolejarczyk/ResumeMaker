@@ -1,10 +1,14 @@
-﻿namespace ResumeMakerApi.Source.Entity;
+﻿namespace ResumeMakerApi.Source.Entities;
 
 public class SkillElement
 {
     public int Id { get; set; }
+
     public string SkillName { get; set; } = string.Empty;
+
     public int Order { get; set; }
+
     public int SkillId { get; set; }
-    public Skill Skill { get; set; } = null!;
+
+    public Skill Skill { get; set; } = new();
 }
