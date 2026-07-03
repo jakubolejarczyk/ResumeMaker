@@ -27,6 +27,18 @@
           <AssociatedConnUserName />
           <FullPath>Educations.sql</FullPath>
         </FileNode>
+        <FileNode Name="ExperienceDescriptions.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>ExperienceDescriptions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Experiences.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Experiences.sql</FullPath>
+        </FileNode>
         <FileNode Name="Phone.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>

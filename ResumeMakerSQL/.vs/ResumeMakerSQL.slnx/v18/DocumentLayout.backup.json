@@ -1,12 +1,35 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\SocialMedias.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\SocialMedias.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (90))",
+              "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\SocialMedias.sql",
+              "RelativeDocumentMoniker": "ResumeMakerSQL\\SocialMedias.sql",
+              "ToolTip": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (90))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-07-03T18:23:57.759Z",
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (90))"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
