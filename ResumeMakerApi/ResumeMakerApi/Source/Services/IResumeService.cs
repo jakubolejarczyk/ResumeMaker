@@ -2,5 +2,5 @@
 
 public interface IResumeService
 {
-    byte[] Run();
+    public byte[] Run();
 }
