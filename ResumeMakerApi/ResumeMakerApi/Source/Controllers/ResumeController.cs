@@ -5,13 +5,19 @@ namespace ResumeMakerApi.Source.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ResumeController(IResumeService resumeService) : ControllerBase
+public class ResumeController : ControllerBase
 {
-    [HttpGet]
-    public ActionResult<byte[]> Get()
+    private readonly IResumeService resumeService;
+
+    public ResumeController(IResumeService resumeService)
+    {
+        this.resumeService = resumeService;
+    }
+
+    [HttpGet("{userId}")]
+    public ActionResult<byte[]> Get(int userId)
     {
         var bytes = resumeService.Run();
-        var resume = File(bytes, "application/pdf", "resume.pdf");
-        return Ok(resume);
+        return File(bytes, "application/pdf", "resume.pdf");
     }
 }
