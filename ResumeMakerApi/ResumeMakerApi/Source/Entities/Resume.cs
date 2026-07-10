@@ -10,11 +10,15 @@ public class Resume
 
     public User User { get; set; } = new();
 
-    public List<Education> Educations { get; set; } = [];
+    public int CompanyId { get; set; }
 
-    public List<SocialMedia> SocialMedias { get; set; } = [];
+    public Company Company { get; set; } = new();
+
+    public List<Education> Educations { get; set; } = [];
     
     public List<Experience> Experiences { get; set; } = [];
     
     public List<Skill> Skills { get; set; } = [];
+
+    public List<SocialMedia> SocialMedias { get; set; } = [];
 }

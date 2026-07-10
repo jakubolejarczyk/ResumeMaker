@@ -6,9 +6,9 @@ public class Phone
 
     public string CountryCode { get; set; } = string.Empty;
 
-    public string PhoneNumber { get; set; } = string.Empty;
+    public string AreaCode { get; set; } = string.Empty;
 
-    public bool ShowInResume { get; set; }
+    public string LocalPhoneNumber { get; set; } = string.Empty;
 
     public int UserId { get; set; }
 
