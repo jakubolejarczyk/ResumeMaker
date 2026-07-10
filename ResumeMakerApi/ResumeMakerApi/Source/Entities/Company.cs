@@ -6,5 +6,7 @@ public class Company
 
     public string CompanyName { get; set; } = string.Empty;
 
-    public List<Resume> Resumes { get; set; } = [];
+    public string City { get; set; } = string.Empty;
+
+    public string Country { get; set; } = string.Empty;
 }

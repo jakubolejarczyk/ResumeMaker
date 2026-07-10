@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResumeMakerApi.Source.Context;
 
@@ -11,9 +12,11 @@ using ResumeMakerApi.Source.Context;
 namespace ResumeMakerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260710205002_AddCityAndCountryToCompanyTable")]
+    partial class AddCityAndCountryToCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,6 +174,9 @@ namespace ResumeMakerApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("JobTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -179,6 +185,8 @@ namespace ResumeMakerApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("UserId");
 
@@ -343,11 +351,19 @@ namespace ResumeMakerApi.Migrations
 
             modelBuilder.Entity("ResumeMakerApi.Source.Entities.Resume", b =>
                 {
+                    b.HasOne("ResumeMakerApi.Source.Entities.Company", "Company")
+                        .WithMany("Resumes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ResumeMakerApi.Source.Entities.User", "User")
                         .WithMany("Resumes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("User");
                 });
@@ -383,6 +399,11 @@ namespace ResumeMakerApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Resume");
+                });
+
+            modelBuilder.Entity("ResumeMakerApi.Source.Entities.Company", b =>
+                {
+                    b.Navigation("Resumes");
                 });
 
             modelBuilder.Entity("ResumeMakerApi.Source.Entities.Experience", b =>
