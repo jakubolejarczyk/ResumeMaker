@@ -1,4 +1,5 @@
 ﻿using ResumeMakerApi.Source.Builders;
+using ResumeMakerApi.Source.Contexts;
 using ResumeMakerApi.Source.Controllers;
 using ResumeMakerApi.Source.Services;
 
@@ -11,5 +12,6 @@ public static class SourceProvider
         ControllersProvider.Builder(builder);
         BuildersProvider.Builder(builder);
         ServicesProvider.Builder(builder);
+        ContextsProvider.Builder(builder);
     }
 }
