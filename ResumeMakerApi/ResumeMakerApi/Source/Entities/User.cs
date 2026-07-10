@@ -16,5 +16,7 @@ public class User
 
     public List<Phone> Phones { get; set; } = [];
 
+    public List<Company> Companies { get; set; } = [];
+
     public List<Resume> Resumes { get; set; } = [];
 }
