@@ -6,7 +6,5 @@ public class Company
 
     public string CompanyName { get; set; } = string.Empty;
 
-    public List<Experience> Experiences { get; set; } = [];
-
-    public List<Company> Companies { get; set; } = [];
+    public List<Resume> Resumes { get; set; } = [];
 }
