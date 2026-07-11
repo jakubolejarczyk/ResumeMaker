@@ -10,13 +10,11 @@ public class User
 
     public string LastName { get; set; } = string.Empty;
 
-    public string City { get; set; } = string.Empty;
-
-    public string Country { get; set; } = string.Empty;
-
-    public List<Phone> Phones { get; set; } = [];
-
-    public List<Company> Companies { get; set; } = [];
+    public string CountryCode { get; set; } = string.Empty;
+    
+    public string PhoneNumber { get; set; } = string.Empty;
 
     public List<Resume> Resumes { get; set; } = [];
+
+    public List<Company> Companies { get; set; } = [];
 }

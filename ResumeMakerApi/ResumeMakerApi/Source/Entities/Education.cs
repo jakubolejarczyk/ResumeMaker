@@ -2,7 +2,7 @@
 
 public class Education
 {
-    public int Id {  get; set; }
+    public int Id { get; set; }
 
     public string InstitutionName { get; set; } = string.Empty;
 
@@ -10,7 +10,9 @@ public class Education
 
     public string Degree { get; set; } = string.Empty;
 
-    public int GraduationYear { get; set; }
+    public DateOnly StartYear { get; set; }
+
+    public DateOnly EndYear { get; set; }
 
     public int ResumeId { get; set; }
 

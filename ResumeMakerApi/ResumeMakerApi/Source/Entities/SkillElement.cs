@@ -4,11 +4,11 @@ public class SkillElement
 {
     public int Id { get; set; }
 
-    public string SkillName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     public int Order { get; set; }
 
-    public int SkillId { get; set; }
+    public int SkillGroupId { get; set; }
 
-    public Skill Skill { get; set; } = new();
+    public SkillGroup SkillGroup { get; set; } = new();
 }

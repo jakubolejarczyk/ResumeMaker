@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ResumeMakerApi.Source.Entities;
 
-namespace ResumeMakerApi.Source.Context;
+namespace ResumeMakerApi.Source.Contexts;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Company> Companies { get; set; }
 
@@ -11,22 +11,15 @@ public class AppDbContext : DbContext
 
     public DbSet<Experience> Experiences { get; set; }
 
-    public DbSet<ExperienceElement> ExperienceElements { get; set; }
-
-    public DbSet<Phone> Phones { get; set; }
+    public DbSet<ExperienceDescription> ExperienceDescriptions { get; set; }
 
     public DbSet<Resume> Resumes { get; set; }
 
-    public DbSet<Skill> Skills { get; set; }
-
     public DbSet<SkillElement> SkillElements { get; set; }
+
+    public DbSet<SkillGroup> SkillGroups { get; set; }
 
     public DbSet<SocialMedia> SocialMedias { get; set; }
 
     public DbSet<User> Users { get; set; }
-
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-
-    }
 }

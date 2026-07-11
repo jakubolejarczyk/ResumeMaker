@@ -1,6 +1,6 @@
 ﻿namespace ResumeMakerApi.Source.Entities;
 
-public class ExperienceElement
+public class ExperienceDescription
 {
     public int Id { get; set; }
 
