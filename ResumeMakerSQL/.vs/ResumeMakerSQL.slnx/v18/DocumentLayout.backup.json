@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Companies.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\Companies.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Users.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\Users.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Phone.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
       "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\Phone.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
     }
@@ -19,13 +27,35 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Phone.sql - jakub\\SQLEXPRESS.ResumeMakerOld (JAKUB\\jakub (51))",
+              "Title": "Companies.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (52))",
+              "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Companies.sql",
+              "RelativeDocumentMoniker": "ResumeMakerSQL\\Companies.sql",
+              "ToolTip": "Companies.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (52))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-07-10T20:56:37.229Z",
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (52))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Users.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (78))",
+              "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Users.sql",
+              "RelativeDocumentMoniker": "ResumeMakerSQL\\Users.sql",
+              "ToolTip": "Users.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (78))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-07-10T20:56:32.122Z",
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (78))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Phone.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (55))",
               "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Phone.sql",
               "RelativeDocumentMoniker": "ResumeMakerSQL\\Phone.sql",
-              "ToolTip": "Phone.sql - jakub\\SQLEXPRESS.ResumeMakerOld (JAKUB\\jakub (51))",
+              "ToolTip": "Phone.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (55))",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-07-10T18:33:18.095Z",
-              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMakerOld (JAKUB\\jakub (51))"
+              "WhenOpened": "2026-07-10T20:56:30.781Z",
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (55))"
             }
           ]
         }
