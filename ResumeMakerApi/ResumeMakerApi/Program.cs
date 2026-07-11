@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using QuestPDF.Infrastructure;
 using ResumeMakerApi.Source;
-using ResumeMakerApi.Source.Context;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
