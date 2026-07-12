@@ -1,4 +1,5 @@
 USE ResumeMaker;
 GO
 
-SELECT * FROM Users;
+SELECT *
+FROM Users;
