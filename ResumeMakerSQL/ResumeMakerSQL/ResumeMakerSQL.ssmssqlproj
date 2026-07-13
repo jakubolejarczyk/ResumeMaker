@@ -63,11 +63,11 @@
           <AssociatedConnUserName />
           <FullPath>SkillElements.sql</FullPath>
         </FileNode>
-        <FileNode Name="Skills.sql">
+        <FileNode Name="SkillGroups.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>jakub\SQLEXPRESS</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>Skills.sql</FullPath>
+          <FullPath>SkillGroups.sql</FullPath>
         </FileNode>
         <FileNode Name="SocialMedias.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:jakub\SQLEXPRESS:True</AssociatedConnectionMoniker>
