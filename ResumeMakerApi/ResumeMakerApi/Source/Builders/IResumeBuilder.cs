@@ -1,6 +1,8 @@
-﻿namespace ResumeMakerApi.Source.Builders;
+﻿using ResumeMakerApi.Source.Dtos;
+
+namespace ResumeMakerApi.Source.Builders;
 
 public interface IResumeBuilder
 {
-    public byte[] Build();
+    public byte[] Build(ResumeDto resumeDto);
 }

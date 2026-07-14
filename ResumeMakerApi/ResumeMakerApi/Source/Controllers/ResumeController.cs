@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ResumeMakerApi.Source.Dtos;
+using ResumeMakerApi.Source.Repositories;
 using ResumeMakerApi.Source.Services;
 
 namespace ResumeMakerApi.Source.Controllers;
