@@ -6,7 +6,7 @@
 
 The diagram shows what actions are performed by user.
 
-![Use Case](./Documentation/Images/UseCase.jpg)
+![Use Case](./Documentation/Images/UseCaseDiagram.jpg)
 
 ## 1.2. ERD
 
