@@ -1,4 +1,6 @@
 ﻿using API.Sources.Models;
+using API.Sources.Requests;
+using API.Sources.Responses;
 using API.Sources.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,14 @@ namespace API.Sources.Controllers;
 [Route("api/[controller]")]
 public class UserController(IUserService service) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User?>> ReadUserAsync(int id)
+    [HttpPost]
+    public async Task<ActionResult<CreateUserResponse>> CreateUserAsync([FromBody] CreateUserRequest request)
     {
-        var result = await service.ReadUserAsync(id);
-        return result is null ? NotFound("User with the given Id was not found.") : Ok(result);
-    }
-
-    [HttpGet]
-    public async Task<ActionResult<List<User>>> ReadUsersAsync()
-    {
-        return Ok(await service.ReadUsersAsync());
+        var response = await service.CreateUserAsync(request);
+        if (response.Success)
+        {
+            return Ok(response);
+        }
+        return BadRequest(response);
     }
 }

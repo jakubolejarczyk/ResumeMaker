@@ -2,10 +2,19 @@
 
 @API_HostAddress = http://localhost:5038
 
-GET {{API_HostAddress}}/api/user/1
+POST {{API_HostAddress}}/api/user
 Accept: application/json
+Content-Type: application/json
+
+{
+  "User": {
+    "Email": "user@example.com",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "City": "New York",
+    "Country": "USA",
+    "PhoneNumber": "123-456-7890"
+  }
+}
 
 ###
-
-GET {{API_HostAddress}}/api/user
-Accept: application/json

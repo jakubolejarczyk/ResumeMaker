@@ -1,10 +1,12 @@
 ﻿using API.Sources.Models;
+using API.Sources.Requests;
+using API.Sources.Responses;
 
 namespace API.Sources.Services;
 
 public interface IUserService
 {
-    Task<User> CreateUserAsync(User user);
+    Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request);
 
     Task<User?> ReadUserAsync(int id);
 
