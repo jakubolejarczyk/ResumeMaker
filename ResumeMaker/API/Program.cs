@@ -1,6 +1,11 @@
+using API.Sources;
+
 var builder = WebApplication.CreateBuilder(args);
+
+SourcesProvider.BuilderProvider(builder);
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+SourcesProvider.AppProvider(app);
 
 app.Run();
