@@ -12,4 +12,4 @@ The diagram shows what actions are performed by user.
 
 The diagram shows how the database is built.
 
-![ERD](./Documentation/Images/ERD.jpg)
+![ERD](./Documentation/Images/ERDDiagram.jpg)
