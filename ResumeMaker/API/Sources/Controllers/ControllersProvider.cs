@@ -1,4 +1,6 @@
-﻿namespace API.Sources.Controllers;
+﻿using Scalar.AspNetCore;
+
+namespace API.Sources.Controllers;
 
 public static class ControllersProvider
 {
@@ -14,6 +16,7 @@ public static class ControllersProvider
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.MapScalarApiReference();
         }
     }
 }
