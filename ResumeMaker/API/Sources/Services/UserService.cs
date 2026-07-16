@@ -41,4 +41,16 @@ public class UserService(IUserRepository repository, UserStore store) : IUserSer
         };
         return Task.FromResult(response);
     }
+
+    public Task<ReadUsersResponse> ReadUsers()
+    {
+        var users = repository.ReadUsers();
+        var response = new ReadUsersResponse
+        {
+            Success = users.Success,
+            Message = users.Message,
+            Users = users.Data
+        };
+        return Task.FromResult(response);
+    }
 }

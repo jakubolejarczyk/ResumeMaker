@@ -46,4 +46,14 @@ public class UserRepository(UserStore store) : IUserRepository
             Data = user
         };
     }
+
+    public RepositoryModel<List<User>> ReadUsers()
+    {
+        return new RepositoryModel<List<User>>
+        {
+            Success = true,
+            Message = "Users found.",
+            Data = store.Users
+        };
+    }
 }

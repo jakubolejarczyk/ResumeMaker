@@ -30,4 +30,15 @@ public class UserController(IUserService service) : ControllerBase
         }
         return NotFound(response);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<ReadUsersResponse>> ReadUsers()
+    {
+        var response = await service.ReadUsers();
+        if (response.Success)
+        {
+            return Ok(response);
+        }
+        return NotFound(response);
+    }
 }
