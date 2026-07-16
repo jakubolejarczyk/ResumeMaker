@@ -48,6 +48,21 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 
     public RepositoryDTO<Company> Delete(int id)
     {
-        throw new NotImplementedException();
+        var company = store.Date.FirstOrDefault(c => c.Id == id);
+        if (company == null)
+        {
+            return new RepositoryDTO<Company>
+            {
+                Success = false,
+                Message = "Failed to delete the company because it does not exist."
+            };
+        }
+        store.Date.Remove(company);
+        return new RepositoryDTO<Company>
+        {
+            Success = true,
+            Message = "Successfully deleted the company.",
+            Body = company
+        };
     }
 }
