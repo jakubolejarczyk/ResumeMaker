@@ -1,5 +1,5 @@
 ﻿using API.Sources.Entities;
-using API.Sources.Repositories;
+using API.Sources.Repositories.User;
 using API.Sources.Requests;
 using API.Sources.Responses;
 using API.Sources.Stores;
