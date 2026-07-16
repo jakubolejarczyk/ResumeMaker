@@ -11,11 +11,6 @@ public class EducationRepository(EducationStore store) : IEducationRepository
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<Education> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<Education> Read(int id)
     {
         throw new NotImplementedException();
@@ -23,10 +18,21 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<List<Education>> ReadAll()
     {
-        throw new NotImplementedException();
+        var educations = store.Date;
+        return new RepositoryDTO<List<Education>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {educations.Count} educations.",
+            Body = educations
+        };
     }
 
     public RepositoryDTO<Education> Update(int id, Education education)
+    {
+        throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<Education> Delete(int id)
     {
         throw new NotImplementedException();
     }

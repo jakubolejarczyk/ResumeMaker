@@ -23,7 +23,13 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<List<SocialMedia>> ReadAll()
     {
-        throw new NotImplementedException();
+        var socialMedias = store.Date;
+        return new RepositoryDTO<List<SocialMedia>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {socialMedias.Count} social medias.",
+            Body = socialMedias
+        };
     }
 
     public RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia)

@@ -23,7 +23,13 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<List<SkillElement>> ReadAll()
     {
-        throw new NotImplementedException();
+        var skillElements = store.Date;
+        return new RepositoryDTO<List<SkillElement>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {skillElements.Count} skill elements.",
+            Body = skillElements
+        };
     }
 
     public RepositoryDTO<SkillElement> Update(int id, SkillElement skillElement)

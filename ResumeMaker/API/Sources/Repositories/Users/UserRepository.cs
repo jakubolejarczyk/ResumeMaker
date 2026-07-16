@@ -23,7 +23,13 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<List<User>> ReadAll()
     {
-        throw new NotImplementedException();
+        var users = store.Date;
+        return new RepositoryDTO<List<User>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {users.Count} users.",
+            Body = users
+        };
     }
 
     public RepositoryDTO<User> Update(int id, User user)

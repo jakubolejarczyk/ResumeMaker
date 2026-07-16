@@ -23,7 +23,13 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<List<Resume>> ReadAll()
     {
-        throw new NotImplementedException();
+        var resumes = store.Date;
+        return new RepositoryDTO<List<Resume>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {resumes.Count} resumes.",
+            Body = resumes
+        };
     }
 
     public RepositoryDTO<Resume> Update(int id, Resume resume)

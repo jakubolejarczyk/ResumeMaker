@@ -23,7 +23,13 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
 
     public RepositoryDTO<List<ExperienceDescription>> ReadAll()
     {
-        throw new NotImplementedException();
+        var educationDescriptions = store.Date;
+        return new RepositoryDTO<List<ExperienceDescription>>
+        {
+            Success = true,
+            Message = $"Successfully retrieved {educationDescriptions.Count} education descriptions.",
+            Body = educationDescriptions
+        };
     }
 
     public RepositoryDTO<ExperienceDescription> Update(int id, ExperienceDescription experienceDescription)
