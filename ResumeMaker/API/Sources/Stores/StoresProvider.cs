@@ -2,12 +2,12 @@
 
 public static class StoresProvider
 {
-    public static void BuilderProvider(WebApplicationBuilder builder)
+    public static void GetBuilder(WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<UserStore>();
     }
 
-    public static void AppProvider(WebApplication app)
+    public static void GetApp(WebApplication app)
     {
     }
 }
