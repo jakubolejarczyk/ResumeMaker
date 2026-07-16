@@ -4,7 +4,7 @@ public static class StoresProvider
 {
     public static void GetBuilder(WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<UserStore>();
+        builder.Services.AddSingleton<IUserStore, UserStore>();
     }
 
     public static void GetApp(WebApplication app)
