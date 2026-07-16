@@ -2,10 +2,10 @@ using API.Sources;
 
 var builder = WebApplication.CreateBuilder(args);
 
-SourcesProvider.BuilderProvider(builder);
+SourcesProvider.GetBuilder(builder);
 
 var app = builder.Build();
 
-SourcesProvider.AppProvider(app);
+SourcesProvider.GetApp(app);
 
 app.Run();

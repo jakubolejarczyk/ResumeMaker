@@ -7,7 +7,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "Email": "user@example.com",
+  "Email": "john@example.com",
   "FirstName": "John",
   "LastName": "Doe",
   "City": "New York",
@@ -17,5 +17,5 @@ Content-Type: application/json
 
 ###
 
-GET {{API_HostAddress}}/api/user/2
+GET {{API_HostAddress}}/api/user/1
 Accept: application/json
