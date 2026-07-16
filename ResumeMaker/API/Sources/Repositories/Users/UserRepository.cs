@@ -18,7 +18,7 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<User> Read(int id)
     {
-        var user = store.Date.FirstOrDefault(c => c.Id == id);
+        var user = store.Data.FirstOrDefault(c => c.Id == id);
         if (user == null)
         {
             return new RepositoryDTO<User>
@@ -37,7 +37,7 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<List<User>> ReadAll()
     {
-        var users = store.Date;
+        var users = store.Data;
         return new RepositoryDTO<List<User>>
         {
             Success = true,

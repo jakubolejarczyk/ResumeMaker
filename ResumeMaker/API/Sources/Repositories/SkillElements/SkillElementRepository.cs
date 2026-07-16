@@ -18,7 +18,7 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<SkillElement> Read(int id)
     {
-        var skillElement = store.Date.FirstOrDefault(c => c.Id == id);
+        var skillElement = store.Data.FirstOrDefault(c => c.Id == id);
         if (skillElement == null)
         {
             return new RepositoryDTO<SkillElement>
@@ -37,7 +37,7 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<List<SkillElement>> ReadAll()
     {
-        var skillElements = store.Date;
+        var skillElements = store.Data;
         return new RepositoryDTO<List<SkillElement>>
         {
             Success = true,

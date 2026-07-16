@@ -1,6 +1,6 @@
 ﻿namespace API.Sources.Cores;
 
-public class StoreCore<TDate>(TDate date)
+public class StoreCore<TData>(TData data)
 {
-    public TDate Date { get; } = date;
+    public TData Data { get; } = data;
 }

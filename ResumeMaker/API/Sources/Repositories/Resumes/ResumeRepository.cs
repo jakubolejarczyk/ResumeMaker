@@ -18,7 +18,7 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<Resume> Read(int id)
     {
-        var resume = store.Date.FirstOrDefault(c => c.Id == id);
+        var resume = store.Data.FirstOrDefault(c => c.Id == id);
         if (resume == null)
         {
             return new RepositoryDTO<Resume>
@@ -37,7 +37,7 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<List<Resume>> ReadAll()
     {
-        var resumes = store.Date;
+        var resumes = store.Data;
         return new RepositoryDTO<List<Resume>>
         {
             Success = true,

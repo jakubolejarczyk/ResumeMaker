@@ -13,7 +13,7 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Read(int id)
     {
-        var education = store.Date.FirstOrDefault(c => c.Id == id);
+        var education = store.Data.FirstOrDefault(c => c.Id == id);
         if (education == null)
         {
             return new RepositoryDTO<Education>
@@ -32,7 +32,7 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<List<Education>> ReadAll()
     {
-        var educations = store.Date;
+        var educations = store.Data;
         return new RepositoryDTO<List<Education>>
         {
             Success = true,

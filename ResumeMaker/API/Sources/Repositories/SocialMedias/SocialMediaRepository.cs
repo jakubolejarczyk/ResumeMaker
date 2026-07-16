@@ -13,7 +13,7 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<SocialMedia> Read(int id)
     {
-        var socialMedia = store.Date.FirstOrDefault(c => c.Id == id);
+        var socialMedia = store.Data.FirstOrDefault(c => c.Id == id);
         if (socialMedia == null)
         {
             return new RepositoryDTO<SocialMedia>
@@ -32,7 +32,7 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<List<SocialMedia>> ReadAll()
     {
-        var socialMedias = store.Date;
+        var socialMedias = store.Data;
         return new RepositoryDTO<List<SocialMedia>>
         {
             Success = true,

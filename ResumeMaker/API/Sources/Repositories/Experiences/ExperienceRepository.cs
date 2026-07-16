@@ -18,7 +18,7 @@ public class ExperienceRepository(ExperienceStore store) : IExperienceRepository
 
     public RepositoryDTO<Experience> Read(int id)
     {
-        var experience = store.Date.FirstOrDefault(c => c.Id == id);
+        var experience = store.Data.FirstOrDefault(c => c.Id == id);
         if (experience == null)
         {
             return new RepositoryDTO<Experience>
@@ -37,7 +37,7 @@ public class ExperienceRepository(ExperienceStore store) : IExperienceRepository
 
     public RepositoryDTO<List<Experience>> ReadAll()
     {
-        var experiences = store.Date;
+        var experiences = store.Data;
         return new RepositoryDTO<List<Experience>>
         {
             Success = true,

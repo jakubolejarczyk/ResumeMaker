@@ -18,7 +18,7 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<SkillGroup> Read(int id)
     {
-        var skillGroup = store.Date.FirstOrDefault(c => c.Id == id);
+        var skillGroup = store.Data.FirstOrDefault(c => c.Id == id);
         if (skillGroup == null)
         {
             return new RepositoryDTO<SkillGroup>
@@ -37,7 +37,7 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<List<SkillGroup>> ReadAll()
     {
-        var skillGroups = store.Date;
+        var skillGroups = store.Data;
         return new RepositoryDTO<List<SkillGroup>>
         {
             Success = true,

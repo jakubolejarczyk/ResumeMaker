@@ -13,7 +13,7 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 
     public RepositoryDTO<Company> Read(int id)
     {
-        var company = store.Date.FirstOrDefault(c => c.Id == id);
+        var company = store.Data.FirstOrDefault(c => c.Id == id);
         if (company == null)
         {
             return new RepositoryDTO<Company>
@@ -32,7 +32,7 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 
     public RepositoryDTO<List<Company>> ReadAll()
     {
-        var companies = store.Date;
+        var companies = store.Data;
         return new RepositoryDTO<List<Company>>
         {
             Success = true,
@@ -48,7 +48,7 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 
     public RepositoryDTO<Company> Delete(int id)
     {
-        var company = store.Date.FirstOrDefault(c => c.Id == id);
+        var company = store.Data.FirstOrDefault(c => c.Id == id);
         if (company == null)
         {
             return new RepositoryDTO<Company>
@@ -57,7 +57,7 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
                 Message = "Failed to delete the company because it does not exist."
             };
         }
-        store.Date.Remove(company);
+        store.Data.Remove(company);
         return new RepositoryDTO<Company>
         {
             Success = true,
