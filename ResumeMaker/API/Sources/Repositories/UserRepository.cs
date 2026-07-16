@@ -1,48 +1,49 @@
 ﻿using API.Sources.Entities;
-using API.Sources.Requests;
-using API.Sources.Responses;
+using API.Sources.Models;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories;
 
 public class UserRepository(UserStore store) : IUserRepository
 {
-    public CreateUserResponse CreateUser(CreateUserRequest user)
+    public RepositoryModel<User?> CreateUser(User user)
     {
-        var newUser = new User
+        var emailExists = store.Users.FindAll(u => u.Email == user.Email).Any();
+        if (emailExists)
         {
-            Id = store.Users.Count + 1,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            City = user.City,
-            Country = user.Country,
-            PhoneNumber = user.PhoneNumber
-        };
-        store.Users.Add(newUser);
-        return new CreateUserResponse
+            return new RepositoryModel<User?>
+            {
+                Success = false,
+                Message = "User with this email already exists.",
+                Data = null
+            };
+        }
+        store.Users.Add(user);
+        return new RepositoryModel<User?>
         {
             Success = true,
-            Message = "User created successfully."
+            Message = "User created successfully.",
+            Data = user
         };
     }
 
-    public ReadUserResponse? ReadUser(int id)
+    public RepositoryModel<User?> ReadUser(int id)
     {
         var user = store.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
-            return null;
+            return new RepositoryModel<User?>
+            {
+                Success = false,
+                Message = "User not found.",
+                Data = null
+            };
         }
-        return new ReadUserResponse
+        return new RepositoryModel<User?>
         {
-            Id = user.Id,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            City = user.City,
-            Country = user.Country,
-            PhoneNumber = user.PhoneNumber
+            Success = true,
+            Message = "User found.",
+            Data = user
         };
     }
 }

@@ -1,11 +1,11 @@
-﻿using API.Sources.Requests;
-using API.Sources.Responses;
+﻿using API.Sources.Entities;
+using API.Sources.Models;
 
 namespace API.Sources.Repositories;
 
 public interface IUserRepository
 {
-    CreateUserResponse CreateUser(CreateUserRequest user);
+    RepositoryModel<User?> CreateUser(User user);
 
-    ReadUserResponse? ReadUser(int id);
+    RepositoryModel<User?> ReadUser(int id);
 }
