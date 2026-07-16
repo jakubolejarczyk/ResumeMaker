@@ -1,4 +1,5 @@
-﻿using API.Sources.Requests;
+﻿using API.Sources.Entities;
+using API.Sources.Requests;
 using API.Sources.Responses;
 using API.Sources.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,5 +19,16 @@ public class UserController(IUserService service) : ControllerBase
             return Ok(response);
         }
         return BadRequest(response);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User?>> Read(int id)
+    {
+        var user = await service.ReadUserAsync(id);
+        if (user is null)
+        {
+            return NotFound("User not found.");
+        }
+        return Ok(user);
     }
 }

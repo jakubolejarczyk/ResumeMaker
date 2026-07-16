@@ -1,7 +1,9 @@
-﻿namespace API.Sources.Models;
+﻿namespace API.Sources.Entities;
 
 public class User
 {
+    public int Id { get; set; }
+
     public required string Email { get; set; }
 
     public required string FirstName { get; set; }

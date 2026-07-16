@@ -1,4 +1,4 @@
-﻿using API.Sources.Models;
+﻿using API.Sources.Entities;
 using API.Sources.Requests;
 using API.Sources.Responses;
 
