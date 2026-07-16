@@ -4,13 +4,13 @@ namespace API.Sources.Controllers;
 
 public static class ControllersProvider
 {
-    public static void BuilderProvider(WebApplicationBuilder builder)
+    public static void GetBuilder(WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
     }
 
-    public static void AppProvider(WebApplication app)
+    public static void GetApp(WebApplication app)
     {
         app.MapControllers();
         if (app.Environment.IsDevelopment())

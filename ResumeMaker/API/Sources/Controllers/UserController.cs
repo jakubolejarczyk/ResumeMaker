@@ -1,5 +1,4 @@
-﻿using API.Sources.Entities;
-using API.Sources.Requests;
+﻿using API.Sources.Requests;
 using API.Sources.Responses;
 using API.Sources.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +10,9 @@ namespace API.Sources.Controllers;
 public class UserController(IUserService service) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<CreateUserResponse>> CreateUserAsync([FromBody] CreateUserRequest request)
+    public async Task<ActionResult<CreateUserResponse>> CreateUser([FromBody] CreateUserRequest request)
     {
-        var response = await service.CreateUserAsync(request);
+        var response = await service.CreateUser(request);
         if (response.Success)
         {
             return Ok(response);
@@ -22,13 +21,13 @@ public class UserController(IUserService service) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<User?>> Read(int id)
+    public async Task<ActionResult<ReadUserResponse>> ReadUser(int id)
     {
-        var user = await service.ReadUserAsync(id);
-        if (user is null)
+        var response = await service.ReadUser(id);
+        if (response.Success)
         {
-            return NotFound("User not found.");
+            return Ok(response);
         }
-        return Ok(user);
+        return NotFound(response);
     }
 }

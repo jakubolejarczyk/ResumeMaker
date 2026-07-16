@@ -2,12 +2,12 @@
 
 public static class ServicesProvider
 {
-    public static void BuilderProvider(WebApplicationBuilder builder)
+    public static void GetBuilder(WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddSingleton<IUserService, UserService>();
     }
 
-    public static void AppProvider(WebApplication app)
+    public static void GetApp(WebApplication app)
     {
     }
 }

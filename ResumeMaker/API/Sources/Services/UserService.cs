@@ -2,35 +2,43 @@
 using API.Sources.Repositories;
 using API.Sources.Requests;
 using API.Sources.Responses;
+using API.Sources.Stores;
 
 namespace API.Sources.Services;
 
-public class UserService(IUserRepository repository) : IUserService
+public class UserService(IUserRepository repository, UserStore store) : IUserService
 {
-    public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
+    public Task<CreateUserResponse> CreateUser(CreateUserRequest request)
     {
-        var response = repository.CreateUser(request);
-        return await Task.FromResult(response);
-    }
-
-    public Task<bool> DeleteUserAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ReadUserResponse?> ReadUserAsync(int id)
-    {
-        var response = repository.ReadUser(id);
+        var newUser = new User
+        {
+            Id = store.Users.Count + 1,
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            City = request.City,
+            Country = request.Country,
+            PhoneNumber = request.PhoneNumber
+        };
+        var user = repository.CreateUser(newUser);
+        var response = new CreateUserResponse
+        {
+            Success = user.Success,
+            Message = user.Message,
+            User = user.Data
+        };
         return Task.FromResult(response);
     }
 
-    public Task<List<User>> ReadUsersAsync()
+    public Task<ReadUserResponse> ReadUser(int id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> UpdateUserAsync(int id, User user)
-    {
-        throw new NotImplementedException();
+        var user = repository.ReadUser(id);
+        var response = new ReadUserResponse
+        {
+            Success = user.Success,
+            Message = user.Message,
+            User = user.Data
+        };
+        return Task.FromResult(response);
     }
 }

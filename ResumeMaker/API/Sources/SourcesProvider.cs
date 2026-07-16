@@ -7,19 +7,19 @@ namespace API.Sources;
 
 public static class SourcesProvider
 {
-    public static void BuilderProvider(WebApplicationBuilder builder)
+    public static void GetBuilder(WebApplicationBuilder builder)
     {
-        ControllersProvider.BuilderProvider(builder);
-        ServicesProvider.BuilderProvider(builder);
-        StoresProvider.BuilderProvider(builder);
-        RepositoriesProvider.BuilderProvider(builder);
+        ControllersProvider.GetBuilder(builder);
+        RepositoriesProvider.GetBuilder(builder);
+        ServicesProvider.GetBuilder(builder);
+        StoresProvider.GetBuilder(builder);
     }
 
-    public static void AppProvider(WebApplication app)
+    public static void GetApp(WebApplication app)
     {
-        ControllersProvider.AppProvider(app);
-        ServicesProvider.AppProvider(app);
-        StoresProvider.AppProvider(app);
-        RepositoriesProvider.AppProvider(app);
+        ControllersProvider.GetApp(app);
+        RepositoriesProvider.GetApp(app);
+        ServicesProvider.GetApp(app);
+        StoresProvider.GetApp(app);
     }
 }
