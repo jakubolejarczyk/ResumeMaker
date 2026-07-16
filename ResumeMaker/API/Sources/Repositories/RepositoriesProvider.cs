@@ -1,10 +1,10 @@
-﻿namespace API.Sources.Stores;
+﻿namespace API.Sources.Repositories;
 
-public static class StoresProvider
+public static class RepositoriesProvider
 {
     public static void BuilderProvider(WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<UserStore>();
+        builder.Services.AddSingleton<IUserRepository, UserRepository>();
     }
 
     public static void AppProvider(WebApplication app)

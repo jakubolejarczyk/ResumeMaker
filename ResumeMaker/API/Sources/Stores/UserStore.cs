@@ -2,7 +2,7 @@
 
 namespace API.Sources.Stores;
 
-public class UserStore : IUserStore
+public class UserStore
 {
     public List<User> Users { get; } = [];
 }

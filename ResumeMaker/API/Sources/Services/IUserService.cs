@@ -8,7 +8,7 @@ public interface IUserService
 {
     Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request);
 
-    Task<User?> ReadUserAsync(int id);
+    Task<ReadUserResponse?> ReadUserAsync(int id);
 
     Task<bool> UpdateUserAsync(int id, User user);
 

@@ -1,4 +1,5 @@
 ﻿using API.Sources.Controllers;
+using API.Sources.Repositories;
 using API.Sources.Services;
 using API.Sources.Stores;
 
@@ -11,6 +12,7 @@ public static class SourcesProvider
         ControllersProvider.BuilderProvider(builder);
         ServicesProvider.BuilderProvider(builder);
         StoresProvider.BuilderProvider(builder);
+        RepositoriesProvider.BuilderProvider(builder);
     }
 
     public static void AppProvider(WebApplication app)
@@ -18,5 +20,6 @@ public static class SourcesProvider
         ControllersProvider.AppProvider(app);
         ServicesProvider.AppProvider(app);
         StoresProvider.AppProvider(app);
+        RepositoriesProvider.AppProvider(app);
     }
 }

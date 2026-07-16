@@ -7,17 +7,15 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "User": {
-    "Email": "user@example.com",
-    "FirstName": "John",
-    "LastName": "Doe",
-    "City": "New York",
-    "Country": "USA",
-    "PhoneNumber": "123-456-7890"
-  }
+  "Email": "user@example.com",
+  "FirstName": "John",
+  "LastName": "Doe",
+  "City": "New York",
+  "Country": "USA",
+  "PhoneNumber": "123-456-7890"
 }
 
 ###
 
-GET {{API_HostAddress}}/api/user/0
+GET {{API_HostAddress}}/api/user/2
 Accept: application/json
