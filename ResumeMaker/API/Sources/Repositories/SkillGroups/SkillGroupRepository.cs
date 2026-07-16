@@ -18,7 +18,21 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<SkillGroup> Read(int id)
     {
-        throw new NotImplementedException();
+        var skillGroup = store.Date.FirstOrDefault(c => c.Id == id);
+        if (skillGroup == null)
+        {
+            return new RepositoryDTO<SkillGroup>
+            {
+                Success = false,
+                Message = "Failed to retrieve the skill group."
+            };
+        }
+        return new RepositoryDTO<SkillGroup>
+        {
+            Success = true,
+            Message = "Successfully retrieved the skill group.",
+            Body = skillGroup
+        };
     }
 
     public RepositoryDTO<List<SkillGroup>> ReadAll()

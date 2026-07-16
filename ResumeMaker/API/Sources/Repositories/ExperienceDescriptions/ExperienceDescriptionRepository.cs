@@ -18,7 +18,21 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
 
     public RepositoryDTO<ExperienceDescription> Read(int id)
     {
-        throw new NotImplementedException();
+        var experienceDescription = store.Date.FirstOrDefault(c => c.Id == id);
+        if (experienceDescription == null)
+        {
+            return new RepositoryDTO<ExperienceDescription>
+            {
+                Success = false,
+                Message = "Failed to retrieve the experience description."
+            };
+        }
+        return new RepositoryDTO<ExperienceDescription>
+        {
+            Success = true,
+            Message = "Successfully retrieved the experience description.",
+            Body = experienceDescription
+        };
     }
 
     public RepositoryDTO<List<ExperienceDescription>> ReadAll()

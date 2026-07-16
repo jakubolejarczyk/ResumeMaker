@@ -13,7 +13,21 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Read(int id)
     {
-        throw new NotImplementedException();
+        var education = store.Date.FirstOrDefault(c => c.Id == id);
+        if (education == null)
+        {
+            return new RepositoryDTO<Education>
+            {
+                Success = false,
+                Message = "Failed to retrieve the education."
+            };
+        }
+        return new RepositoryDTO<Education>
+        {
+            Success = true,
+            Message = "Successfully retrieved the education.",
+            Body = education
+        };
     }
 
     public RepositoryDTO<List<Education>> ReadAll()

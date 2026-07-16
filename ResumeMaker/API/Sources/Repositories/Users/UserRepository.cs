@@ -18,7 +18,21 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<User> Read(int id)
     {
-        throw new NotImplementedException();
+        var user = store.Date.FirstOrDefault(c => c.Id == id);
+        if (user == null)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "Failed to retrieve the user."
+            };
+        }
+        return new RepositoryDTO<User>
+        {
+            Success = true,
+            Message = "Successfully retrieved the user.",
+            Body = user
+        };
     }
 
     public RepositoryDTO<List<User>> ReadAll()

@@ -13,7 +13,21 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 
     public RepositoryDTO<Company> Read(int id)
     {
-        throw new NotImplementedException();
+        var company = store.Date.FirstOrDefault(c => c.Id == id);
+        if (company == null)
+        {
+            return new RepositoryDTO<Company>
+            {
+                Success = false,
+                Message = "Failed to retrieve the company."
+            };
+        }
+        return new RepositoryDTO<Company>
+        {
+            Success = true,
+            Message = "Successfully retrieved the company.",
+            Body = company
+        };
     }
 
     public RepositoryDTO<List<Company>> ReadAll()

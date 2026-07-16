@@ -11,14 +11,23 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<SocialMedia> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<SocialMedia> Read(int id)
     {
-        throw new NotImplementedException();
+        var socialMedia = store.Date.FirstOrDefault(c => c.Id == id);
+        if (socialMedia == null)
+        {
+            return new RepositoryDTO<SocialMedia>
+            {
+                Success = false,
+                Message = "Failed to retrieve the social media."
+            };
+        }
+        return new RepositoryDTO<SocialMedia>
+        {
+            Success = true,
+            Message = "Successfully retrieved the social media.",
+            Body = socialMedia
+        };
     }
 
     public RepositoryDTO<List<SocialMedia>> ReadAll()
@@ -33,6 +42,11 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
     }
 
     public RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia)
+    {
+        throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<SocialMedia> Delete(int id)
     {
         throw new NotImplementedException();
     }

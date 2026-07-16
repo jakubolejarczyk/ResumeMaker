@@ -18,7 +18,21 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<SkillElement> Read(int id)
     {
-        throw new NotImplementedException();
+        var skillElement = store.Date.FirstOrDefault(c => c.Id == id);
+        if (skillElement == null)
+        {
+            return new RepositoryDTO<SkillElement>
+            {
+                Success = false,
+                Message = "Failed to retrieve the skill element."
+            };
+        }
+        return new RepositoryDTO<SkillElement>
+        {
+            Success = true,
+            Message = "Successfully retrieved the skill element.",
+            Body = skillElement
+        };
     }
 
     public RepositoryDTO<List<SkillElement>> ReadAll()
