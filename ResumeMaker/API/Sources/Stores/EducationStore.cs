@@ -3,6 +3,6 @@ using API.Sources.Entities;
 
 namespace API.Sources.Stores;
 
-public class UserStore() : StoreCore<List<User>>([])
+public class EducationStore() : StoreCore<List<Education>>([])
 {
 }
