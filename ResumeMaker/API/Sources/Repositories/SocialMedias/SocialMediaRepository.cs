@@ -43,7 +43,33 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia)
     {
-        throw new NotImplementedException();
+        var currentSocialMedia = store.Data.FirstOrDefault(s => s.Id == id);
+        if (currentSocialMedia == null)
+        {
+            return new RepositoryDTO<SocialMedia>
+            {
+                Success = false,
+                Message = "Failed to update the social media because it does not exist."
+            };
+        }
+        if (currentSocialMedia.Id != socialMedia.Id)
+        {
+            return new RepositoryDTO<SocialMedia>
+            {
+                Success = false,
+                Message = "Failed to update the social media due to an internal error."
+            };
+        }
+        currentSocialMedia.Label = socialMedia.Label;
+        currentSocialMedia.Link = socialMedia.Link;
+        currentSocialMedia.Order = socialMedia.Order;
+        store.Data = store.Data.Select(s => s.Id == id ? currentSocialMedia : s).ToList();
+        return new RepositoryDTO<SocialMedia>
+        {
+            Success = true,
+            Message = "Successfully updated the social media.",
+            Body = currentSocialMedia
+        };
     }
 
     public RepositoryDTO<SocialMedia> Delete(int id)

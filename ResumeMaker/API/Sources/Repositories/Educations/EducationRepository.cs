@@ -43,7 +43,34 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Update(int id, Education education)
     {
-        throw new NotImplementedException();
+        var currentEducation = store.Data.FirstOrDefault(e => e.Id == id);
+        if (currentEducation == null)
+        {
+            return new RepositoryDTO<Education>
+            {
+                Success = false,
+                Message = "Failed to update the education because it does not exist."
+            };
+        }
+        if (currentEducation.Id != education.Id)
+        {
+            return new RepositoryDTO<Education>
+            {
+                Success = false,
+                Message = "Failed to update the education due to an internal error."
+            };
+        }
+        currentEducation.InstitutionName = education.InstitutionName;
+        currentEducation.FieldOfStudy = education.FieldOfStudy;
+        currentEducation.Degree = education.Degree;
+        currentEducation.GraduationYear = education.GraduationYear;
+        store.Data = store.Data.Select(e => e.Id == id ? currentEducation : e).ToList();
+        return new RepositoryDTO<Education>
+        {
+            Success = true,
+            Message = "Successfully updated the education.",
+            Body = currentEducation
+        };
     }
 
     public RepositoryDTO<Education> Delete(int id)

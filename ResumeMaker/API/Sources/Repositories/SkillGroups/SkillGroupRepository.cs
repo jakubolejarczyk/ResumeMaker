@@ -43,7 +43,32 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<SkillGroup> Update(int id, SkillGroup skillGroup)
     {
-        throw new NotImplementedException();
+        var currentSkillGroup = store.Data.FirstOrDefault(s => s.Id == id);
+        if (currentSkillGroup == null)
+        {
+            return new RepositoryDTO<SkillGroup>
+            {
+                Success = false,
+                Message = "Failed to update the skill group because it does not exist."
+            };
+        }
+        if (currentSkillGroup.Id != skillGroup.Id)
+        {
+            return new RepositoryDTO<SkillGroup>
+            {
+                Success = false,
+                Message = "Failed to update the skill group due to an internal error."
+            };
+        }
+        currentSkillGroup.Name = skillGroup.Name;
+        currentSkillGroup.Order = skillGroup.Order;
+        store.Data = store.Data.Select(s => s.Id == id ? currentSkillGroup : s).ToList();
+        return new RepositoryDTO<SkillGroup>
+        {
+            Success = true,
+            Message = "Successfully updated the skill group.",
+            Body = currentSkillGroup
+        };
     }
 
     public RepositoryDTO<SkillGroup> Delete(int id)

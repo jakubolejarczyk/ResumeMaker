@@ -43,7 +43,42 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<Resume> Update(int id, Resume resume)
     {
-        throw new NotImplementedException();
+        var currentResume = store.Data.FirstOrDefault(r => r.Id == id);
+        if (currentResume == null)
+        {
+            return new RepositoryDTO<Resume>
+            {
+                Success = false,
+                Message = "Failed to update the resume because it does not exist."
+            };
+        }
+        if (currentResume.Id != resume.Id)
+        {
+            return new RepositoryDTO<Resume>
+            {
+                Success = false,
+                Message = "Failed to update the resume due to an internal error."
+            };
+        }
+        var nameExists = store.Data.FirstOrDefault(r => r.Name == resume.Name);
+        if (nameExists != null)
+        {
+            return new RepositoryDTO<Resume>
+            {
+                Success = false,
+                Message = "The resume name is already taken."
+            };
+        }
+        currentResume.Name = resume.Name;
+        currentResume.JobTitle = resume.JobTitle;
+        currentResume.Description = resume.Description;
+        store.Data = store.Data.Select(r => r.Id == id ? currentResume : r).ToList();
+        return new RepositoryDTO<Resume>
+        {
+            Success = true,
+            Message = "Successfully updated the resume.",
+            Body = currentResume
+        };
     }
 
     public RepositoryDTO<Resume> Delete(int id)

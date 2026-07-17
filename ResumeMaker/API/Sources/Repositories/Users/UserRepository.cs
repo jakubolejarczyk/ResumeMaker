@@ -43,7 +43,45 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<User> Update(int id, User user)
     {
-        throw new NotImplementedException();
+        var currentUser = store.Data.FirstOrDefault(u => u.Id == id);
+        if (currentUser == null)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "Failed to update the user because it does not exist."
+            };
+        }
+        if (currentUser.Id != user.Id)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "Failed to update the user due to an internal error."
+            };
+        }
+        var emailExists = store.Data.FirstOrDefault(u => u.Email == user.Email);
+        if (emailExists != null)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "The email address is already taken."
+            };
+        }
+        currentUser.Email = user.Email;
+        currentUser.FirstName = currentUser.FirstName;
+        currentUser.LastName = currentUser.LastName;
+        currentUser.City = currentUser.City;
+        currentUser.Country = currentUser.Country;
+        currentUser.PhoneNumber = currentUser.PhoneNumber;
+        store.Data = store.Data.Select(u => u.Id == id ? currentUser : u).ToList();
+        return new RepositoryDTO<User>
+        {
+            Success = true,
+            Message = "Successfully updated the user.",
+            Body = currentUser
+        };
     }
 
     public RepositoryDTO<User> Delete(int id)

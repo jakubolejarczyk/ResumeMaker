@@ -2,5 +2,5 @@
 
 public class StoreCore<TData>(TData data)
 {
-    public TData Data { get; } = data;
+    public TData Data { get; set; } = data;
 }

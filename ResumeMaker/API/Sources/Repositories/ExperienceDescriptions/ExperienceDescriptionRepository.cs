@@ -43,7 +43,32 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
 
     public RepositoryDTO<ExperienceDescription> Update(int id, ExperienceDescription experienceDescription)
     {
-        throw new NotImplementedException();
+        var currentExperienceDescription = store.Data.FirstOrDefault(e => e.Id == id);
+        if (currentExperienceDescription == null)
+        {
+            return new RepositoryDTO<ExperienceDescription>
+            {
+                Success = false,
+                Message = "Failed to update the experience description because it does not exist."
+            };
+        }
+        if (currentExperienceDescription.Id != experienceDescription.Id)
+        {
+            return new RepositoryDTO<ExperienceDescription>
+            {
+                Success = false,
+                Message = "Failed to update the experience description due to an internal error."
+            };
+        }
+        currentExperienceDescription.Description = experienceDescription.Description;
+        currentExperienceDescription.Order = experienceDescription.Order;
+        store.Data = store.Data.Select(e => e.Id == id ? currentExperienceDescription : e).ToList();
+        return new RepositoryDTO<ExperienceDescription>
+        {
+            Success = true,
+            Message = "Successfully updated the experience description.",
+            Body = currentExperienceDescription
+        };
     }
 
     public RepositoryDTO<ExperienceDescription> Delete(int id)

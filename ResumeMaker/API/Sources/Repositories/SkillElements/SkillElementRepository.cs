@@ -43,7 +43,32 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<SkillElement> Update(int id, SkillElement skillElement)
     {
-        throw new NotImplementedException();
+        var currentSkillElement = store.Data.FirstOrDefault(s => s.Id == id);
+        if (currentSkillElement == null)
+        {
+            return new RepositoryDTO<SkillElement>
+            {
+                Success = false,
+                Message = "Failed to update the skill element because it does not exist."
+            };
+        }
+        if (currentSkillElement.Id != skillElement.Id)
+        {
+            return new RepositoryDTO<SkillElement>
+            {
+                Success = false,
+                Message = "Failed to update the skill element due to an internal error."
+            };
+        }
+        currentSkillElement.Name = skillElement.Name;
+        currentSkillElement.Order = skillElement.Order;
+        store.Data = store.Data.Select(s => s.Id == id ? currentSkillElement : s).ToList();
+        return new RepositoryDTO<SkillElement>
+        {
+            Success = true,
+            Message = "Successfully updated the skill element.",
+            Body = currentSkillElement
+        };
     }
 
     public RepositoryDTO<SkillElement> Delete(int id)
