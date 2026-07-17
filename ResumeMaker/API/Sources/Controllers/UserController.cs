@@ -1,6 +1,6 @@
 ﻿using API.Sources.Requests;
 using API.Sources.Responses;
-using API.Sources.Services;
+using API.Sources.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Sources.Controllers;
