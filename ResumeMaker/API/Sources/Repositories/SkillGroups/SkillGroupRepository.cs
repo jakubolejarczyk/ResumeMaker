@@ -8,7 +8,14 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 {
     public RepositoryDTO<SkillGroup> Create(SkillGroup skillGroup)
     {
-        throw new NotImplementedException();
+        skillGroup.Id = store.Data.Count;
+        store.Data.Add(skillGroup);
+        return new RepositoryDTO<SkillGroup>
+        {
+            Success = true,
+            Message = "The skill group was created successfully.",
+            Body = skillGroup
+        };
     }
 
     public RepositoryDTO<SkillGroup> Read(int id)

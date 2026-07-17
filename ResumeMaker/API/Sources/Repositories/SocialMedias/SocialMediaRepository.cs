@@ -8,7 +8,14 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 {
     public RepositoryDTO<SocialMedia> Create(SocialMedia socialMedia)
     {
-        throw new NotImplementedException();
+        socialMedia.Id = store.Data.Count;
+        store.Data.Add(socialMedia);
+        return new RepositoryDTO<SocialMedia>
+        {
+            Success = true,
+            Message = "The social media was created successfully.",
+            Body = socialMedia
+        };
     }
 
     public RepositoryDTO<SocialMedia> Read(int id)

@@ -8,7 +8,14 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
 {
     public RepositoryDTO<ExperienceDescription> Create(ExperienceDescription experienceDescription)
     {
-        throw new NotImplementedException();
+        experienceDescription.Id = store.Data.Count;
+        store.Data.Add(experienceDescription);
+        return new RepositoryDTO<ExperienceDescription>
+        {
+            Success = true,
+            Message = "The experience description was created successfully.",
+            Body = experienceDescription
+        };
     }
 
     public RepositoryDTO<ExperienceDescription> Read(int id)

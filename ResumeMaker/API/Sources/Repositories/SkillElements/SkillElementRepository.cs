@@ -8,7 +8,14 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 {
     public RepositoryDTO<SkillElement> Create(SkillElement skillElement)
     {
-        throw new NotImplementedException();
+        skillElement.Id = store.Data.Count;
+        store.Data.Add(skillElement);
+        return new RepositoryDTO<SkillElement>
+        {
+            Success = true,
+            Message = "The skill element was created successfully.",
+            Body = skillElement
+        };
     }
 
     public RepositoryDTO<SkillElement> Read(int id)

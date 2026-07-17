@@ -8,7 +8,14 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
 {
     public RepositoryDTO<Company> Create(Company company)
     {
-        throw new NotImplementedException();
+        company.Id = store.Data.Count;
+        store.Data.Add(company);
+        return new RepositoryDTO<Company>
+        {
+            Success = true,
+            Message = "The company was created successfully.",
+            Body = company
+        };
     }
 
     public RepositoryDTO<Company> Read(int id)

@@ -8,7 +8,23 @@ public class UserRepository(UserStore store) : IUserRepository
 {
     public RepositoryDTO<User> Create(User user)
     {
-        throw new NotImplementedException();
+        user.Id = store.Data.Count;
+        var emailExists = store.Data.FirstOrDefault(u => u.Email == user.Email);
+        if (emailExists != null)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "The email address is already taken."
+            };
+        }
+        store.Data.Add(user);
+        return new RepositoryDTO<User>
+        {
+            Success = true,
+            Message = "The user was created successfully.",
+            Body = user
+        };
     }
 
     public RepositoryDTO<User> Read(int id)

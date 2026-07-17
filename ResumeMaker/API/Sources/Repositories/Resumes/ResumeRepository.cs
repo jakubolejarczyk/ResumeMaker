@@ -8,7 +8,23 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 {
     public RepositoryDTO<Resume> Create(Resume resume)
     {
-        throw new NotImplementedException();
+        resume.Id = store.Data.Count;
+        var nameExists = store.Data.FirstOrDefault(r => r.Name == resume.Name);
+        if (nameExists != null)
+        {
+            return new RepositoryDTO<Resume>
+            {
+                Success = false,
+                Message = "The resume name is already taken."
+            };
+        }
+        store.Data.Add(resume);
+        return new RepositoryDTO<Resume>
+        {
+            Success = true,
+            Message = "The resume was created successfully.",
+            Body = resume
+        };
     }
 
     public RepositoryDTO<Resume> Read(int id)

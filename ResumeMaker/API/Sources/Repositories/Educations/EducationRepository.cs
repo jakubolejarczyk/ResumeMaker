@@ -8,7 +8,14 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 {
     public RepositoryDTO<Education> Create(Education education)
     {
-        throw new NotImplementedException();
+        education.Id = store.Data.Count;
+        store.Data.Add(education);
+        return new RepositoryDTO<Education>
+        {
+            Success = true,
+            Message = "The education was created successfully.",
+            Body = education
+        };
     }
 
     public RepositoryDTO<Education> Read(int id)
