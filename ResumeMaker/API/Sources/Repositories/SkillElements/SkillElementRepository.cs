@@ -13,7 +13,7 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<SkillElement> Read(int id)
     {
-        var skillElement = store.Data.FirstOrDefault(c => c.Id == id);
+        var skillElement = store.Data.FirstOrDefault(s => s.Id == id);
         if (skillElement == null)
         {
             return new RepositoryDTO<SkillElement>
@@ -48,7 +48,7 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
 
     public RepositoryDTO<SkillElement> Delete(int id)
     {
-        var skillElement = store.Data.FirstOrDefault(c => c.Id == id);
+        var skillElement = store.Data.FirstOrDefault(s => s.Id == id);
         if (skillElement == null)
         {
             return new RepositoryDTO<SkillElement>

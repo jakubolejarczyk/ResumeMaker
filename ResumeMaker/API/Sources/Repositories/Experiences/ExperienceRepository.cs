@@ -13,7 +13,7 @@ public class ExperienceRepository(ExperienceStore store) : IExperienceRepository
 
     public RepositoryDTO<Experience> Read(int id)
     {
-        var experience = store.Data.FirstOrDefault(c => c.Id == id);
+        var experience = store.Data.FirstOrDefault(e => e.Id == id);
         if (experience == null)
         {
             return new RepositoryDTO<Experience>
@@ -48,7 +48,7 @@ public class ExperienceRepository(ExperienceStore store) : IExperienceRepository
 
     public RepositoryDTO<Experience> Delete(int id)
     {
-        var experience = store.Data.FirstOrDefault(c => c.Id == id);
+        var experience = store.Data.FirstOrDefault(e => e.Id == id);
         if (experience == null)
         {
             return new RepositoryDTO<Experience>

@@ -13,7 +13,7 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<Resume> Read(int id)
     {
-        var resume = store.Data.FirstOrDefault(c => c.Id == id);
+        var resume = store.Data.FirstOrDefault(r => r.Id == id);
         if (resume == null)
         {
             return new RepositoryDTO<Resume>
@@ -48,7 +48,7 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
 
     public RepositoryDTO<Resume> Delete(int id)
     {
-        var resume = store.Data.FirstOrDefault(c => c.Id == id);
+        var resume = store.Data.FirstOrDefault(r => r.Id == id);
         if (resume == null)
         {
             return new RepositoryDTO<Resume>

@@ -13,7 +13,7 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Read(int id)
     {
-        var education = store.Data.FirstOrDefault(c => c.Id == id);
+        var education = store.Data.FirstOrDefault(e => e.Id == id);
         if (education == null)
         {
             return new RepositoryDTO<Education>
@@ -48,7 +48,7 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Delete(int id)
     {
-        var education = store.Data.FirstOrDefault(c => c.Id == id);
+        var education = store.Data.FirstOrDefault(e => e.Id == id);
         if (education == null)
         {
             return new RepositoryDTO<Education>

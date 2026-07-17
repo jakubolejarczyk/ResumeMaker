@@ -13,7 +13,7 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<SocialMedia> Read(int id)
     {
-        var socialMedia = store.Data.FirstOrDefault(c => c.Id == id);
+        var socialMedia = store.Data.FirstOrDefault(s => s.Id == id);
         if (socialMedia == null)
         {
             return new RepositoryDTO<SocialMedia>
@@ -48,7 +48,7 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<SocialMedia> Delete(int id)
     {
-        var socialMedia = store.Data.FirstOrDefault(c => c.Id == id);
+        var socialMedia = store.Data.FirstOrDefault(s => s.Id == id);
         if (socialMedia == null)
         {
             return new RepositoryDTO<SocialMedia>

@@ -13,7 +13,7 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<User> Read(int id)
     {
-        var user = store.Data.FirstOrDefault(c => c.Id == id);
+        var user = store.Data.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return new RepositoryDTO<User>
@@ -48,7 +48,7 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<User> Delete(int id)
     {
-        var user = store.Data.FirstOrDefault(c => c.Id == id);
+        var user = store.Data.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return new RepositoryDTO<User>

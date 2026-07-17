@@ -13,7 +13,7 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<SkillGroup> Read(int id)
     {
-        var skillGroup = store.Data.FirstOrDefault(c => c.Id == id);
+        var skillGroup = store.Data.FirstOrDefault(s => s.Id == id);
         if (skillGroup == null)
         {
             return new RepositoryDTO<SkillGroup>
@@ -48,7 +48,7 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
 
     public RepositoryDTO<SkillGroup> Delete(int id)
     {
-        var skillGroup = store.Data.FirstOrDefault(c => c.Id == id);
+        var skillGroup = store.Data.FirstOrDefault(s => s.Id == id);
         if (skillGroup == null)
         {
             return new RepositoryDTO<SkillGroup>

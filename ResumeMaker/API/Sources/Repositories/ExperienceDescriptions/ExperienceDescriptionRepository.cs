@@ -13,7 +13,7 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
 
     public RepositoryDTO<ExperienceDescription> Read(int id)
     {
-        var experienceDescription = store.Data.FirstOrDefault(c => c.Id == id);
+        var experienceDescription = store.Data.FirstOrDefault(e => e.Id == id);
         if (experienceDescription == null)
         {
             return new RepositoryDTO<ExperienceDescription>
