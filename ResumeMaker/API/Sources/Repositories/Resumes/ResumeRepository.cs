@@ -11,11 +11,6 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<Resume> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<Resume> Read(int id)
     {
         var resume = store.Data.FirstOrDefault(c => c.Id == id);
@@ -49,5 +44,25 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
     public RepositoryDTO<Resume> Update(int id, Resume resume)
     {
         throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<Resume> Delete(int id)
+    {
+        var resume = store.Data.FirstOrDefault(c => c.Id == id);
+        if (resume == null)
+        {
+            return new RepositoryDTO<Resume>
+            {
+                Success = false,
+                Message = "Failed to delete the resume because it does not exist."
+            };
+        }
+        store.Data.Remove(resume);
+        return new RepositoryDTO<Resume>
+        {
+            Success = true,
+            Message = "Successfully deleted the resume.",
+            Body = resume
+        };
     }
 }

@@ -11,11 +11,6 @@ public class UserRepository(UserStore store) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<User> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<User> Read(int id)
     {
         var user = store.Data.FirstOrDefault(c => c.Id == id);
@@ -49,5 +44,25 @@ public class UserRepository(UserStore store) : IUserRepository
     public RepositoryDTO<User> Update(int id, User user)
     {
         throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<User> Delete(int id)
+    {
+        var user = store.Data.FirstOrDefault(c => c.Id == id);
+        if (user == null)
+        {
+            return new RepositoryDTO<User>
+            {
+                Success = false,
+                Message = "Failed to delete the user because it does not exist."
+            };
+        }
+        store.Data.Remove(user);
+        return new RepositoryDTO<User>
+        {
+            Success = true,
+            Message = "Successfully deleted the user.",
+            Body = user
+        };
     }
 }

@@ -11,11 +11,6 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<SkillElement> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<SkillElement> Read(int id)
     {
         var skillElement = store.Data.FirstOrDefault(c => c.Id == id);
@@ -49,5 +44,25 @@ public class SkillElementRepository(SkillElementStore store) : ISkillElementRepo
     public RepositoryDTO<SkillElement> Update(int id, SkillElement skillElement)
     {
         throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<SkillElement> Delete(int id)
+    {
+        var skillElement = store.Data.FirstOrDefault(c => c.Id == id);
+        if (skillElement == null)
+        {
+            return new RepositoryDTO<SkillElement>
+            {
+                Success = false,
+                Message = "Failed to delete the skill element because it does not exist."
+            };
+        }
+        store.Data.Remove(skillElement);
+        return new RepositoryDTO<SkillElement>
+        {
+            Success = true,
+            Message = "Successfully deleted the skill element.",
+            Body = skillElement
+        };
     }
 }

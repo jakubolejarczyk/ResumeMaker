@@ -11,11 +11,6 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<SkillGroup> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<SkillGroup> Read(int id)
     {
         var skillGroup = store.Data.FirstOrDefault(c => c.Id == id);
@@ -49,5 +44,25 @@ public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
     public RepositoryDTO<SkillGroup> Update(int id, SkillGroup skillGroup)
     {
         throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<SkillGroup> Delete(int id)
+    {
+        var skillGroup = store.Data.FirstOrDefault(c => c.Id == id);
+        if (skillGroup == null)
+        {
+            return new RepositoryDTO<SkillGroup>
+            {
+                Success = false,
+                Message = "Failed to delete the skill group because it does not exist."
+            };
+        }
+        store.Data.Remove(skillGroup);
+        return new RepositoryDTO<SkillGroup>
+        {
+            Success = true,
+            Message = "Successfully deleted the skill group.",
+            Body = skillGroup
+        };
     }
 }

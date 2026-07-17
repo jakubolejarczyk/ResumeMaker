@@ -11,11 +11,6 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
         throw new NotImplementedException();
     }
 
-    public RepositoryDTO<ExperienceDescription> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public RepositoryDTO<ExperienceDescription> Read(int id)
     {
         var experienceDescription = store.Data.FirstOrDefault(c => c.Id == id);
@@ -49,5 +44,25 @@ public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) :
     public RepositoryDTO<ExperienceDescription> Update(int id, ExperienceDescription experienceDescription)
     {
         throw new NotImplementedException();
+    }
+
+    public RepositoryDTO<ExperienceDescription> Delete(int id)
+    {
+        var experienceDescription = store.Data.FirstOrDefault(c => c.Id == id);
+        if (experienceDescription == null)
+        {
+            return new RepositoryDTO<ExperienceDescription>
+            {
+                Success = false,
+                Message = "Failed to delete the experience description because it does not exist."
+            };
+        }
+        store.Data.Remove(experienceDescription);
+        return new RepositoryDTO<ExperienceDescription>
+        {
+            Success = true,
+            Message = "Successfully deleted the experience description.",
+            Body = experienceDescription
+        };
     }
 }

@@ -48,6 +48,21 @@ public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaReposit
 
     public RepositoryDTO<SocialMedia> Delete(int id)
     {
-        throw new NotImplementedException();
+        var socialMedia = store.Data.FirstOrDefault(c => c.Id == id);
+        if (socialMedia == null)
+        {
+            return new RepositoryDTO<SocialMedia>
+            {
+                Success = false,
+                Message = "Failed to delete the social media because it does not exist."
+            };
+        }
+        store.Data.Remove(socialMedia);
+        return new RepositoryDTO<SocialMedia>
+        {
+            Success = true,
+            Message = "Successfully deleted the social media.",
+            Body = socialMedia
+        };
     }
 }

@@ -48,6 +48,21 @@ public class EducationRepository(EducationStore store) : IEducationRepository
 
     public RepositoryDTO<Education> Delete(int id)
     {
-        throw new NotImplementedException();
+        var education = store.Data.FirstOrDefault(c => c.Id == id);
+        if (education == null)
+        {
+            return new RepositoryDTO<Education>
+            {
+                Success = false,
+                Message = "Failed to delete the education because it does not exist."
+            };
+        }
+        store.Data.Remove(education);
+        return new RepositoryDTO<Education>
+        {
+            Success = true,
+            Message = "Successfully deleted the education.",
+            Body = education
+        };
     }
 }
