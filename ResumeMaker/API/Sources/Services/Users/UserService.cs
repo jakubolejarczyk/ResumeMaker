@@ -1,10 +1,9 @@
-﻿using API.Sources.Repositories.Users;
-using API.Sources.Requests;
+﻿using API.Sources.Requests;
 using API.Sources.Responses;
 
 namespace API.Sources.Services.Users;
 
-public class UserService(UserRepository userRepository) : IUserService
+public class UserService : IUserService
 {
     public CreateUserResponse CreateUser(CreateUserRequest request)
     {
