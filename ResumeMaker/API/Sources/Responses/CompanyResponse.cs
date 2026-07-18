@@ -2,6 +2,8 @@
 
 public class CompanyResponse
 {
+    public required int Id {  get; set; }
+
     public required string CompanyName { get; set; }
 
     public required string City { get; set; }

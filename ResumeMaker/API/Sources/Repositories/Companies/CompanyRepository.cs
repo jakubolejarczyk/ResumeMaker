@@ -40,10 +40,11 @@ public class CompanyRepository(CompanyStore store) : ICompanyRepository
     public RepositoryDTO<List<Company>> ReadAll()
     {
         var companies = store.Data;
+        var count = companies == null ? 0 : companies.Count();
         return new RepositoryDTO<List<Company>>
         {
             Success = true,
-            Message = $"Successfully retrieved {companies.Count} companies.",
+            Message = $"Successfully retrieved {count} companies.",
             Body = companies
         };
     }

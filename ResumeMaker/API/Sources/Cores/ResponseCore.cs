@@ -6,7 +6,5 @@ public class ResponseCore<TBody>
 
     public required string Message { get; set; }
 
-    public int? Id { get; set; }
-
     public TBody? Body { get; set; }
 }
