@@ -1,6 +1,5 @@
 ﻿using API.Sources.Controllers;
 using API.Sources.Repositories;
-using API.Sources.Services;
 using API.Sources.Stores;
 
 namespace API.Sources;
@@ -18,8 +17,5 @@ public static class SourcesProvider
     public static void GetApp(WebApplication app)
     {
         ControllersProvider.GetApp(app);
-        RepositoriesProvider.GetApp(app);
-        ServicesProvider.GetApp(app);
-        StoresProvider.GetApp(app);
     }
 }
