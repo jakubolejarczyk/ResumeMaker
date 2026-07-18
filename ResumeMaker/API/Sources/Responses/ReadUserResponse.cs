@@ -8,5 +8,5 @@ public class ReadUserResponse
 
     public required string Message { get; set; }
 
-    public User? User { get; set; }
+    public required User? User { get; set; }
 }

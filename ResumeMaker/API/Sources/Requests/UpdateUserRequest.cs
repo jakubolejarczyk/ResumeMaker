@@ -1,8 +1,7 @@
 ﻿namespace API.Sources.Requests;
 
-public class CreateUserRequest
+public class UpdateUserRequest
 {
-
     public required string Email { get; set; }
 
     public required string FirstName { get; set; }
