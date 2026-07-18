@@ -1,31 +1,32 @@
-﻿using API.Sources.Requests;
+﻿using API.Sources.Cores;
+using API.Sources.Requests;
 using API.Sources.Responses;
 
 namespace API.Sources.Services.Companies;
 
 public class CompanyService : ICompanyService
 {
-    public CreateCompanyResponse CreateCompany(CreateCompanyRequest request)
+    public ResponseCore<CompanyResponse> CreateCompany(CompanyRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public ReadCompaniesResponse ReadCompanies()
+    public ResponseCore<CompanyResponse> DeleteCompany(int id)
     {
         throw new NotImplementedException();
     }
 
-    public ReadCompanyResponse ReadCompany(int id)
+    public ResponseCore<List<CompanyResponse>> ReadCompanies()
     {
         throw new NotImplementedException();
     }
 
-    public UpdateCompanyResponse UpdateCompany(int id, UpdateCompanyRequest request)
+    public ResponseCore<CompanyResponse> ReadCompany(int id)
     {
         throw new NotImplementedException();
     }
 
-    public DeleteCompanyResponse DeleteCompany(int id)
+    public ResponseCore<CompanyResponse> UpdateCompany(int id, CompanyRequest request)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,6 @@
-﻿namespace API.Sources.Requests;
+﻿namespace API.Sources.Responses;
 
-public class UpdateCompanyRequest
+public class CompanyResponse
 {
     public required string CompanyName { get; set; }
 
@@ -13,4 +13,6 @@ public class UpdateCompanyRequest
     public string? CustomConsentClause { get; set; }
 
     public required string RecruitmentStatus { get; set; }
+
+    public required int UserId { get; set; }
 }

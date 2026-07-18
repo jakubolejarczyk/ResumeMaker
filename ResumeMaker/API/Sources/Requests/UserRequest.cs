@@ -1,6 +1,6 @@
 ﻿namespace API.Sources.Requests;
 
-public class CreateUserRequest
+public class UserRequest
 {
 
     public required string Email { get; set; }

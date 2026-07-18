@@ -1,6 +1,6 @@
 ﻿namespace API.Sources.Requests;
 
-public class CreateResumeRequest
+public class ResumeRequest
 {
     public required string Name { get; set; }
 

@@ -1,6 +1,6 @@
-﻿namespace API.Sources.Requests;
+﻿namespace API.Sources.Responses;
 
-public class UpdateUserRequest
+public class UserResponse
 {
     public required string Email { get; set; }
 

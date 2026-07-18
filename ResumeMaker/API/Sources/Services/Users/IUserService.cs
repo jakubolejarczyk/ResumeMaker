@@ -1,17 +1,18 @@
-﻿using API.Sources.Requests;
+﻿using API.Sources.Cores;
+using API.Sources.Requests;
 using API.Sources.Responses;
 
 namespace API.Sources.Services.Users;
 
 public interface IUserService
 {
-    CreateUserResponse CreateUser(CreateUserRequest request);
+    ResponseCore<UserResponse> CreateUser(UserRequest request);
 
-    ReadUserResponse ReadUser(int id);
+    ResponseCore<UserResponse> ReadUser(int id);
 
-    ReadUsersResponse ReadUsers();
+    ResponseCore<List<UserResponse>> ReadUsers();
 
-    UpdateUserResponse UpdateUser(int id, UpdateUserRequest request);
+    ResponseCore<UserResponse> UpdateUser(int id, UserRequest request);
 
-    DeleteUserResponse DeleteUser(int id);
+    ResponseCore<UserResponse> DeleteUser(int id);
 }

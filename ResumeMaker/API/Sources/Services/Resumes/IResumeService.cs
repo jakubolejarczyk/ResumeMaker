@@ -1,18 +1,19 @@
-﻿using API.Sources.Requests;
+﻿using API.Sources.Cores;
+using API.Sources.Requests;
 
 namespace API.Sources.Services.Resumes;
 
 public interface IResumeService
 {
-    void CreateResume(CreateResumeRequest request);
+    ResponseCore<ResumeResponse> CreateResume(ResumeResponse request);
 
-    void ReadResume();
+    ResponseCore<ResumeResponse> ReadResume(int id);
 
-    void ReadResumes();
+    ResponseCore<List<ResumeResponse>> ReadResumes();
 
-    void UpdateResume();
+    ResponseCore<ResumeResponse> UpdateResume(int id, ResumeResponse request);
 
-    void DeleteResume();
+    ResponseCore<ResumeResponse> DeleteResume(int id);
 
-    void GeneratePDFResume();
+    byte[] GeneratePDFResume(int userId, int companyId, int resumeId);
 }

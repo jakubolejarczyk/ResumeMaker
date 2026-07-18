@@ -10,7 +10,7 @@ namespace API.Sources.Controllers;
 public class UserController(IUserService service) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<CreateUserResponse>> CreateUser([FromBody] CreateUserRequest request)
+    public async Task<ActionResult<UserResponse>> CreateUser([FromBody] UserRequest request)
     {
         var response = await service.CreateUser(request);
         if (response.Success)

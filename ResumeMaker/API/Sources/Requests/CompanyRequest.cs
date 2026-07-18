@@ -1,6 +1,6 @@
 ﻿namespace API.Sources.Requests;
 
-public class CreateCompanyRequest
+public class CompanyRequest
 {
     public required string CompanyName { get; set; }
 
