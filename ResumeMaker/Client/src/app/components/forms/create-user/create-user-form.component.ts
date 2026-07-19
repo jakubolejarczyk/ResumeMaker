@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { Component, inject } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
 
 @Component({
   selector: 'app-create-user-form-component',
@@ -8,13 +8,15 @@ import { FormControl, FormGroup } from "@angular/forms";
   standalone: false
 })
 export class CreateUserFormComponent {
-  createUserForm = new FormGroup({
-    email: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    city: new FormControl(''),
-    country: new FormControl(''),
-    phoneNumber: new FormControl('')
+  formBuilder = inject(FormBuilder);
+
+  createUserForm = this.formBuilder.group({
+    email: [''],
+    firstName: [''],
+    lastName: [''],
+    city: [''],
+    country: [''],
+    phoneNumber: ['']
   });
 
   onSubmit() {
