@@ -8,4 +8,9 @@ var app = builder.Build();
 
 SourcesProvider.GetApp(app);
 
+app.Map("/", () =>
+{
+    return "API works!";
+});
+
 app.Run();
