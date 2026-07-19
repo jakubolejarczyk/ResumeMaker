@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-create-user-form-component',
@@ -11,15 +11,16 @@ export class CreateUserFormComponent {
   formBuilder = inject(FormBuilder);
 
   createUserForm = this.formBuilder.group({
-    email: [''],
-    firstName: [''],
-    lastName: [''],
-    city: [''],
-    country: [''],
-    phoneNumber: ['']
+    email: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    city: ['', Validators.required],
+    country: ['', Validators.required],
+    phoneNumber: ['', Validators.required]
   });
 
   onSubmit() {
+    if (!this.createUserForm.valid) return;
     console.log(this.createUserForm.value);
   }
 }
