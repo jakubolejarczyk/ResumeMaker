@@ -1,0 +1,14 @@
+.form {
+    padding: 1rem;
+    margin: 1rem;
+    border: 1px solid black;
+}
+
+.form-item {
+    margin-bottom: 0.5rem;
+}
+
+.form-label {
+    display: inline-block;
+    width: 120px;
+}

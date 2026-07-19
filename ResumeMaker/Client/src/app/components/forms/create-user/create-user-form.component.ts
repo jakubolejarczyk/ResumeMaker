@@ -1,15 +1,23 @@
 import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-create-user-form-component',
   templateUrl: './create-user-form.component.html',
+  styleUrl: './create-user-form.component.css',
   standalone: false
 })
 export class CreateUserFormComponent {
-  name = new FormControl('');
+  createUserForm = new FormGroup({
+    email: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    city: new FormControl(''),
+    country: new FormControl(''),
+    phoneNumber: new FormControl('')
+  });
 
-  updateName() {
-    this.name.setValue('Nancy');
+  onSubmit() {
+    console.log(this.createUserForm.value);
   }
 }
