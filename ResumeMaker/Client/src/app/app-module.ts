@@ -4,12 +4,14 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { App } from './app';
 import { AppRoutingModule } from './app-routing-module';
+import { ComponentModule } from './component/component-module';
 
 @NgModule({
   declarations: [App],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ComponentModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
