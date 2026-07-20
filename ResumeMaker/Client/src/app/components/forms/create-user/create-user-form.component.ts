@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
@@ -10,6 +11,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class CreateUserFormComponent {
   formBuilder = inject(FormBuilder);
 
+  http = inject(HttpClient);
+
   createUserForm = this.formBuilder.group({
     email: ['', Validators.required],
     firstName: ['', Validators.required],
@@ -21,6 +24,10 @@ export class CreateUserFormComponent {
 
   onSubmit() {
     if (!this.createUserForm.valid) return;
-    console.log(this.createUserForm.value);
+    const body = this.createUserForm.value;
+    this.http.post('http://localhost:5038/api/user', body).subscribe((response) => {
+      console.log(response);
+    });
+
   }
 }
