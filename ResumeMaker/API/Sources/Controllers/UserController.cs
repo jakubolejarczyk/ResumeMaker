@@ -14,11 +14,7 @@ public class UserController(IUserService service) : ControllerBase
     public ActionResult<ResponseCore<UserResponse>> CreateUser([FromBody] UserRequest request)
     {
         var response = service.CreateUser(request);
-        if (response.Success)
-        {
-            return Ok(response);
-        }
-        return BadRequest(response);
+        return Ok(response);
     }
 
     [HttpGet]

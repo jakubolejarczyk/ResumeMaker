@@ -1,0 +1,8 @@
+<div class="view">
+  @if (showUserForm) {
+  <button (click)="switchUserForm()" class="show-user-form-button">Show user form</button>
+  } @else {
+  <button (click)="switchUserForm()" class="hide-user-form-button">Hide user form</button>
+  <app-user-form-component></app-user-form-component>
+  }
+</div>
