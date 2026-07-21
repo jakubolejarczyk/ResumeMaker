@@ -9,4 +9,6 @@ public class ExperienceDescription
     public int Order { get; set; }
 
     public int ExperienceId { get; set; }
+
+    public Experience Experience { get; set; } = new();
 }

@@ -11,4 +11,6 @@ public class SocialMedia
     public int Order { get; set; }
 
     public int ResumeId { get; set; }
+
+    public Resume Resume { get; set; } = new();
 }

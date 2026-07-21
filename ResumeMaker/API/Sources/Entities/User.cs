@@ -15,4 +15,8 @@ public class User
     public string Country { get; set; } = string.Empty;
 
     public string PhoneNumber { get; set; } = string.Empty;
+
+    public List<Company> Companies { get; set; } = [];
+
+    public List<Resume> Resumes { get; set; } = [];
 }

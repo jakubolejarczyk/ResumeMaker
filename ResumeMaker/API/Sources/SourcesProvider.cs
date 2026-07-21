@@ -1,4 +1,5 @@
-﻿using API.Sources.Controllers;
+﻿using API.Sources.Contexts;
+using API.Sources.Controllers;
 using API.Sources.Repositories;
 using API.Sources.Stores;
 
@@ -12,6 +13,7 @@ public static class SourcesProvider
         RepositoriesProvider.GetBuilder(builder);
         ServicesProvider.GetBuilder(builder);
         StoresProvider.GetBuilder(builder);
+        ContextsProvider.GetBuilder(builder);
     }
 
     public static void GetApp(WebApplication app)

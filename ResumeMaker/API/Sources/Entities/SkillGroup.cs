@@ -9,4 +9,8 @@ public class SkillGroup
     public int Order { get; set; }
 
     public int ResumeId { get; set; }
+
+    public Resume Resume { get; set; } = new();
+
+    public List<SkillElement> SkillElements { get; set; } = [];
 }

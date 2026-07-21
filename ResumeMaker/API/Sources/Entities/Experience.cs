@@ -13,4 +13,8 @@ public class Experience
     public DateOnly? EndDate { get; set; }
 
     public int ResumeId { get; set; }
+
+    public Resume Resume { get; set; } = new();
+
+    public List<ExperienceDescription> ExperienceDescriptions { get; set; } = [];
 }

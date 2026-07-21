@@ -9,4 +9,6 @@ public class SkillElement
     public int Order { get; set; }
 
     public int SkillGroupId { get; set; }
+
+    public SkillGroup SkillGroup { get; set; } = new();
 }

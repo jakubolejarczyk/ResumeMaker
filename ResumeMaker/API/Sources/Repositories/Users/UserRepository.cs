@@ -1,15 +1,15 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.Users;
 
-public class UserRepository(UserStore store) : IUserRepository
+public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserRepository
 {
     public RepositoryDTO<User> Create(User user)
     {
-        user.Id = store.Data.Count;
-        var emailExists = store.Data.FirstOrDefault(u => u.Email == user.Email);
+        var emailExists = appDbContext.Users.FirstOrDefault(u => u.Email == user.Email);
         if (emailExists != null)
         {
             return new RepositoryDTO<User>
@@ -18,7 +18,8 @@ public class UserRepository(UserStore store) : IUserRepository
                 Message = "The email address is already taken."
             };
         }
-        store.Data.Add(user);
+        appDbContext.Add(user);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<User>
         {
             Success = true,
@@ -48,7 +49,7 @@ public class UserRepository(UserStore store) : IUserRepository
 
     public RepositoryDTO<List<User>> ReadAll()
     {
-        var users = store.Data;
+        var users = appDbContext.Users.ToList();
         return new RepositoryDTO<List<User>>
         {
             Success = true,

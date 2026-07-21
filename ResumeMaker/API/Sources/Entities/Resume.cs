@@ -11,4 +11,14 @@ public class Resume
     public string Description { get; set; } = string.Empty;
 
     public int UserId { get; set; }
+
+    public User User { get; set; } = new();
+
+    public List<Resume> Resumes { get; set; } = [];
+
+    public List<Education> Educations { get; set; } = [];
+
+    public List<Experience> Experiences { get; set; } = [];
+
+    public List<SkillGroup> SkillGroups { get; set; } = [];
 }
