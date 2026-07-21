@@ -1,0 +1,26 @@
+.nav {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.nav-item {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.nav-item:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 340px) {
+  .nav-item {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-item:last-child {
+    margin-bottom: 0;
+  }
+}

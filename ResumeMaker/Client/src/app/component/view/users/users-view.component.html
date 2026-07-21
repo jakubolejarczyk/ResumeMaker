@@ -1,1 +1,50 @@
-<p>users</p>
+<div class="view">
+  <form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h3 class="user-form-header">Create user</h3>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="email">Email</label>
+      <input id="email" class="user-form-input-text" type="text" formControlName="email" />
+    </div>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="firstName">First name</label>
+      <input id="firstName" class="user-form-input-text" type="text" formControlName="firstName" />
+    </div>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="lastName">Last name</label>
+      <input id="lastName" class="user-form-input-text" type="text" formControlName="lastName" />
+    </div>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="city">City</label>
+      <input id="city" class="user-form-input-text" type="text" formControlName="city" />
+    </div>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="country">Country</label>
+      <input id="country" class="user-form-input-text" type="text" formControlName="country" />
+    </div>
+    <div class="user-form-item">
+      <label class="user-form-form-label" for="phoneNumber">Phone number</label>
+      <input id="phoneNumber" class="user-form-input-text" type="text" formControlName="phoneNumber" />
+    </div>
+    <input type="submit" [disabled]="!userForm.valid" value="Create" />
+  </form>
+  <div class="user-list">
+    @if (users.length > 0) {
+      @for (user of users; track user.id) {
+    <div class="user-list-item">
+      <p class="user-list-item-line"><b>Id:</b> {{ user.id}}</p>
+      <p class="user-list-item-line"><b>Email:</b> {{ user.email }}</p>
+      <p class="user-list-item-line"><b>First name:</b> {{ user.firstName }}</p>
+      <p class="user-list-item-line"><b>Last name:</b> {{ user.lastName }}</p>
+      <p class="user-list-item-line"><b>City:</b> {{ user.city }}</p>
+      <p class="user-list-item-line"><b>Country:</b> {{ user.country }}</p>
+      <p class="user-list-item-line"><b>Phone number:</b> {{ user.phoneNumber }}</p>
+      <button (click)="onDelete(user.id)">Delete</button>
+    </div>
+      }
+    } @else {
+    <div class="user-not-found">
+      <p>User not found.</p>
+    </div>
+    }
+  </div>
+</div>
