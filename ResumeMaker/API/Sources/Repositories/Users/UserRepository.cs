@@ -103,7 +103,7 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
 
     public RepositoryDTO<User> Delete(int id)
     {
-        var user = store.Data.FirstOrDefault(u => u.Id == id);
+        var user = appDbContext.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return new RepositoryDTO<User>
@@ -112,7 +112,8 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
                 Message = "Failed to delete the user because it does not exist."
             };
         }
-        store.Data.Remove(user);
+        appDbContext.Users.Remove(user);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<User>
         {
             Success = true,

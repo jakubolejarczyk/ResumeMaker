@@ -23,4 +23,11 @@ public class UserController(IUserService service) : ControllerBase
         var response = service.ReadUsers();
         return Ok(response);
     }
+
+    [HttpDelete("{userId}")]
+    public ActionResult<ResponseCore<UserResponse>> DeleteUsers(int userId)
+    {
+        var response = service.DeleteUser(userId);
+        return Ok(response);
+    }
 }

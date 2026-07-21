@@ -12,6 +12,7 @@
     <p>Country: {{ user.country }}</p>
     <p>Phone number: {{ user.phoneNumber }}</p>
     <button (click)="selectUser(user.id)">Select</button>
+    <button (click)="deleteUser(user.id)">Delete</button>
   </div>
   }
   } @else {

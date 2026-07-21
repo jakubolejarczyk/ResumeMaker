@@ -89,6 +89,22 @@ public class UserService(IUserRepository userRepository) : IUserService
 
     public ResponseCore<UserResponse> DeleteUser(int id)
     {
-        throw new NotImplementedException();
+        var dto = userRepository.Delete(id);
+        var body = dto.Body;
+        return new ResponseCore<UserResponse>
+        {
+            Success = dto.Success,
+            Message = dto.Message,
+            Body = body == null ? null : new UserResponse()
+            {
+                Id = body.Id,
+                Email = body.Email,
+                FirstName = body.FirstName,
+                LastName = body.LastName,
+                City = body.City,
+                Country = body.Country,
+                PhoneNumber = body.PhoneNumber
+            }
+        };
     }
 }
