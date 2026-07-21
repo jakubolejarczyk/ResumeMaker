@@ -1,25 +1,19 @@
 import { NgModule } from "@angular/core";
 
-import { UserViewComponent } from "./user/user-view.component";
-import { CompanyViewComponent } from "./company/company-view.component";
-import { ResumeViewComponent } from "./resume/resume-view.component";
-import { FormModule } from "../form/form-module";
-import { ListModule } from "../list/list-module";
+import { CompaniesViewComponent } from "./companies/companies-view.component";
+import { ResumesViewComponent } from "./resumes/resumes-view.component";
+import { UsersViewComponent } from "./users/users-view.component";
 
 @NgModule({
   declarations: [
-    UserViewComponent,
-    ResumeViewComponent,
-    CompanyViewComponent
-  ],
-  imports: [
-    FormModule,
-    ListModule
+    CompaniesViewComponent,
+    ResumesViewComponent,
+    UsersViewComponent
   ],
   exports: [
-    UserViewComponent,
-    ResumeViewComponent,
-    CompanyViewComponent
+    CompaniesViewComponent,
+    ResumesViewComponent,
+    UsersViewComponent
   ]
 })
 export class ViewModule { }
