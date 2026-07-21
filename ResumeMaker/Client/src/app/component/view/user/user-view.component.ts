@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
   selector: 'app-user-view-component',
@@ -6,4 +6,10 @@ import { Component } from "@angular/core";
   styleUrl: 'user-view.component.css',
   standalone: false
 })
-export class UserViewComponent { }
+export class UserViewComponent {
+  @Output() userId = new EventEmitter();
+
+  emitUserId(userId: number) {
+    this.userId.emit(userId);
+  }
+}

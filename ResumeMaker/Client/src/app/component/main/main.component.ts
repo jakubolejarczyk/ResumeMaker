@@ -6,4 +6,10 @@ import { Component } from "@angular/core";
   styleUrl: 'main.component.css',
   standalone: false
 })
-export class MainComponent { }
+export class MainComponent {
+  userId: number = -1;
+
+  setUserId(userId: number) {
+    this.userId = userId;
+  }
+}

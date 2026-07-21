@@ -1,5 +1,9 @@
 <div class="main">
-  <app-user-view-component></app-user-view-component>
+  <div class="options">
+    <p>User selected by id: {{ userId }}</p>
+    <p>Company selected by id: </p>
+  </div>
+  <app-user-view-component (userId)="setUserId($event)"></app-user-view-component>
   <app-company-view-component></app-company-view-component>
   <app-resume-view-component></app-resume-view-component>
 </div>
