@@ -21,10 +21,6 @@ public class UserController(IUserService service) : ControllerBase
     public ActionResult<ResponseCore<List<UserResponse>>> ReadUsers()
     {
         var response = service.ReadUsers();
-        if (response.Success)
-        {
-            return Ok(response);
-        }
-        return BadRequest(response);
+        return Ok(response);
     }
 }

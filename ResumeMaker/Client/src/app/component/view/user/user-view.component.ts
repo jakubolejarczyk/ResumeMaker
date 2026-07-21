@@ -6,10 +6,4 @@ import { Component } from "@angular/core";
   styleUrl: 'user-view.component.css',
   standalone: false
 })
-export class UserViewComponent {
-  showUserForm = false;
-
-  switchUserForm() {
-    this.showUserForm = !this.showUserForm;
-  }
-}
+export class UserViewComponent { }
