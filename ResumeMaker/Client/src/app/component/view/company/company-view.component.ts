@@ -49,8 +49,9 @@ export class CompanyViewComponent implements OnInit {
     if (!this.companyForm.valid) return;
     const userId = this.userStore.getValue();
     const { value } = this.companyForm;
+    const body = { ...value, userId };
     const id = this.route.snapshot.paramMap.get('id');
-    this.httpClient.patch<ResponseModel<CompanyEntityModel>>(`http://localhost:5038/api/company/${id}`, value)
+    this.httpClient.patch<ResponseModel<CompanyEntityModel>>(`http://localhost:5038/api/company/${id}`, body)
       .pipe(
         tap(() => {
           this.httpClient.get<ResponseModel<CompanyEntityModel>>(`http://localhost:5038/api/company/${id}`).subscribe(response => {
