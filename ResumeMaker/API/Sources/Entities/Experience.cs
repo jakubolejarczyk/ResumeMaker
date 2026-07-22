@@ -14,7 +14,7 @@ public class Experience
 
     public int ResumeId { get; set; }
 
-    public Resume Resume { get; set; } = new();
+    public Resume Resume { get; set; } = null!;
 
     public List<ExperienceDescription> ExperienceDescriptions { get; set; } = [];
 }

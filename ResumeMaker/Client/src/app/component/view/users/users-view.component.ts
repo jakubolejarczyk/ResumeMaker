@@ -7,6 +7,7 @@ import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { ResponseModel } from "../../../model/response/response.model";
 import { UsersStore } from "../../../store/users.store";
 import { Router } from "@angular/router";
+import { UserStore } from "../../../store/user.store";
 
 @Component({
   selector: 'app-users-view-component',
@@ -20,6 +21,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   usersStore = inject(UsersStore);
   cdr = inject(ChangeDetectorRef);
   router = inject(Router);
+  userStore = inject(UserStore);
 
   userForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -71,6 +73,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           alert(err);
         }
       });
+  }
+
+  onSelect(userId: number) {
+    this.userStore.data.next(userId);
+    alert(`User with id ${userId} was set!`);
   }
 
   onUpdate(userId: number) {

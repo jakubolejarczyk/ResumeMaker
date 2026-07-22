@@ -10,5 +10,5 @@ public class SkillElement
 
     public int SkillGroupId { get; set; }
 
-    public SkillGroup SkillGroup { get; set; } = new();
+    public SkillGroup SkillGroup { get; set; } = null!;
 }

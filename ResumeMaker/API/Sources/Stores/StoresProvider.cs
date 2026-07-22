@@ -4,7 +4,6 @@ public static class StoresProvider
 {
     public static void GetBuilder(WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<CompanyStore>();
         builder.Services.AddSingleton<EducationStore>();
         builder.Services.AddSingleton<ExperienceDescriptionStore>();
         builder.Services.AddSingleton<ExperienceStore>();

@@ -38,13 +38,14 @@
       <p class="user-list-item-line"><b>City:</b> {{ user.city }}</p>
       <p class="user-list-item-line"><b>Country:</b> {{ user.country }}</p>
       <p class="user-list-item-line"><b>Phone number:</b> {{ user.phoneNumber }}</p>
+      <button (click)="onSelect(user.id)">Select</button>
       <button (click)="onUpdate(user.id)">Update</button>
       <button (click)="onDelete(user.id)">Delete</button>
     </div>
       }
     } @else {
     <div class="user-not-found">
-      <p>User not found.</p>
+      <p>Users not found.</p>
     </div>
     }
   </div>

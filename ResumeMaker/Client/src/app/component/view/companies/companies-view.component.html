@@ -1,1 +1,51 @@
-<p>companies</p>
+<div class="view">
+  <form class="company-form" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    <h3 class="company-form-header">Create company</h3>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="companyName">Company name</label>
+      <input id="companyName" class="company-form-input-text" type="text" formControlName="companyName" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="city">City</label>
+      <input id="city" class="company-form-input-text" type="text" formControlName="city" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="country">Country</label>
+      <input id="country" class="company-form-input-text" type="text" formControlName="country" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="includeConsentClause">Include Consent Clause</label>
+      <input id="includeConsentClause" type="checkbox" formControlName="includeConsentClause" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="customConsentClause">Custom Consent Clause</label>
+      <input id="customConsentClause" class="company-form-input-text" type="text" formControlName="customConsentClause" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="recruitmentStatus">Recruitment status</label>
+      <input id="recruitmentStatus" class="company-form-input-text" type="text" formControlName="recruitmentStatus" />
+    </div>
+    <input type="submit" [disabled]="!companyForm.valid" value="Create" />
+  </form>
+  <div class="company-list">
+    @if (companies.length > 0) {
+    @for (company of companies; track company.id) {
+    <div class="company-list-item">
+      <p class="company-list-item-line"><b>Id:</b> {{ company.id}}</p>
+      <p class="company-list-item-line"><b>Company name:</b> {{ company.companyName }}</p>
+      <p class="company-list-item-line"><b>City:</b> {{ company.city }}</p>
+      <p class="company-list-item-line"><b>Include consent clause:</b> {{ company.includeConsentClause }}</p>
+      <p class="company-list-item-line"><b>Custom consent clause:</b> {{ company.customConsentClause }}</p>
+      <p class="company-list-item-line"><b>Recruitment status:</b> {{ company.recruitmentStatus }}</p>
+      <p class="company-list-item-line"><b>User id:</b> {{ company.userId }}</p>
+      <button (click)="onUpdate(company.id)">Update</button>
+      <button (click)="onDelete(company.id)">Delete</button>
+    </div>
+    }
+    } @else {
+    <div class="company-not-found">
+      <p>Companies not found.</p>
+    </div>
+    }
+  </div>
+</div>

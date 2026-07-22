@@ -12,5 +12,5 @@ public class SocialMedia
 
     public int ResumeId { get; set; }
 
-    public Resume Resume { get; set; } = new();
+    public Resume Resume { get; set; } = null!;
 }

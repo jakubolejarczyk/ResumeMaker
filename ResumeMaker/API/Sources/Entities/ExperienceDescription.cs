@@ -10,5 +10,5 @@ public class ExperienceDescription
 
     public int ExperienceId { get; set; }
 
-    public Experience Experience { get; set; } = new();
+    public Experience Experience { get; set; } = null!;
 }

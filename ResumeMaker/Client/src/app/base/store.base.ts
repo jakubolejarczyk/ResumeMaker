@@ -6,4 +6,8 @@ export class StoreBase<TData> {
   constructor(data: TData) {
     this.data = new BehaviorSubject(data);
   }
+
+  getValue() {
+    return this.data.getValue();
+  }
 }
