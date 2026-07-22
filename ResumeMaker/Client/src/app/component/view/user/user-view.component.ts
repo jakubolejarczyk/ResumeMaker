@@ -72,7 +72,6 @@ export class UserViewComponent implements OnInit {
       .subscribe({
         next: response => {
           this.usersStore.data.next(response.body);
-          this.userForm.reset();
         },
         error: err => {
           alert(err);
