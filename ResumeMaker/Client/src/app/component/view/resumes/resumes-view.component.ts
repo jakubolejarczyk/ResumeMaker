@@ -18,8 +18,7 @@ export class ResumesViewComponent {
     description: ['', Validators.required],
     socialMedias: this.formBuilder.array([]),
     educations: this.formBuilder.array([]),
-    experience: this.formBuilder.array([]),
-    experienceDescription: this.formBuilder.array([])
+    experience: this.formBuilder.array([])
   });
 
   onSubmit() {
@@ -100,7 +99,19 @@ export class ResumesViewComponent {
 
   // Experience
   getExperience() {
-    return <FormArray>this.resumeForm.get('experience');
+    return this.resumeForm.get('experience') as FormArray;
+  }
+
+  addExperience() {
+    const control = this.formBuilder.group({
+      companyName: ['', Validators.required],
+      jobTitle: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      experienceDescription: this.formBuilder.array([])
+    });
+
+    this.getExperience().push(control);
   }
 
   moveExperience(fromIndex: number, toIndex: number) {
@@ -125,47 +136,47 @@ export class ResumesViewComponent {
     this.getExperience().removeAt(index);
   }
 
-  addExperience() {
-    const control = this.formBuilder.group({
-      companyName: ['', Validators.required],
-      jobTitle: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required]
-    });
-    this.getExperience().push(control);
+
+  // Experience descriptions
+  getExperienceDescription(experienceIndex: number) {
+    return this.getExperience()
+      .at(experienceIndex)
+      .get('experienceDescription') as FormArray;
   }
 
-  // Experience description
-  getExperienceDescription() {
-    return <FormArray>this.resumeForm.get('experienceDescription');
+
+  addExperienceDescription(experienceIndex: number) {
+    const descriptions = this.getExperienceDescription(experienceIndex);
+    descriptions.push(
+      this.formBuilder.group({
+        description: ['', Validators.required]
+      })
+    );
+
   }
 
-  moveExperienceDescription(fromIndex: number, toIndex: number) {
-    const items = this.getExperienceDescription();
-    if (toIndex < 0 || toIndex >= items.length) {
+  removeExperienceDescription(experienceIndex: number, descriptionIndex: number) {
+    this.getExperienceDescription(experienceIndex).removeAt(descriptionIndex);
+  }
+
+
+  moveExperienceDescription(experienceIndex: number, fromIndex: number, toIndex: number) {
+    const descriptions = this.getExperienceDescription(experienceIndex);
+    if (toIndex < 0 || toIndex >= descriptions.length) {
       return;
     }
-    const control = items.at(fromIndex);
-    items.removeAt(fromIndex);
-    items.insert(toIndex, control);
+    const control = descriptions.at(fromIndex);
+    descriptions.removeAt(fromIndex);
+    descriptions.insert(toIndex, control);
   }
 
-  moveExperienceDescriptionUp(index: number) {
-    this.moveExperienceDescription(index, index - 1);
+
+  moveExperienceDescriptionUp(experienceIndex: number, descriptionIndex: number) {
+    this.moveExperienceDescription(experienceIndex, descriptionIndex, descriptionIndex - 1);
   }
 
-  moveExperiencDescriptioneDown(index: number) {
-    this.moveExperienceDescription(index, index + 1);
-  }
 
-  removeExperienceDescription(index: number) {
-    this.getExperienceDescription().removeAt(index);
-  }
-
-  addExperienceDescription() {
-    const control = this.formBuilder.group({
-      description: ['', Validators.required]
-    });
-    this.getExperienceDescription().push(control);
+  moveExperienceDescriptionDown(experienceIndex: number, descriptionIndex: number) {
+    this.moveExperienceDescription(experienceIndex, descriptionIndex, descriptionIndex + 1);
   }
 }

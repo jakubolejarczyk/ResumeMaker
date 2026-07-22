@@ -64,42 +64,40 @@
       @for (control of getExperience().controls; track control; let i = $index) {
       <div class="resume-form-item" [formGroupName]="i">
         <div class="resume-form-item">
-          <label class="resume-form-form-label" for="companyName">Company name</label>
-          <input id="companyName" class="resume-form-input-text" type="text" formControlName="companyName" />
+          <label class="resume-form-form-label">Company name</label>
+          <input class="resume-form-input-text" type="text" formControlName="companyName" />
         </div>
         <div class="resume-form-item">
-          <label class="resume-form-form-label" for="jobTitle">Job title</label>
-          <input id="jobTitle" class="resume-form-input-text" type="text" formControlName="jobTitle" />
+          <label class="resume-form-form-label">Job title</label>
+          <input class="resume-form-input-text" type="text" formControlName="jobTitle" />
         </div>
         <div class="resume-form-item">
-          <label class="resume-form-form-label" for="startDate">Start date</label>
-          <input id="startDate" class="resume-form-input-text" type="text" formControlName="startDate" />
+          <label class="resume-form-form-label">Start date</label>
+          <input class="resume-form-input-text" type="text" formControlName="startDate" />
         </div>
         <div class="resume-form-item">
-          <label class="resume-form-form-label" for="endDate">End date</label>
-          <input id="endDate" class="resume-form-input-text" type="text" formControlName="endDate" />
+          <label class="resume-form-form-label">End date</label>
+          <input class="resume-form-input-text" type="text" formControlName="endDate" />
+        </div>
+        <!-- experienceDescriptions -->
+        <div formArrayName="experienceDescription">
+          <h4>Experience description</h4>
+          @for(control of getExperienceDescription(i).controls; track control; let j = $index) {
+          <div class="resume-form-item" [formGroupName]="j">
+            <input class="resume-form-input-text" type="text" formControlName="description" />
+            <button type="button" (click)="moveExperienceDescriptionUp(i,j)" [disabled]="j === 0">Up</button>
+            <button type="button" (click)="moveExperienceDescriptionDown(i,j)" [disabled]="j === getExperienceDescription(i).length - 1">Down</button>
+            <button type="button" (click)="removeExperienceDescription(i,j)">Delete</button>
+          </div>
+          }
+          <button type="button"(click)="addExperienceDescription(i)">Add description</button>
         </div>
         <button type="button" (click)="moveExperienceUp(i)" [disabled]="i === 0">Up</button>
         <button type="button" (click)="moveExperienceDown(i)" [disabled]="i === getExperience().length - 1">Down</button>
         <button type="button" (click)="removeExperience(i)">Delete</button>
       </div>
       }
-      <button type="button" (click)="addExperience()">Add</button>
-    </div>
-    <!-- experience description -->
-    <div class="resume-form-item resume-form-array" formArrayName="experienceDescription">
-      @for (control of getExperienceDescription().controls; track control; let i = $index) {
-      <div class="resume-form-item" [formGroupName]="i">
-        <div class="resume-form-item">
-          <label class="resume-form-form-label" for="description">Description</label>
-          <input id="description" class="resume-form-input-text" type="text" formControlName="description" />
-        </div>
-        <button type="button" (click)="moveExperienceDescriptionUp(i)" [disabled]="i === 0">Up</button>
-        <button type="button" (click)="moveExperienceDescriptionDown(i)" [disabled]="i === getExperienceDescription().length - 1">Down</button>
-        <button type="button" (click)="removeExperienceDescription(i)">Delete</button>
-      </div>
-      }
-      <button type="button" (click)="addExperienceDescription()">Add</button>
+      <button type="button" (click)="addExperience()">Add experience</button>
     </div>
     <input type="submit" [disabled]="!resumeForm.valid" value="Create" />
   </form>
