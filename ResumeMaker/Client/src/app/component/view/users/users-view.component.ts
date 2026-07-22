@@ -6,6 +6,7 @@ import { Subscription, switchMap } from "rxjs";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { ResponseModel } from "../../../model/response/response.model";
 import { UsersStore } from "../../../store/users.store";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-users-view-component',
@@ -18,6 +19,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   httpClient = inject(HttpClient);
   usersStore = inject(UsersStore);
   cdr = inject(ChangeDetectorRef);
+  router = inject(Router);
 
   userForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -68,6 +70,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           alert(err);
         }
       });
+  }
+
+  onUpdate(userId: number) {
+    this.router.navigate(['/user', userId]);
   }
 
   onDelete(userId: number) {

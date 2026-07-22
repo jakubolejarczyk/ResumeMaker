@@ -17,7 +17,7 @@ Content-Type: application/json
 
 ###
 
-GET {{API_HostAddress}}/api/user/2
+GET {{API_HostAddress}}/api/user/1
 Accept: application/json
 
 ###

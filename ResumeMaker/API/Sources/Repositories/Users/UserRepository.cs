@@ -1,11 +1,10 @@
 ﻿using API.Sources.Contexts;
 using API.Sources.DTOs;
 using API.Sources.Entities;
-using API.Sources.Stores;
 
 namespace API.Sources.Repositories.Users;
 
-public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserRepository
+public class UserRepository(AppDbContext appDbContext) : IUserRepository
 {
     public RepositoryDTO<User> Create(User user)
     {
@@ -30,7 +29,7 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
 
     public RepositoryDTO<User> Read(int id)
     {
-        var user = store.Data.FirstOrDefault(u => u.Id == id);
+        var user = appDbContext.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return new RepositoryDTO<User>
@@ -60,7 +59,7 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
 
     public RepositoryDTO<User> Update(int id, User user)
     {
-        var currentUser = store.Data.FirstOrDefault(u => u.Id == id);
+        var currentUser = appDbContext.Users.FirstOrDefault(u => u.Id == id);
         if (currentUser == null)
         {
             return new RepositoryDTO<User>
@@ -77,7 +76,7 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
                 Message = "Failed to update the user due to an internal error."
             };
         }
-        var emailExists = store.Data.FirstOrDefault(u => u.Email == user.Email);
+        var emailExists = appDbContext.Users.FirstOrDefault(u => u.Email == user.Email);
         if (emailExists != null)
         {
             return new RepositoryDTO<User>
@@ -87,12 +86,13 @@ public class UserRepository(UserStore store, AppDbContext appDbContext) : IUserR
             };
         }
         currentUser.Email = user.Email;
-        currentUser.FirstName = currentUser.FirstName;
-        currentUser.LastName = currentUser.LastName;
-        currentUser.City = currentUser.City;
-        currentUser.Country = currentUser.Country;
-        currentUser.PhoneNumber = currentUser.PhoneNumber;
-        store.Data = store.Data.Select(u => u.Id == id ? currentUser : u).ToList();
+        currentUser.FirstName = user.FirstName;
+        currentUser.LastName = user.LastName;
+        currentUser.City = user.City;
+        currentUser.Country = user.Country;
+        currentUser.PhoneNumber = user.PhoneNumber;
+        appDbContext.Update(currentUser);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<User>
         {
             Success = true,

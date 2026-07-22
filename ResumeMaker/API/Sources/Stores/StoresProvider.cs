@@ -12,6 +12,5 @@ public static class StoresProvider
         builder.Services.AddSingleton<SkillElementStore>();
         builder.Services.AddSingleton<SkillGroupStore>();
         builder.Services.AddSingleton<SocialMediaStore>();
-        builder.Services.AddSingleton<UserStore>();
     }
 }
