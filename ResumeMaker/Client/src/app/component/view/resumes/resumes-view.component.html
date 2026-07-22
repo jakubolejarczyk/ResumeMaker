@@ -13,17 +13,93 @@
       <label class="resume-form-form-label" for="description">Description</label>
       <input id="description" class="resume-form-input-text" type="text" formControlName="description" />
     </div>
+    <!-- social media -->
     <div class="resume-form-item resume-form-array" formArrayName="socialMedias">
       @for (control of getSocialMedias().controls; track control; let i = $index) {
-      <div [formGroupName]="i">
-        <input type="text" placeholder="Label" formControlName="label">
-        <input type="text" placeholder="Link" formControlName="link">
+      <div class="resume-form-item" [formGroupName]="i">
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="label">Label</label>
+          <input id="label" class="resume-form-input-text" type="text" formControlName="label" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="link">Link</label>
+          <input id="link" class="resume-form-input-text" type="text" formControlName="link" />
+        </div>
         <button type="button" (click)="moveSocialMediaUp(i)" [disabled]="i === 0">Up</button>
         <button type="button" (click)="moveSodialMediaDown(i)" [disabled]="i === getSocialMedias().length - 1">Down</button>
         <button type="button" (click)="removeSocialMedia(i)">Delete</button>
       </div>
       }
       <button type="button" (click)="addSocialMedia()">Add</button>
+    </div>
+    <!-- education -->
+    <div class="resume-form-item resume-form-array" formArrayName="educations">
+      @for (control of getEducations().controls; track control; let i = $index) {
+      <div class="resume-form-item" [formGroupName]="i">
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="institutionName">Institution name</label>
+          <input id="institutionName" class="resume-form-input-text" type="text" formControlName="institutionName" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="fieldOfStudy">Field of study</label>
+          <input id="fieldOfStudy" class="resume-form-input-text" type="text" formControlName="fieldOfStudy" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="degree">Degree</label>
+          <input id="degree" class="resume-form-input-text" type="text" formControlName="degree" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="graduationYear">GraduationYear</label>
+          <input id="graduationYear" class="resume-form-input-text" type="text" formControlName="graduationYear" />
+        </div>
+        <button type="button" (click)="moveEducationUp(i)" [disabled]="i === 0">Up</button>
+        <button type="button" (click)="moveEducationDown(i)" [disabled]="i === getEducations().length - 1">Down</button>
+        <button type="button" (click)="removeEducation(i)">Delete</button>
+      </div>
+      }
+      <button type="button" (click)="addEducation()">Add</button>
+    </div>
+    <!-- experience -->
+    <div class="resume-form-item resume-form-array" formArrayName="experience">
+      @for (control of getExperience().controls; track control; let i = $index) {
+      <div class="resume-form-item" [formGroupName]="i">
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="companyName">Company name</label>
+          <input id="companyName" class="resume-form-input-text" type="text" formControlName="companyName" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="jobTitle">Job title</label>
+          <input id="jobTitle" class="resume-form-input-text" type="text" formControlName="jobTitle" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="startDate">Start date</label>
+          <input id="startDate" class="resume-form-input-text" type="text" formControlName="startDate" />
+        </div>
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="endDate">End date</label>
+          <input id="endDate" class="resume-form-input-text" type="text" formControlName="endDate" />
+        </div>
+        <button type="button" (click)="moveExperienceUp(i)" [disabled]="i === 0">Up</button>
+        <button type="button" (click)="moveExperienceDown(i)" [disabled]="i === getExperience().length - 1">Down</button>
+        <button type="button" (click)="removeExperience(i)">Delete</button>
+      </div>
+      }
+      <button type="button" (click)="addExperience()">Add</button>
+    </div>
+    <!-- experience description -->
+    <div class="resume-form-item resume-form-array" formArrayName="experienceDescription">
+      @for (control of getExperienceDescription().controls; track control; let i = $index) {
+      <div class="resume-form-item" [formGroupName]="i">
+        <div class="resume-form-item">
+          <label class="resume-form-form-label" for="description">Description</label>
+          <input id="description" class="resume-form-input-text" type="text" formControlName="description" />
+        </div>
+        <button type="button" (click)="moveExperienceDescriptionUp(i)" [disabled]="i === 0">Up</button>
+        <button type="button" (click)="moveExperienceDescriptionDown(i)" [disabled]="i === getExperienceDescription().length - 1">Down</button>
+        <button type="button" (click)="removeExperienceDescription(i)">Delete</button>
+      </div>
+      }
+      <button type="button" (click)="addExperienceDescription()">Add</button>
     </div>
     <input type="submit" [disabled]="!resumeForm.valid" value="Create" />
   </form>
