@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-create-company-form-component',
@@ -6,4 +7,19 @@ import { Component } from "@angular/core";
   styleUrl: './create-company-form.component.css',
   standalone: false
 })
-export class CreateCompanyFormComponent {}
+export class CreateCompanyFormComponent {
+  formBuilder = inject(FormBuilder);
+
+  createCompanyForm = this.formBuilder.group({
+    companyName: ['', Validators.required],
+    city: ['', Validators.required],
+    country: ['', Validators.required],
+    includeConsentClause: [false, Validators.required],
+    customConsentClause: ['', Validators.required],
+    recruitmentStatus: ['', Validators.required]
+  });
+
+  onSubmit() {
+    console.log(this.createCompanyForm.value);
+  }
+}
