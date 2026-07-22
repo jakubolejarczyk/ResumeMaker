@@ -18,7 +18,8 @@ export class ResumesViewComponent {
     description: ['', Validators.required],
     socialMedias: this.formBuilder.array([]),
     educations: this.formBuilder.array([]),
-    experience: this.formBuilder.array([])
+    experience: this.formBuilder.array([]),
+    skillGroup: this.formBuilder.array([])
   });
 
   onSubmit() {
@@ -178,5 +179,85 @@ export class ResumesViewComponent {
 
   moveExperienceDescriptionDown(experienceIndex: number, descriptionIndex: number) {
     this.moveExperienceDescription(experienceIndex, descriptionIndex, descriptionIndex + 1);
+  }
+
+  // Skill group
+  getSkillGroup() {
+    return this.resumeForm.get('skillGroup') as FormArray;
+  }
+
+  addSkillGroup() {
+    const control = this.formBuilder.group({
+      name: ['', Validators.required],
+      skillElement: this.formBuilder.array([])
+    });
+
+    this.getSkillGroup().push(control);
+  }
+
+  moveSkillGroup(fromIndex: number, toIndex: number) {
+    const items = this.getSkillGroup();
+    if (toIndex < 0 || toIndex >= items.length) {
+      return;
+    }
+    const control = items.at(fromIndex);
+    items.removeAt(fromIndex);
+    items.insert(toIndex, control);
+  }
+
+  moveSkillGroupUp(index: number) {
+    this.moveSkillGroup(index, index - 1);
+  }
+
+  moveSkillGroupDown(index: number) {
+    this.moveSkillGroup(index, index + 1);
+  }
+
+  removeSkillGroup(index: number) {
+    this.getSkillGroup().removeAt(index);
+  }
+
+
+  // Skill element
+  getSkillElement(experienceIndex: number) {
+    return this.getSkillGroup()
+      .at(experienceIndex)
+      .get('skillElement') as FormArray;
+  }
+
+
+  addSkillElement(experienceIndex: number) {
+    const descriptions = this.getSkillElement(experienceIndex);
+    descriptions.push(
+      this.formBuilder.group({
+        name: ['', Validators.required]
+      })
+    );
+
+  }
+
+  removeSkillElement(experienceIndex: number, descriptionIndex: number) {
+    this.getSkillElement(experienceIndex).removeAt(descriptionIndex);
+  }
+
+
+  moveSkillElement(experienceIndex: number, fromIndex: number, toIndex: number) {
+    const descriptions = this.getSkillElement(experienceIndex);
+    if (toIndex < 0 || toIndex >= descriptions.length) {
+      return;
+    }
+    const control = descriptions.at(fromIndex);
+    descriptions.removeAt(fromIndex);
+    descriptions.insert(toIndex, control);
+  }
+
+
+  moveSkillElementUp(experienceIndex: number, descriptionIndex: number) {
+    this.moveSkillElement(experienceIndex, descriptionIndex, descriptionIndex - 1);
+  }
+
+
+  moveSkillElementDown(experienceIndex: number, descriptionIndex: number) {
+    this.moveSkillElement(experienceIndex, descriptionIndex, descriptionIndex + 1);
   }
 }

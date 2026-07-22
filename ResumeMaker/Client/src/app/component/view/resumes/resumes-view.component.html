@@ -90,7 +90,7 @@
             <button type="button" (click)="removeExperienceDescription(i,j)">Delete</button>
           </div>
           }
-          <button type="button"(click)="addExperienceDescription(i)">Add description</button>
+          <button type="button" (click)="addExperienceDescription(i)">Add description</button>
         </div>
         <button type="button" (click)="moveExperienceUp(i)" [disabled]="i === 0">Up</button>
         <button type="button" (click)="moveExperienceDown(i)" [disabled]="i === getExperience().length - 1">Down</button>
@@ -98,6 +98,34 @@
       </div>
       }
       <button type="button" (click)="addExperience()">Add experience</button>
+    </div>
+    <!-- skill group -->
+    <div class="resume-form-item resume-form-array" formArrayName="skillGroup">
+      @for (control of getSkillGroup().controls; track control; let i = $index) {
+      <div class="resume-form-item" [formGroupName]="i">
+        <div class="resume-form-item">
+          <label class="resume-form-form-label">Name</label>
+          <input class="resume-form-input-text" type="text" formControlName="name" />
+        </div>
+        <!-- sksill element -->
+        <div formArrayName="skillElement">
+          <h4>Skill element</h4>
+          @for(control of getSkillElement(i).controls; track control; let j = $index) {
+          <div class="resume-form-item" [formGroupName]="j">
+            <input class="resume-form-input-text" type="text" formControlName="name" />
+            <button type="button" (click)="moveSkillElementUp(i,j)" [disabled]="j === 0">Up</button>
+            <button type="button" (click)="moveSkillElementDown(i,j)" [disabled]="j === getSkillElement(i).length - 1">Down</button>
+            <button type="button" (click)="removeSkillElement(i,j)">Delete</button>
+          </div>
+          }
+          <button type="button" (click)="addSkillElement(i)">Add skill element</button>
+        </div>
+        <button type="button" (click)="moveSkillGroupUp(i)" [disabled]="i === 0">Up</button>
+        <button type="button" (click)="moveSkillGroupDown(i)" [disabled]="i === getSkillGroup().length - 1">Down</button>
+        <button type="button" (click)="removeSkillGroup(i)">Delete</button>
+      </div>
+      }
+      <button type="button" (click)="addSkillGroup()">Add skill group</button>
     </div>
     <input type="submit" [disabled]="!resumeForm.valid" value="Create" />
   </form>
