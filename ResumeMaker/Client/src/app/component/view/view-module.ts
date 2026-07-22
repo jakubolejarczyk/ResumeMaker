@@ -5,20 +5,23 @@ import { CompaniesViewComponent } from "./companies/companies-view.component";
 import { ResumesViewComponent } from "./resumes/resumes-view.component";
 import { UsersViewComponent } from "./users/users-view.component";
 import { UserViewComponent } from "./user/user-view.component";
+import { CompanyViewComponent } from "./company/company-view.component";
 
 @NgModule({
   declarations: [
     CompaniesViewComponent,
     ResumesViewComponent,
     UsersViewComponent,
-    UserViewComponent
+    UserViewComponent,
+    CompanyViewComponent
   ],
   imports: [ReactiveFormsModule],
   exports: [
     CompaniesViewComponent,
     ResumesViewComponent,
     UsersViewComponent,
-    UserViewComponent
+    UserViewComponent,
+    CompanyViewComponent
   ]
 })
 export class ViewModule { }
