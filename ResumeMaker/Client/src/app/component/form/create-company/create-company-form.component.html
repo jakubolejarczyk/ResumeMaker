@@ -1,34 +1,28 @@
 <form class="form" [formGroup]="createCompanyForm" (ngSubmit)="onSubmit()">
-  <!-- Company name -->
+  <h3 class="form-title">Create company</h3>
   <div class="form-item">
     <label class="form-label" for="companyName">Company name</label>
-    <input id="companyName" class="form-input" type="text" formControlName="companyName" />
+    <input id="companyName" class="form-input-text" type="text" formControlName="companyName" />
   </div>
-  <!-- City -->
   <div class="form-item">
     <label class="form-label" for="city">City</label>
-    <input id="city" class="form-input" type="text" formControlName="city" />
+    <input id="city" class="form-input-text" type="text" formControlName="city" />
   </div>
-  <!-- Country -->
   <div class="form-item">
     <label class="form-label" for="country">Country</label>
-    <input id="country" class="form-input" type="text" formControlName="country" />
+    <input id="country" class="form-input-text" type="text" formControlName="country" />
   </div>
-  <!-- Include consent clause -->
-  <div class="form-item">
+  <div class="form-item form-item-checkbox">
     <label class="form-label" for="includeConsentClause">Include consent clause</label>
-    <input id="includeConsentClause" class="form-input" type="checkbox" formControlName="includeConsentClause" />
+    <input id="includeConsentClause" type="checkbox" formControlName="includeConsentClause" />
   </div>
-  <!-- Custom consent clause -->
   <div class="form-item">
     <label class="form-label" for="customConsentClause">Custom consent clause</label>
-    <input id="customConsentClause" class="form-input" type="text" formControlName="customConsentClause" />
+    <input id="customConsentClause" class="form-input-text" type="text" formControlName="customConsentClause" />
   </div>
-  <!-- Recruitment status -->
   <div class="form-item">
     <label class="form-label" for="recruitmentStatus">Recruitment status</label>
-    <input id="recruitmentStatus" class="form-input" type="text" formControlName="recruitmentStatus" />
+    <input id="recruitmentStatus" class="form-input-text" type="text" formControlName="recruitmentStatus" />
   </div>
-  <!-- Submit -->
   <input type="submit" [disabled]="!createCompanyForm.valid" value="Create" />
 </form>

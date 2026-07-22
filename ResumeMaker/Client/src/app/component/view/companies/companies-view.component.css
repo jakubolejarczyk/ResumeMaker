@@ -1,5 +1,4 @@
 .view {
-  margin: 1rem;
 }
 
 .company-form {
@@ -41,6 +40,7 @@
 }
 
 .company-list {
+    margin: 1rem;
   border: 1px solid black;
 }
 

@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
   selector: 'app-create-company-form-component',
   templateUrl: './create-company-form.component.html',
-  styleUrl: './create-company-form.component.css',
+  styleUrl: '../base/base-form.component.css',
   standalone: false
 })
 export class CreateCompanyFormComponent {

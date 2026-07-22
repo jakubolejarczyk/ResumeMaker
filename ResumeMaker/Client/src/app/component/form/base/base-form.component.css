@@ -1,0 +1,36 @@
+.form {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.form-title {
+  margin-bottom: 1rem;
+}
+
+.form-item {
+  margin-bottom: 0.5rem;
+}
+
+.form-item-checkbox {
+  display: flex;
+}
+
+.form-label {
+  display: inline-block;
+  width: 160px;
+}
+
+.form-input-text {
+  width: calc(100% - 160px);
+}
+
+@media screen and (max-width: 640px) {
+  .form-label {
+    width: 150px;
+  }
+
+  .form-input-text {
+    width: 100%;
+  }
+}
