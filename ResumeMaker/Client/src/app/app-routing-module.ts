@@ -25,7 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'resumes',
-    component: ResumesViewComponent
+    component: ResumesViewComponent,
+    canActivate: [userIsSelectedGuard]
   },
   {
     path: 'user/:id',
