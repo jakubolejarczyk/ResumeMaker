@@ -63,6 +63,7 @@ export class UserViewComponent implements OnInit {
         }),
         switchMap(response => {
           if (response.success) {
+            alert(response.message);
             return this.httpClient.get<ResponseModel<UserEntityModel[]>>('http://localhost:5038/api/user');
           } else {
             throw new Error(response.message);

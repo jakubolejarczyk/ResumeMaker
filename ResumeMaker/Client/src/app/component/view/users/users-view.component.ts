@@ -55,6 +55,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(response => {
           if (response.success) {
+            alert(response.message);
             return this.httpClient.get<ResponseModel<UserEntityModel[]>>('http://localhost:5038/api/user');
           } else {
             throw new Error(response.message);
