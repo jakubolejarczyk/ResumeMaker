@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Sources.Cores;
+using API.Sources.Requests;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace API.Sources.Controllers;
 
@@ -6,9 +9,9 @@ namespace API.Sources.Controllers;
 [Route("api/[controller]")]
 public class ResumeController : ControllerBase
 {
-    [HttpGet]
-    public string GetResume()
+    [HttpPost]
+    public ActionResult<ResponseCore<ResumeResponse>> CreateCompany([FromBody] ResumeRequest request)
     {
-        return "Hello from ResumeController";
+        return Ok(request);
     }
 }

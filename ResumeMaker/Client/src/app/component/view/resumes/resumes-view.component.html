@@ -13,46 +13,17 @@
       <label class="resume-form-form-label" for="description">Description</label>
       <input id="description" class="resume-form-input-text" type="text" formControlName="description" />
     </div>
-
-    <div formArrayName="socialMedias" class="resume-form-item resume-form-array">
-
-      @for (control of getItems().controls; track control; let i = $index) {
-
+    <div class="resume-form-item resume-form-array" formArrayName="socialMedias">
+      @for (control of getSocialMedias().controls; track control; let i = $index) {
       <div [formGroupName]="i">
-
-        <input formControlName="name" placeholder="Nazwa">
-
-        <input formControlName="url" placeholder="URL">
-
-        <input formControlName="description" placeholder="Opis">
-
-
-        <button type="button"
-                (click)="moveUp(i)"
-                [disabled]="i === 0">
-          ↑
-        </button>
-
-        <button type="button"
-                (click)="moveDown(i)"
-                [disabled]="i === getItems().length - 1">
-          ↓
-        </button>
-
-
-        <button type="button"
-                (click)="removeItem(i)">
-          Usuń
-        </button>
-
+        <input type="text" placeholder="Label" formControlName="label">
+        <input type="text" placeholder="Link" formControlName="link">
+        <button type="button" (click)="moveSocialMediaUp(i)" [disabled]="i === 0">Up</button>
+        <button type="button" (click)="moveSodialMediaDown(i)" [disabled]="i === getSocialMedias().length - 1">Down</button>
+        <button type="button" (click)="removeSocialMedia(i)">Delete</button>
       </div>
-
       }
-
-      <button type="button" (click)="addSocialMedia()">
-        Add
-      </button>
-
+      <button type="button" (click)="addSocialMedia()">Add</button>
     </div>
     <input type="submit" [disabled]="!resumeForm.valid" value="Create" />
   </form>

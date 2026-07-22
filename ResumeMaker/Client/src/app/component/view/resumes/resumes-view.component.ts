@@ -1,5 +1,6 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, inject } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-resumes-view-component',
@@ -9,6 +10,8 @@ import { FormArray, FormBuilder, FormControl, Validators } from "@angular/forms"
 })
 export class ResumesViewComponent {
   formBuilder = inject(FormBuilder);
+  httpClient = inject(HttpClient);
+
   resumeForm = this.formBuilder.group({
     name: ['', Validators.required],
     jobTitle: ['', Validators.required],
@@ -16,49 +19,55 @@ export class ResumesViewComponent {
     socialMedias: this.formBuilder.array([])
   });
 
-  getItems() {
-    return this.resumeForm.get('socialMedias') as FormArray;
-  }
+  onSubmit() {
+    console.log(this.resumeForm.value);
 
-  addSocialMedia() {
-    this.getItems().push(this.createSocialMedia());
-  }
+    const body: any = this.resumeForm.value;
+    body.userId = 0;
+    body.socialMedias = body.socialMedias == null ? [] : body.socialMedias.map((i: any) => ({
+      ...i,
+      order: 0
+    }))
 
-  removeItem(index: number) {
-    const aaa = this.resumeForm.get('socialMedias') as FormArray;
-    aaa.removeAt(index);
+    this.httpClient.post('http://localhost:5038/api/resume', this.resumeForm.value).subscribe(response => {
+      console.log(response);
+    });
   }
 
   createSocialMedia() {
     return this.formBuilder.group({
-      name: [''],
-      url: [''],
-      description: ['']
+      label: [''],
+      link: ['']
     });
   }
 
-  onSubmit() {
-    console.log(this.resumeForm.value);
+  getSocialMedias() {
+    return this.resumeForm.get('socialMedias') as FormArray;
   }
 
-  moveItem(fromIndex: number, toIndex: number) {
-    const items = this.getItems();
+  addSocialMedia() {
+    this.getSocialMedias().push(this.createSocialMedia());
+  }
 
+  removeSocialMedia(index: number) {
+    this.getSocialMedias().removeAt(index);
+  }
+
+  moveSocialMedia(fromIndex: number, toIndex: number) {
+    const items = this.getSocialMedias();
     if (toIndex < 0 || toIndex >= items.length) {
       return;
     }
-
     const control = items.at(fromIndex);
-
     items.removeAt(fromIndex);
     items.insert(toIndex, control);
   }
 
-  moveUp(index: number) {
-    this.moveItem(index, index - 1);
+  moveSocialMediaUp(index: number) {
+    this.moveSocialMedia(index, index - 1);
   }
 
-  moveDown(index: number) {
-    this.moveItem(index, index + 1);
+  moveSodialMediaDown(index: number) {
+    this.moveSocialMedia(index, index + 1);
   }
 }
