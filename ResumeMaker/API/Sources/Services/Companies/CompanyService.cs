@@ -62,9 +62,9 @@ public class CompanyService(ICompanyRepository repository) : ICompanyService
         };
     }
 
-    public ResponseCore<List<CompanyResponse>> ReadCompanies()
+    public ResponseCore<List<CompanyResponse>> ReadCompaniesByUserId(int userId)
     {
-        var dto = repository.ReadAll();
+        var dto = repository.ReadAllByUserId(userId);
         var body = dto.Body;
         return new ResponseCore<List<CompanyResponse>>
         {

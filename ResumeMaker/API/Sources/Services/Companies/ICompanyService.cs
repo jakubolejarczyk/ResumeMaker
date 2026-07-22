@@ -10,7 +10,7 @@ public interface ICompanyService
 
     ResponseCore<CompanyResponse> ReadCompany(int id);
 
-    ResponseCore<List<CompanyResponse>> ReadCompanies();
+    ResponseCore<List<CompanyResponse>> ReadCompaniesByUserId(int userId);
 
     ResponseCore<CompanyResponse> UpdateCompany(int id, CompanyRequest request);
 

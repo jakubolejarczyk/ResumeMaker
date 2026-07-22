@@ -39,9 +39,9 @@ public class CompanyRepository(AppDbContext appDbContext) : ICompanyRepository
         };
     }
 
-    public RepositoryDTO<List<Company>> ReadAll()
+    public RepositoryDTO<List<Company>> ReadAllByUserId(int userId)
     {
-        var companies = appDbContext.Companies.ToList();
+        var companies = appDbContext.Companies.Where(c => c.UserId == userId).ToList();
         return new RepositoryDTO<List<Company>>
         {
             Success = true,

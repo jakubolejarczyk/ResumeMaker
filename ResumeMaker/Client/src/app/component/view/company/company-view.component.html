@@ -1,0 +1,30 @@
+<div class="view">
+  <form class="company-form" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    <h3 class="company-form-header">Update company</h3>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="companyName">Company name</label>
+      <input id="companyName" class="company-form-input-text" type="text" formControlName="companyName" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="city">City</label>
+      <input id="city" class="company-form-input-text" type="text" formControlName="city" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="country">Country</label>
+      <input id="country" class="company-form-input-text" type="text" formControlName="country" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="includeConsentClause">Include Consent Clause</label>
+      <input id="includeConsentClause" type="checkbox" formControlName="includeConsentClause" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="customConsentClause">Custom Consent Clause</label>
+      <input id="customConsentClause" class="company-form-input-text" type="text" formControlName="customConsentClause" />
+    </div>
+    <div class="company-form-item">
+      <label class="company-form-form-label" for="recruitmentStatus">Recruitment status</label>
+      <input id="recruitmentStatus" class="company-form-input-text" type="text" formControlName="recruitmentStatus" />
+    </div>
+    <input type="submit" [disabled]="!companyForm.valid" value="Update" />
+  </form>
+</div>

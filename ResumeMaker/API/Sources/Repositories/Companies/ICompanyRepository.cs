@@ -9,7 +9,7 @@ public interface ICompanyRepository
 
     RepositoryDTO<Company> Read(int id);
 
-    RepositoryDTO<List<Company>> ReadAll();
+    RepositoryDTO<List<Company>> ReadAllByUserId(int userId);
 
     RepositoryDTO<Company> Update(int id, Company company);
 

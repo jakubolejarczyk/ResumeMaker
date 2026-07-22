@@ -24,10 +24,10 @@ public class CompanyController(ICompanyService service) : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet]
-    public ActionResult<ResponseCore<List<CompanyResponse>>> ReadCompanies()
+    [HttpGet("user/{userId}")]
+    public ActionResult<ResponseCore<List<CompanyResponse>>> ReadCompanies(int userId)
     {
-        var response = service.ReadCompanies();
+        var response = service.ReadCompaniesByUserId(userId);
         return Ok(response);
     }
 

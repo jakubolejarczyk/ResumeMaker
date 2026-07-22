@@ -6,6 +6,7 @@ import { CompaniesViewComponent } from './component/view/companies/companies-vie
 import { ResumesViewComponent } from './component/view/resumes/resumes-view.component';
 import { UserViewComponent } from './component/view/user/user-view.component';
 import { userIsSelectedGuard } from './guard/user-is-selected.guard';
+import { CompanyViewComponent } from './component/view/company/company-view.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'user/:id',
     component: UserViewComponent
+  },
+  {
+    path: 'company/:id',
+    component: CompanyViewComponent,
+    canActivate: [userIsSelectedGuard]
   },
   {
     path: '**',

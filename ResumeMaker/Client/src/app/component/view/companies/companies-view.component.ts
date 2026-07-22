@@ -37,11 +37,12 @@ export class CompaniesViewComponent implements OnInit, OnDestroy {
   sub!: Subscription;
 
   ngOnInit() {
+    const userId = this.userStore.getValue();
     this.sub = this.companiesStore.data.subscribe(companies => {
       this.companies = companies;
       this.cdr.detectChanges();
     });
-    this.httpClient.get<ResponseModel<CompanyEntityModel[]>>('http://localhost:5038/api/company').subscribe(response => {
+    this.httpClient.get<ResponseModel<CompanyEntityModel[]>>(`http://localhost:5038/api/company/user/${userId}`).subscribe(response => {
       this.companiesStore.data.next(response.body);
     });
   }
@@ -52,18 +53,16 @@ export class CompaniesViewComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.companyForm.valid) return;
+    const userId = this.userStore.getValue();
     const { value } = this.companyForm;
-    const body = {
-      ...value,
-      userId: this.userStore.getValue()
-    };
+    const body = { ...value, userId };
     console.log(body);
     this.httpClient.post<ResponseModel<CompanyEntityModel>>('http://localhost:5038/api/company', body)
       .pipe(
         switchMap(response => {
           if (response.success) {
             alert(response.message);
-            return this.httpClient.get<ResponseModel<CompanyEntityModel[]>>('http://localhost:5038/api/company');
+            return this.httpClient.get<ResponseModel<CompanyEntityModel[]>>(`http://localhost:5038/api/company/user/${userId}`);
           } else {
             throw new Error(response.message);
           }
@@ -85,11 +84,12 @@ export class CompaniesViewComponent implements OnInit, OnDestroy {
   }
 
   onDelete(companyId: number) {
+    const userId = this.userStore.getValue();
     this.httpClient.delete<ResponseModel<CompanyEntityModel>>(`http://localhost:5038/api/company/${companyId}`)
       .pipe(
         switchMap(response => {
           if (response.success) {
-            return this.httpClient.get<ResponseModel<CompanyEntityModel[]>>('http://localhost:5038/api/company');
+            return this.httpClient.get<ResponseModel<CompanyEntityModel[]>>(`http://localhost:5038/api/company/user/${userId}`);
           } else {
             throw new Error(response.message);
           }

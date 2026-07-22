@@ -4,7 +4,7 @@ export interface CompanyEntityModel {
   city: string;
   country: string;
   includeConsentClause: boolean;
-  customConsentClause?: string;
+  customConsentClause: string | null;
   recruitmentStatus: string;
   userId: number;
 }
