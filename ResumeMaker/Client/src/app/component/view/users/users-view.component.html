@@ -1,5 +1,6 @@
 <div class="view">
-  <form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <app-create-user-form-component></app-create-user-form-component>
+  <!--<form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <h3 class="user-form-header">Create user</h3>
     <div class="user-form-item">
       <label class="user-form-form-label" for="email">Email</label>
@@ -26,8 +27,8 @@
       <input id="phoneNumber" class="user-form-input-text" type="text" formControlName="phoneNumber" />
     </div>
     <input type="submit" [disabled]="!userForm.valid" value="Create" />
-  </form>
-  <div class="user-list">
+  </form>-->
+  <!--<div class="user-list">
     @if (users.length > 0) {
       @for (user of users; track user.id) {
     <div class="user-list-item">
@@ -48,5 +49,5 @@
       <p>Users not found.</p>
     </div>
     }
-  </div>
+  </div>-->
 </div>

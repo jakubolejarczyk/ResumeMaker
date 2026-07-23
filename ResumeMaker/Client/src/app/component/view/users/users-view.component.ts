@@ -3,8 +3,8 @@ import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angula
 import { FormBuilder, Validators } from "@angular/forms";
 import { Subscription, switchMap } from "rxjs";
 
-import { UserEntityModel } from "../../../model/entity/user-entity.model";
-import { ResponseModel } from "../../../model/response/response.model";
+// import { UserEntityModel } from "../../../model/entity/user-entity.model";
+// import { ResponseModel } from "../../../model/response/response.model";
 // import { UsersStore } from "../../../store/users.store";
 import { Router } from "@angular/router";
 // import { UserStore } from "../../../store/user.store";
@@ -32,7 +32,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     phoneNumber: ['', Validators.required]
   });
 
-  users: UserEntityModel[] = [];
+  // users: UserEntityModel[] = [];
 
   // sub!: Subscription;
 
@@ -51,28 +51,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.userForm.valid) return;
-    const { value } = this.userForm;
-    this.httpClient.post<ResponseModel<UserEntityModel>>('http://localhost:5038/api/user', value)
-      .pipe(
-        switchMap(response => {
-          if (response.success) {
-            alert(response.message);
-            return this.httpClient.get<ResponseModel<UserEntityModel[]>>('http://localhost:5038/api/user');
-          } else {
-            throw new Error(response.message);
-          }
-        })
-      )
-      .subscribe({
-        next: response => {
-          // this.usersStore.data.next(response.body);
-          this.userForm.reset();
-        },
-        error: err => {
-          alert(err);
-        }
-      });
   }
 
   onSelect(userId: number) {
@@ -85,23 +63,23 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   onDelete(userId: number) {
-    this.httpClient.delete<ResponseModel<UserEntityModel>>(`http://localhost:5038/api/user/${userId}`)
-      .pipe(
-        switchMap(response => {
-          if (response.success) {
-            return this.httpClient.get<ResponseModel<UserEntityModel[]>>('http://localhost:5038/api/user');
-          } else {
-            throw new Error(response.message);
-          }
-        })
-      )
-      .subscribe({
-        next: response => {
-          // this.usersStore.data.next(response.body);
-        },
-        error: err => {
-          alert(err);
-        }
-      });
+    // this.httpClient.delete<ResponseModel<UserEntityModel>>(`http:localhost:5038/api/user/${userId}`)
+    //   .pipe(
+    //     switchMap(response => {
+    //       if (response.success) {
+    //         return this.httpClient.get<ResponseModel<UserEntityModel[]>>('http:localhost:5038/api/user');
+    //       } else {
+    //         throw new Error(response.message);
+    //       }
+    //     })
+    //   )
+    //   .subscribe({
+    //     next: response => {
+    //       this.usersStore.data.next(response.body);
+    //     },
+    //     error: err => {
+    //       alert(err);
+    //     }
+    //   });
   }
 }

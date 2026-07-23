@@ -1,0 +1,28 @@
+<form class="form" [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+  <h3 class="form-title">Create user</h3>
+  <div class="form-item">
+    <label class="form-label" for="email">Email</label>
+    <input id="email" class="form-input-text" type="text" formControlName="email" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="firstName">First name</label>
+    <input id="firstName" class="form-input-text" type="text" formControlName="firstName" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="lastName">Last name</label>
+    <input id="lastName" class="form-input-text" type="text" formControlName="lastName" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="city">City</label>
+    <input id="city" class="form-input-text" type="text" formControlName="city" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="country">Country</label>
+    <input id="country" class="form-input-text" type="text" formControlName="country" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="phoneNumber">Phone number</label>
+    <input id="phoneNumber" class="form-input-text" type="text" formControlName="phoneNumber" />
+  </div>
+  <input type="submit" [disabled]="!createUserForm.valid" value="Create" />
+</form>
