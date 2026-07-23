@@ -19,20 +19,9 @@ export class UserRequestService {
       .pipe(
         switchMap(response => {
           alert(response.message);
-          if (response.success) {
-            return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
-          } else {
-            throw new Error(response.message);
-          }
+          return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })
       )
-      .subscribe({
-        next: response => {
-          this.appStore.users.next(response.body);
-        },
-        error: err => {
-          console.error(err);
-        }
-      });
+      .subscribe(response => this.appStore.users.next(response.body));
   }
 }
