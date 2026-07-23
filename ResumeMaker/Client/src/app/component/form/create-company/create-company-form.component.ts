@@ -1,6 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
+import { AppStore } from "../../../store/app-store";
+
 @Component({
   selector: 'app-create-company-form-component',
   templateUrl: './create-company-form.component.html',
@@ -9,6 +11,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 })
 export class CreateCompanyFormComponent {
   formBuilder = inject(FormBuilder);
+  appStore = inject(AppStore);
 
   createCompanyForm = this.formBuilder.group({
     companyName: ['', Validators.required],

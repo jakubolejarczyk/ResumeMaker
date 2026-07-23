@@ -3,11 +3,11 @@ import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { CompaniesStore } from "../../../store/companies.store";
+// import { CompaniesStore } from "../../../store/companies.store";
 import { tap, switchMap } from "rxjs";
 import { ResponseModel } from "../../../model/response/response.model";
 import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
-import { UserStore } from "../../../store/user.store";
+// import { UserStore } from "../../../store/user.store";
 
 @Component({
   selector: 'app-company-view-component',
@@ -19,8 +19,8 @@ export class CompanyViewComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   httpClient = inject(HttpClient);
   route = inject(ActivatedRoute);
-  companiesStore = inject(CompaniesStore);
-  userStore = inject(UserStore);
+  // companiesStore = inject(CompaniesStore);
+  // userStore = inject(UserStore);
 
   companyForm = this.formBuilder.group({
     companyName: ['', Validators.required],
@@ -47,7 +47,8 @@ export class CompanyViewComponent implements OnInit {
 
   onSubmit() {
     if (!this.companyForm.valid) return;
-    const userId = this.userStore.getValue();
+    // const userId = this.userStore.getValue();
+    const userId = 1;
     const { value } = this.companyForm;
     const body = { ...value, userId };
     const id = this.route.snapshot.paramMap.get('id');
@@ -76,7 +77,7 @@ export class CompanyViewComponent implements OnInit {
       )
       .subscribe({
         next: response => {
-          this.companiesStore.data.next(response.body);
+          // this.companiesStore.data.next(response.body);
         },
         error: err => {
           alert(err);

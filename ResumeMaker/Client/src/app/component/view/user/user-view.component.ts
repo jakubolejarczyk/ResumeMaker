@@ -6,7 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { ResponseModel } from "../../../model/response/response.model";
-import { UsersStore } from "../../../store/users.store";
+// import { UsersStore } from "../../../store/users.store";
 
 @Component({
   selector: 'app-user-view-component',
@@ -18,7 +18,7 @@ export class UserViewComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   httpClient = inject(HttpClient);
   route = inject(ActivatedRoute);
-  usersStore = inject(UsersStore);
+  // usersStore = inject(UsersStore);
 
   userForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -72,7 +72,7 @@ export class UserViewComponent implements OnInit {
       )
       .subscribe({
         next: response => {
-          this.usersStore.data.next(response.body);
+          // this.usersStore.data.next(response.body);
         },
         error: err => {
           alert(err);

@@ -5,9 +5,9 @@ import { Subscription, switchMap } from "rxjs";
 
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { ResponseModel } from "../../../model/response/response.model";
-import { UsersStore } from "../../../store/users.store";
+// import { UsersStore } from "../../../store/users.store";
 import { Router } from "@angular/router";
-import { UserStore } from "../../../store/user.store";
+// import { UserStore } from "../../../store/user.store";
 
 @Component({
   selector: 'app-users-view-component',
@@ -18,10 +18,10 @@ import { UserStore } from "../../../store/user.store";
 export class UsersViewComponent implements OnInit, OnDestroy {
   formBuilder = inject(FormBuilder);
   httpClient = inject(HttpClient);
-  usersStore = inject(UsersStore);
+  // usersStore = inject(UsersStore);
   cdr = inject(ChangeDetectorRef);
   router = inject(Router);
-  userStore = inject(UserStore);
+  // userStore = inject(UserStore);
 
   userForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -34,20 +34,20 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   users: UserEntityModel[] = [];
 
-  sub!: Subscription;
+  // sub!: Subscription;
 
   ngOnInit() {
-    this.sub = this.usersStore.data.subscribe(users => {
-      this.users = users;
-      this.cdr.detectChanges();
-    });
-    this.httpClient.get<ResponseModel<UserEntityModel[]>>('http://localhost:5038/api/user').subscribe(response => {
-      this.usersStore.data.next(response.body);
-    });
+    // this.sub = this.usersStore.data.subscribe(users => {
+    //   this.users = users;
+    //   this.cdr.detectChanges();
+    // });
+    // this.httpClient.get<ResponseModel<UserEntityModel[]>>('http:localhost:5038/api/user').subscribe(response => {
+    //   this.usersStore.data.next(response.body);
+    // });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   onSubmit() {
@@ -66,7 +66,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: response => {
-          this.usersStore.data.next(response.body);
+          // this.usersStore.data.next(response.body);
           this.userForm.reset();
         },
         error: err => {
@@ -76,7 +76,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   onSelect(userId: number) {
-    this.userStore.data.next(userId);
+    // this.userStore.data.next(userId);
     alert(`User with id ${userId} was set!`);
   }
 
@@ -97,7 +97,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: response => {
-          this.usersStore.data.next(response.body);
+          // this.usersStore.data.next(response.body);
         },
         error: err => {
           alert(err);
