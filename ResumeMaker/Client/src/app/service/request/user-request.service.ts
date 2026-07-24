@@ -64,9 +64,13 @@ export class UserRequestService {
       .pipe(
         switchMap(response => {
           alert(response.message);
+          const { value } = this.appStore.user;
+          if (value?.id === response.body.id) {
+            this.appStore.user.next(response.body);
+          }
           return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })
-      )
+    )
       .subscribe(response => this.appStore.users.next(response.body));
   }
 
@@ -75,6 +79,10 @@ export class UserRequestService {
       .pipe(
         switchMap(response => {
           alert(response.message);
+          const { value } = this.appStore.user;
+          if (value?.id === response.body.id) {
+            this.appStore.user.next(undefined);
+          }
           return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })
       )
