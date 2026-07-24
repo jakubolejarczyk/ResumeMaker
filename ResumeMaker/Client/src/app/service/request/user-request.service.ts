@@ -10,6 +10,7 @@ import { DeleteUserResponseModel } from "../../model/response/delete-user-respon
 import { ReadUserResponseModel } from "../../model/response/read-user-response.model";
 import { UpdateUserRequestModel } from "../../model/request/update-user-request.model";
 import { UpdateUserResponseModel } from "../../model/response/update-user-response.model";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Injectable({ providedIn: 'root' })
 export class UserRequestService {
@@ -29,8 +30,24 @@ export class UserRequestService {
       .subscribe(response => this.appStore.users.next(response.body));
   }
 
-  readUser(id: string) {
-    return this.httpClient.get<ReadUserResponseModel>(this.API_ENDPOINT + id);
+  readUser(id: string, updateUserForm: FormGroup<{
+    email: FormControl,
+    firstName: FormControl,
+    lastName: FormControl,
+    city: FormControl,
+    country: FormControl,
+    phoneNumber: FormControl
+  }>) {
+    this.httpClient.get<ReadUserResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
+      if (response.success) {
+        updateUserForm.controls.email.setValue(response.body.email);
+        updateUserForm.controls.firstName.setValue(response.body.firstName);
+        updateUserForm.controls.lastName.setValue(response.body.lastName);
+        updateUserForm.controls.city.setValue(response.body.city);
+        updateUserForm.controls.country.setValue(response.body.country);
+        updateUserForm.controls.phoneNumber.setValue(response.body.phoneNumber);
+      }
+    });
   }
 
   readUsers() {

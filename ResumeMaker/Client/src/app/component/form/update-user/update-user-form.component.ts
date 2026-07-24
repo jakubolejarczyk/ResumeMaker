@@ -30,16 +30,7 @@ export class UpdateUserFormComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) return;
-    this.userRequestService.readUser(id).subscribe(response => {
-      if (response.success) {
-        this.updateUserForm.controls.email.setValue(response.body.email);
-        this.updateUserForm.controls.firstName.setValue(response.body.firstName);
-        this.updateUserForm.controls.lastName.setValue(response.body.lastName);
-        this.updateUserForm.controls.city.setValue(response.body.city);
-        this.updateUserForm.controls.country.setValue(response.body.country);
-        this.updateUserForm.controls.phoneNumber.setValue(response.body.phoneNumber);
-      }
-    });
+    this.userRequestService.readUser(id, this.updateUserForm);
   }
 
   onSubmit() {
