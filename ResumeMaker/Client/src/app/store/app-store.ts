@@ -7,7 +7,7 @@ import { UserEntityModel } from "../model/entity/user-entity.model";
 export class AppStore {
   user = new BehaviorSubject<UserEntityModel | undefined>(undefined);
 
-  users = new BehaviorSubject<UserEntityModel[]>([]);
+  updateUser = new BehaviorSubject<UserEntityModel | undefined>(undefined);
 
-  // companies = new BehaviorSubject<CompanyEntityModel[]>([]);
+  users = new BehaviorSubject<UserEntityModel[]>([]);
 }
