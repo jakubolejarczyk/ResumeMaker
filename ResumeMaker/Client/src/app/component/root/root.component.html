@@ -1,4 +1,11 @@
 <div class="root">
+  <div class="selected-user">
+    @if (user) {
+      <p>Wybrano użytkownika: {{ user.firstName }} {{ user.lastName }}</p>
+    } @else {
+      <p>User was not selected!</p>
+    }
+  </div>
   <app-nav-component></app-nav-component>
   <div class="root-content">
     <router-outlet></router-outlet>

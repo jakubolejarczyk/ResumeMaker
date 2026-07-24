@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { switchMap } from "rxjs";
+import { switchMap, tap } from "rxjs";
 
 import { CreateUserRequestModel } from "../../model/request/create-user-request.model";
 import { CreateUserResponseModel } from "../../model/response/create-user-response.model";
@@ -78,7 +78,7 @@ export class UserRequestService {
           return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })
       )
-      .subscribe(response =>{
+      .subscribe(response => {
         this.appStore.users.next(response.body);
       });
   }
