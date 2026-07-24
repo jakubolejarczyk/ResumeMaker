@@ -1,0 +1,29 @@
+.list {
+  border: 1px solid black;
+  margin: 1rem;
+}
+
+.list-item {
+  margin: 1rem;
+}
+
+.table {
+  border: 1px solid black;
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.25rem;
+    text-align: left;
+    border: 1px solid black;
+  }
+
+  th {
+    width: 125px;
+  }
+}
+
+.users-empty {
+  margin: 1rem;
+}

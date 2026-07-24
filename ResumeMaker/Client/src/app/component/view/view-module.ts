@@ -7,6 +7,7 @@ import { UsersViewComponent } from "./users/users-view.component";
 import { UserViewComponent } from "./user/user-view.component";
 import { CompanyViewComponent } from "./company/company-view.component";
 import { FormModule } from "../form/form-module";
+import { ListModule } from "../list/list-module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,11 @@ import { FormModule } from "../form/form-module";
     UserViewComponent,
     CompanyViewComponent
   ],
-  imports: [FormModule, ReactiveFormsModule],
+  imports: [
+    FormModule,
+    ListModule,
+    ReactiveFormsModule
+  ],
   exports: [
     CompaniesViewComponent,
     ResumesViewComponent,

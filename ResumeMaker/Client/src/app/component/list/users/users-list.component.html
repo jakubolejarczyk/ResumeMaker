@@ -1,0 +1,50 @@
+<div class="list">
+  @if (users.length > 0) {
+    @for (user of users; track user.id) {
+      <div class="list-item">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Id</th>
+              <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th>First name</th>
+              <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+              <th>Last name</th>
+              <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+              <th>City</th>
+              <td>{{ user.city }}</td>
+            </tr>
+            <tr>
+              <th>Country</th>
+              <td>{{ user.country }}</td>
+            </tr>
+            <tr>
+              <th>Phone number</th>
+              <td>{{ user.phoneNumber }}</td>
+            </tr>
+            <tr>
+              <th>Actions</th>
+              <td>
+                <button (click)="onSelect(user)">Select</button>
+                <button (click)="onUpdate(user.id)">Update</button>
+                <button (click)="onDelete(user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+    <p class="users-empty">No users found.</p>
+  }
+</div>
