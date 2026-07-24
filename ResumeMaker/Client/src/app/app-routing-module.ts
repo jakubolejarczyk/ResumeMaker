@@ -7,6 +7,7 @@ import { ResumesViewComponent } from './component/view/resumes/resumes-view.comp
 import { UserViewComponent } from './component/view/user/user-view.component';
 import { userIsSelectedGuard } from './guard/user-is-selected.guard';
 import { CompanyViewComponent } from './component/view/company/company-view.component';
+import { userToUpdateExists } from './guard/user-to-update-exists.guard';
 
 const routes: Routes = [
   {
@@ -30,7 +31,8 @@ const routes: Routes = [
   },
   {
     path: 'user/:id',
-    component: UserViewComponent
+    component: UserViewComponent,
+    canActivate: [userToUpdateExists]
   },
   {
     path: 'company/:id',
