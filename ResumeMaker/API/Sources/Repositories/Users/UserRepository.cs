@@ -77,7 +77,7 @@ public class UserRepository(AppDbContext appDbContext) : IUserRepository
             };
         }
         var emailExists = appDbContext.Users.FirstOrDefault(u => u.Email == user.Email);
-        if (emailExists != null)
+        if (emailExists != null && currentUser.Email != user.Email)
         {
             return new RepositoryDTO<User>
             {
