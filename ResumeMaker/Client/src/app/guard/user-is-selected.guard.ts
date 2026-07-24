@@ -1,13 +1,14 @@
-import { CanActivateFn } from "@angular/router";
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
 
-// import { UserStore } from "../store/user.store";
+import { AppStore } from "../store/app-store";
 
 export const userIsSelectedGuard: CanActivateFn = () => {
-  // const userStore = inject(UserStore);
-  // const router = inject(Router);
-  // if (userStore.getValue() == -1) {
-  //   alert("User was not selected!");
-  //   return router.createUrlTree(['/']);
-  // }
+  const appStore = inject(AppStore);
+  const router = inject(Router);
+  if (appStore.user.value === undefined) {
+    alert("User was not selected!");
+    return router.createUrlTree(['/']);
+  }
   return true;
 };
