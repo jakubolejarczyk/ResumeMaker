@@ -1,0 +1,28 @@
+<form class="form" [formGroup]="updateCompanyForm" (ngSubmit)="onSubmit()">
+  <h3 class="form-title">Update company</h3>
+  <div class="form-item">
+    <label class="form-label" for="companyName">Company name</label>
+    <input id="companyName" class="form-input-text" type="text" formControlName="companyName" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="city">City</label>
+    <input id="city" class="form-input-text" type="text" formControlName="city" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="country">Country</label>
+    <input id="country" class="form-input-text" type="text" formControlName="country" />
+  </div>
+  <div class="form-item form-item-checkbox">
+    <label class="form-label" for="includeConsentClause">Include consent clause</label>
+    <input id="includeConsentClause" type="checkbox" formControlName="includeConsentClause" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="customConsentClause">Custom consent clause</label>
+    <input id="customConsentClause" class="form-input-text" type="text" formControlName="customConsentClause" />
+  </div>
+  <div class="form-item">
+    <label class="form-label" for="recruitmentStatus">Recruitment status</label>
+    <input id="recruitmentStatus" class="form-input-text" type="text" formControlName="recruitmentStatus" />
+  </div>
+  <input type="submit" [disabled]="!updateCompanyForm.valid" value="Update" />
+</form>
