@@ -5,20 +5,23 @@ import { CreateCompanyFormComponent } from "./create-company/create-company-form
 import { CreateUserFormComponent } from "./create-user/create-user-form.component";
 import { UpdateUserFormComponent } from "./update-user/update-user-form.component";
 import { UpdateCompanyFormComponent } from "./update-company/update-company-form.component";
+import { CreateResumeFormComponent } from "./create-resume/create-resume-form.component";
 
 @NgModule({
   declarations: [
     CreateCompanyFormComponent,
     CreateUserFormComponent,
     UpdateUserFormComponent,
-    UpdateCompanyFormComponent
+    UpdateCompanyFormComponent,
+    CreateResumeFormComponent
   ],
   imports: [ReactiveFormsModule],
   exports: [
     CreateCompanyFormComponent,
     CreateUserFormComponent,
     UpdateUserFormComponent,
-    UpdateCompanyFormComponent
+    UpdateCompanyFormComponent,
+    CreateResumeFormComponent
   ]
 })
 export class FormModule {}

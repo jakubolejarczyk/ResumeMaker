@@ -8,6 +8,7 @@ import { UserViewComponent } from './component/view/user/user-view.component';
 import { userIsSelectedGuard } from './guard/user-is-selected.guard';
 import { CompanyViewComponent } from './component/view/company/company-view.component';
 import { userToUpdateExists } from './guard/user-to-update-exists.guard';
+import { companyIsSelectedGuard } from './guard/company-is-selected.guard';
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
   {
     path: 'resumes',
     component: ResumesViewComponent,
-    canActivate: [userIsSelectedGuard]
+    canActivate: [userIsSelectedGuard, companyIsSelectedGuard]
   },
   {
     path: 'user/:id',
