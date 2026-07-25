@@ -1,6 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { FormArray, FormBuilder, Validators } from "@angular/forms";
-
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -13,7 +12,7 @@ export class CreateResumeFormComponent {
   formBuilder = inject(FormBuilder);
   httpClient = inject(HttpClient);
 
-  resumeForm = this.formBuilder.group({
+  createResumeForm = this.formBuilder.group({
     name: ['', Validators.required],
     jobTitle: ['', Validators.required],
     description: ['', Validators.required],
@@ -24,12 +23,11 @@ export class CreateResumeFormComponent {
   });
 
   onSubmit() {
-    console.log(this.resumeForm.value);
+    console.log(this.createResumeForm.value);
   }
 
-  // Social medias
   getSocialMedias() {
-    return <FormArray>this.resumeForm.get('socialMedias');
+    return <FormArray>this.createResumeForm.get('socialMedias');
   }
 
   moveSocialMedia(fromIndex: number, toIndex: number) {
@@ -62,9 +60,8 @@ export class CreateResumeFormComponent {
     this.getSocialMedias().push(control);
   }
 
-  // Educations
   getEducations() {
-    return <FormArray>this.resumeForm.get('educations');
+    return <FormArray>this.createResumeForm.get('educations');
   }
 
   moveEducation(fromIndex: number, toIndex: number) {
@@ -99,9 +96,8 @@ export class CreateResumeFormComponent {
     this.getEducations().push(control);
   }
 
-  // Experience
   getExperience() {
-    return this.resumeForm.get('experience') as FormArray;
+    return this.createResumeForm.get('experience') as FormArray;
   }
 
   addExperience() {
@@ -139,13 +135,11 @@ export class CreateResumeFormComponent {
   }
 
 
-  // Experience descriptions
   getExperienceDescription(experienceIndex: number) {
     return this.getExperience()
       .at(experienceIndex)
       .get('experienceDescription') as FormArray;
   }
-
 
   addExperienceDescription(experienceIndex: number) {
     const descriptions = this.getExperienceDescription(experienceIndex);
@@ -161,7 +155,6 @@ export class CreateResumeFormComponent {
     this.getExperienceDescription(experienceIndex).removeAt(descriptionIndex);
   }
 
-
   moveExperienceDescription(experienceIndex: number, fromIndex: number, toIndex: number) {
     const descriptions = this.getExperienceDescription(experienceIndex);
     if (toIndex < 0 || toIndex >= descriptions.length) {
@@ -172,7 +165,6 @@ export class CreateResumeFormComponent {
     descriptions.insert(toIndex, control);
   }
 
-
   moveExperienceDescriptionUp(experienceIndex: number, descriptionIndex: number) {
     this.moveExperienceDescription(experienceIndex, descriptionIndex, descriptionIndex - 1);
   }
@@ -182,9 +174,8 @@ export class CreateResumeFormComponent {
     this.moveExperienceDescription(experienceIndex, descriptionIndex, descriptionIndex + 1);
   }
 
-  // Skill group
   getSkillGroup() {
-    return this.resumeForm.get('skillGroup') as FormArray;
+    return this.createResumeForm.get('skillGroup') as FormArray;
   }
 
   addSkillGroup() {
@@ -218,14 +209,11 @@ export class CreateResumeFormComponent {
     this.getSkillGroup().removeAt(index);
   }
 
-
-  // Skill element
   getSkillElement(experienceIndex: number) {
     return this.getSkillGroup()
       .at(experienceIndex)
       .get('skillElement') as FormArray;
   }
-
 
   addSkillElement(experienceIndex: number) {
     const descriptions = this.getSkillElement(experienceIndex);
@@ -251,7 +239,6 @@ export class CreateResumeFormComponent {
     descriptions.removeAt(fromIndex);
     descriptions.insert(toIndex, control);
   }
-
 
   moveSkillElementUp(experienceIndex: number, descriptionIndex: number) {
     this.moveSkillElement(experienceIndex, descriptionIndex, descriptionIndex - 1);
