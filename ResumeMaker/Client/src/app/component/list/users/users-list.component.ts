@@ -36,6 +36,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   onSelect(user: UserEntityModel) {
     this.appStore.user.next(user);
+    this.appStore.company.next(undefined);
   }
 
   onUpdate(userId: number) {

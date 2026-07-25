@@ -8,10 +8,8 @@ public class CompanyRepository(AppDbContext appDbContext) : ICompanyRepository
 {
     public RepositoryDTO<Company> Create(Company company)
     {
-        Console.WriteLine("Przed zapissem " + company.UserId);
         appDbContext.Companies.Add(company);
         appDbContext.SaveChanges();
-        Console.WriteLine("Po zapissem " + company.UserId);
         return new RepositoryDTO<Company>
         {
             Success = true,

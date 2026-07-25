@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { switchMap, tap } from "rxjs";
+import { switchMap } from "rxjs";
 
 import { CreateUserRequestModel } from "../../model/request/create-user-request.model";
 import { CreateUserResponseModel } from "../../model/response/create-user-response.model";
@@ -79,9 +79,13 @@ export class UserRequestService {
       .pipe(
         switchMap(response => {
           alert(response.message);
-          const { value } = this.appStore.user;
-          if (value?.id === response.body.id) {
+          const userValue = this.appStore.user.value;
+          if (userValue?.id === response.body.id) {
             this.appStore.user.next(undefined);
+          }
+          const companyValue = this.appStore.company.value;
+          if (companyValue?.userId === response.body.id) {
+            this.appStore.company.next(undefined);
           }
           return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })

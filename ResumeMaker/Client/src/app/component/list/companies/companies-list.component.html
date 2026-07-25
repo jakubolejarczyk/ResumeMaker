@@ -1,0 +1,46 @@
+<div class="list">
+  @if (companies.length > 0) {
+    @for (company of companies; track company.id) {
+      <div class="list-item">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Company name</th>
+              <td>{{ company.companyName }}</td>
+            </tr>
+            <tr>
+              <th>City</th>
+              <td>{{ company.city }}</td>
+            </tr>
+            <tr>
+              <th>Country</th>
+              <td>{{ company.country }}</td>
+            </tr>
+            <tr>
+              <th>Include consent clause</th>
+              <td>{{ company.includeConsentClause }}</td>
+            </tr>
+            <tr>
+              <th>Custom consent clause</th>
+              <td>{{ company.customConsentClause }}</td>
+            </tr>
+            <tr>
+              <th>Recruitment status</th>
+              <td>{{ company.recruitmentStatus }}</td>
+            </tr>
+            <tr>
+              <th>Actions</th>
+              <td>
+                <button (click)="onSelect(company)">Select</button>
+                <!--button (click)="onUpdate(user.id)">Update</button>-->
+                <button (click)="onDelete(company.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+    <p class="list-empty">No companies found.</p>
+  }
+</div>

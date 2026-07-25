@@ -3,6 +3,7 @@ import { Subscription } from "rxjs";
 
 import { UserEntityModel } from "../../model/entity/user-entity.model";
 import { AppStore } from "../../store/app-store";
+import { CompanyEntityModel } from "../../model/entity/company-entity.model";
 
 @Component({
   selector: 'app-root-component',
@@ -16,16 +17,24 @@ export class RootComponent implements OnInit, OnDestroy {
 
   user: UserEntityModel | undefined;
 
-  sub!: Subscription;
+  company: CompanyEntityModel | undefined;
+
+  subUser!: Subscription;
+  subCompany!: Subscription;
 
   ngOnInit() {
-    this.sub = this.appStore.user.subscribe(user => {
+    this.subUser = this.appStore.user.subscribe(user => {
       this.user = user;
+      this.cdr.detectChanges();
+    });
+    this.subCompany = this.appStore.company.subscribe(company => {
+      this.company = company;
       this.cdr.detectChanges();
     });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.subUser.unsubscribe();
+    this.subCompany.unsubscribe();
   }
 }

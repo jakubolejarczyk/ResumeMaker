@@ -1,24 +1,2 @@
-<div class="view">
-  <app-create-company-form-component></app-create-company-form-component>
-  <!--<div class="company-list">
-    @if (companies.length > 0) {
-    @for (company of companies; track company.id) {
-    <div class="company-list-item">
-      <p class="company-list-item-line"><b>Id:</b> {{ company.id}}</p>
-      <p class="company-list-item-line"><b>Company name:</b> {{ company.companyName }}</p>
-      <p class="company-list-item-line"><b>City:</b> {{ company.city }}</p>
-      <p class="company-list-item-line"><b>Include consent clause:</b> {{ company.includeConsentClause }}</p>
-      <p class="company-list-item-line"><b>Custom consent clause:</b> {{ company.customConsentClause }}</p>
-      <p class="company-list-item-line"><b>Recruitment status:</b> {{ company.recruitmentStatus }}</p>
-      <p class="company-list-item-line"><b>User id:</b> {{ company.userId }}</p>
-      <button (click)="onUpdate(company.id)">Update</button>
-      <button (click)="onDelete(company.id)">Delete</button>
-    </div>
-    }
-    } @else {
-    <div class="company-not-found">
-      <p>Companies not found.</p>
-    </div>
-    }
-  </div>-->
-</div>
+<app-create-company-form-component></app-create-company-form-component>
+<app-companies-list-component></app-companies-list-component>
