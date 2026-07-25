@@ -38,9 +38,9 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
     this.appStore.company.next(user);
   }
 
-  // onUpdate(userId: number) {
-  //   this.router.navigate(['/user', userId]);
-  // }
+  onUpdate(userId: number) {
+    this.router.navigate(['/company', userId]);
+  }
 
   onDelete(companyId: number) {
     this.companyRequestService.deleteCompany(companyId);
