@@ -24,6 +24,7 @@ public class ResumeService(
 {
     public ResponseCore<ResumeResponse> CreateResume(ResumeRequest request)
     {
+        Console.WriteLine("asdasdasdasdasdasasdas");
         // Resume
         var resume = new Resume()
         {

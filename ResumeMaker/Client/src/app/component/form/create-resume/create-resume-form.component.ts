@@ -34,6 +34,7 @@ export class CreateResumeFormComponent {
       alert('Please fill in all required fields.');
       return;
     }
+    console.log(this.createResumeForm.value);
     const userId = this.appStore.user.value?.id ?? -1;
     const { value } = this.createResumeForm;
     const request: CreateResumeRequestModel = {
@@ -56,7 +57,7 @@ export class CreateResumeFormComponent {
         companyName: experience?.companyName ?? '',
         jobTitle: experience?.jobTitle ?? '',
         startDate: experience?.startDate ?? new Date(),
-        endDate: experience?.endDate ?? undefined,
+        endDate: experience?.endDate ?? new Date(),
         experienceDescriptions: <CreateResumeExperienceDescriptionRequestModel[]><unknown>experience?.experienceDescriptions.map((experienceDescription, index) => ({
             description: experienceDescription.description,
             order: index

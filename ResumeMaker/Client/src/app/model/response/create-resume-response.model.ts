@@ -47,7 +47,7 @@ interface CreateResumeSkillGroupResponseModel {
   resumeId: number;
 }
 
-export interface CreateResumeRequestModel {
+export interface CreateResumeResponseModel {
   id: number;
   name: string;
   jobTitle: string;

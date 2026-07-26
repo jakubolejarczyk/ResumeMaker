@@ -5,6 +5,7 @@ import { switchMap } from "rxjs";
 import { AppStore } from "../../store/app-store";
 import { ReadCompaniesResponseModel } from "../../model/response/read-companies-response.model";
 import { CreateResumeRequestModel } from "../../model/request/create-resume-request.model";
+import { CreateResumeResponseModel } from "../../model/response/create-resume-response.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -14,7 +15,7 @@ export class ResumeRequestService {
   appStore = inject(AppStore);
 
   createResume(request: CreateResumeRequestModel) {
-    this.httpClient.post<CreateResumeRequestModel>(this.API_ENDPOINT, request).subscribe(response => {
+    this.httpClient.post<CreateResumeResponseModel>(this.API_ENDPOINT, request).subscribe(response => {
       console.log(response);
     });
       // .pipe(

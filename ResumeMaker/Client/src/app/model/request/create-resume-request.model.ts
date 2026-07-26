@@ -20,7 +20,7 @@ export interface CreateResumeExperienceRequestModel {
   companyName: string;
   jobTitle: string;
   startDate: Date;
-  endDate?: Date;
+  endDate: Date | null;
   experienceDescriptions: CreateResumeExperienceDescriptionRequestModel[];
 }
 
