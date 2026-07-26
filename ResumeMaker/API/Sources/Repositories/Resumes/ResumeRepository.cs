@@ -100,7 +100,7 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
 
     public RepositoryDTO<Resume> Delete(int id)
     {
-        var resume = store.Data.FirstOrDefault(r => r.Id == id);
+        var resume = appDbContext.Resumes.FirstOrDefault(r => r.Id == id);
         if (resume == null)
         {
             return new RepositoryDTO<Resume>
@@ -109,7 +109,8 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
                 Message = "Failed to delete the resume because it does not exist."
             };
         }
-        store.Data.Remove(resume);
+        appDbContext.Resumes.Remove(resume);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<Resume>
         {
             Success = true,

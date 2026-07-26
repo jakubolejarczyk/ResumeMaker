@@ -10,6 +10,7 @@ using API.Sources.Repositories.SocialMedias;
 using API.Sources.Requests;
 using API.Sources.Responses;
 using Azure;
+using static API.Sources.Requests.ResumeRequest;
 
 namespace API.Sources.Services.Resumes;
 
@@ -317,6 +318,85 @@ public class ResumeService(
 
     public ResponseCore<ResumeResponse> DeleteResume(int id)
     {
-        throw new NotImplementedException();
+        var dto = resumeRepository.Delete(id);
+        var body = dto.Body;
+        return new ResponseCore<ResumeResponse>
+        {
+            Success = dto.Success,
+            Message = dto.Message,
+            Body = body == null ? null : new ResumeResponse()
+            {
+                Id = body.Id,
+                Name = body.Name,
+                JobTitle = body.JobTitle,
+                Description = body.Description,
+                SocialMedias = body.SocialMedias.Select(i =>
+                {
+                    return new ResumeResponse.SocialMediaResponse
+                    {
+                        Id = i.Id,
+                        Label = i.Label,
+                        Link = i.Link,
+                        Order = i.Order,
+                        ResumeId = i.ResumeId
+                    };
+                }).ToList(),
+                Educations = body.Educations.Select(i =>
+                {
+                    return new ResumeResponse.EducationResponse
+                    {
+                        Id = i.Id,
+                        InstitutionName = i.InstitutionName,
+                        FieldOfStudy = i.FieldOfStudy,
+                        Degree = i.Degree,
+                        GraduationYear = i.GraduationYear,
+                        ResumeId = i.ResumeId
+                    };
+                }).ToList(),
+                Experiences = body.Experiences.Select(i =>
+                {
+                    return new ResumeResponse.ExperienceResponse
+                    {
+                        Id = i.Id,
+                        CompanyName = i.CompanyName,
+                        JobTitle = i.JobTitle,
+                        StartDate = i.StartDate,
+                        EndDate = i.EndDate,
+                        ResumeId = i.ResumeId,
+                        ExperienceDescriptions = i.ExperienceDescriptions.Select(j =>
+                        {
+                            return new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                            {
+                                Id = j.Id,
+                                Description = j.Description,
+                                Order = j.Order,
+                                ExperienceId = j.ExperienceId
+                            };
+                        }).ToList()
+                    };
+                }).ToList(),
+                SkillGroups = body.SkillGroups.Select(i =>
+                {
+                    return new ResumeResponse.SkillGroupResponse
+                    {
+                        Id = i.Id,
+                        Name = i.Name,
+                        Order = i.Order,
+                        ResumeId = i.ResumeId,
+                        SkillElements = i.SkillElements.Select(j =>
+                        {
+                            return new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                            {
+                                Id = j.Id,
+                                Name = j.Name,
+                                Order = j.Order,
+                                SkillGroupId = j.SkillGroupId
+                            };
+                        }).ToList()
+                    };
+                }).ToList(),
+                UserId = body?.UserId ?? 0
+            }
+        };
     }
 }

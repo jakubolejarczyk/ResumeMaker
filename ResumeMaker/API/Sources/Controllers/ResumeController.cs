@@ -1,5 +1,6 @@
 ﻿using API.Sources.Cores;
 using API.Sources.Requests;
+using API.Sources.Responses;
 using API.Sources.Services.Resumes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,13 @@ public class ResumeController(IResumeService service) : ControllerBase
     public ActionResult<ResponseCore<List<ResumeResponse>>> ReadResumes(int userId)
     {
         var response = service.ReadResumesByUserId(userId);
+        return Ok(response);
+    }
+
+    [HttpDelete("{resumeId}")]
+    public ActionResult<ResponseCore<ResumeResponse>> DeleteResume(int resumeId)
+    {
+        var response = service.DeleteResume(resumeId);
         return Ok(response);
     }
 }

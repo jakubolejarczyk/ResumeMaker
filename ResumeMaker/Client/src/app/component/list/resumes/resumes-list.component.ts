@@ -42,7 +42,7 @@ export class ResumesListComponent implements OnInit, OnDestroy {
   //   this.router.navigate(['/company', userId]);
   // }
 
-  // onDelete(companyId: number) {
-  //   this.companyRequestService.deleteCompany(companyId);
-  // }
+  onDelete(companyId: number) {
+    this.resumeRequestService.deleteResume(companyId);
+  }
 }
