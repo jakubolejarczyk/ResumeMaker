@@ -87,6 +87,10 @@ export class UserRequestService {
           if (companyValue?.userId === response.body.id) {
             this.appStore.company.next(undefined);
           }
+          const resumeValue = this.appStore.resume.value;
+          if (resumeValue?.userId === response.body.id) {
+            this.appStore.resume.next(undefined);
+          }
           return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
         })
       )

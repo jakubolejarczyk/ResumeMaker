@@ -11,6 +11,8 @@ export class AppStore {
 
   company = new BehaviorSubject<CompanyEntityModel | undefined>(undefined);
 
+  resume = new BehaviorSubject<ResumeEntityModel | undefined>(undefined);
+
   users = new BehaviorSubject<UserEntityModel[]>([]);
 
   companies = new BehaviorSubject<CompanyEntityModel[]>([]);

@@ -86,6 +86,10 @@ export class CompanyRequestService {
           if (value?.id === response.body.id) {
             this.appStore.company.next(undefined);
           }
+          const resumeValue = this.appStore.resume.value;
+          if (resumeValue?.userId === response.body.id) {
+            this.appStore.resume.next(undefined);
+          }
           const userId = this.appStore.user.value?.id ?? -1;
           return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
         })

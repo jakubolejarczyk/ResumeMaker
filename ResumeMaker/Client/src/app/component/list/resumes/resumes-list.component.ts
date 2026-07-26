@@ -34,9 +34,9 @@ export class ResumesListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  // onSelect(user: CompanyEntityModel) {
-  //   this.appStore.company.next(user);
-  // }
+  onSelect(resume: ResumeEntityModel) {
+    this.appStore.resume.next(resume);
+  }
 
   // onUpdate(userId: number) {
   //   this.router.navigate(['/company', userId]);

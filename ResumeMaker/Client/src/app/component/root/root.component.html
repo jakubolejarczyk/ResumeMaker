@@ -1,16 +1,23 @@
 <div class="root">
   <div class="selected-entity">
     @if (user) {
-      <p>Wybrano użytkownika: {{ user.firstName }} {{ user.lastName }}</p>
+      <p>User: {{ user.firstName }} {{ user.lastName }}</p>
     } @else {
       <p>User was not selected!</p>
     }
   </div>
   <div class="selected-entity">
     @if (company) {
-      <p>Wybrano firmę: {{ company.companyName }}</p>
+      <p>Company: {{ company.companyName }}</p>
     } @else {
       <p>Company was not selected!</p>
+    }
+  </div>
+  <div class="selected-entity">
+    @if (resume) {
+      <p>Resume: {{ resume.name }}</p>
+    } @else {
+      <p>Resume was not selected!</p>
     }
   </div>
   <app-nav-component></app-nav-component>

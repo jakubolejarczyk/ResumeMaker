@@ -52,7 +52,7 @@ export interface ResumeEntityModel {
   name: string;
   jobTitle: string;
   description: string;
-  userId: string;
+  userId: number;
   socialMedias: ResumeSocialMediaEntityModel[];
   educations: ResumeEducationEntityModel[];
   experiences: ResumeExperienceEntityModel[];
