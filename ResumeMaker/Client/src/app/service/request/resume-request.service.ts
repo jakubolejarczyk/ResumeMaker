@@ -1,0 +1,93 @@
+import { inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { switchMap } from "rxjs";
+
+import { AppStore } from "../../store/app-store";
+import { ReadCompaniesResponseModel } from "../../model/response/read-companies-response.model";
+import { CreateResumeRequestModel } from "../../model/request/create-resume-request.model";
+
+@Injectable({ providedIn: 'root' })
+export class ResumeRequestService {
+  readonly API_ENDPOINT = 'http://localhost:5038/api/resume/';
+
+  httpClient = inject(HttpClient);
+  appStore = inject(AppStore);
+
+  createResume(request: CreateResumeRequestModel) {
+    this.httpClient.post<CreateResumeRequestModel>(this.API_ENDPOINT, request).subscribe(response => {
+      console.log(response);
+    });
+      // .pipe(
+      //   switchMap(response => {
+      //     alert(response.message);
+      //     const userId = this.appStore.user.value?.id ?? -1;
+      //     return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
+      //   })
+      // )
+      // .subscribe(response => this.appStore.companies.next(response.body));
+  }
+
+  // readCompany(id: string, updateCompanyForm: FormGroup<{
+  //   companyName: FormControl,
+  //   city: FormControl,
+  //   country: FormControl,
+  //   includeConsentClause: FormControl,
+  //   customConsentClause: FormControl,
+  //   recruitmentStatus: FormControl
+  // }>) {
+  //   this.httpClient.get<ReadCompanyResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
+  //     if (response.success) {
+  //       updateCompanyForm.controls.companyName.setValue(response.body.companyName);
+  //       updateCompanyForm.controls.city.setValue(response.body.city);
+  //       updateCompanyForm.controls.country.setValue(response.body.country);
+  //       updateCompanyForm.controls.includeConsentClause.setValue(response.body.includeConsentClause);
+  //       updateCompanyForm.controls.customConsentClause.setValue(response.body.customConsentClause);
+  //       updateCompanyForm.controls.recruitmentStatus.setValue(response.body.recruitmentStatus);
+  //     }
+  //   });
+  // }
+
+  // readCompanies() {
+  //   const userId = this.appStore.user.value?.id ?? -1;
+  //   this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`).subscribe(response => {
+  //     if (!response.success) {
+  //       alert(response.message);
+  //     }
+  //     this.appStore.companies.next(response.body);
+  //   });
+  // }
+
+  // updateCompany(id: string, request: UpdateCompanyRequestModel) {
+  //   this.httpClient.patch<UpdateCompanyResponseModel>(this.API_ENDPOINT + id, request)
+  //     .pipe(
+  //       switchMap(response => {
+  //         alert(response.message);
+  //         const { value } = this.appStore.company;
+  //         if (value?.id === response.body.id) {
+  //           this.appStore.company.next(response.body);
+  //         }
+  //         const userId = this.appStore.user.value?.id ?? -1;
+  //         return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
+  //       })
+  //   )
+  //     .subscribe(response => this.appStore.companies.next(response.body));
+  // }
+
+  // deleteCompany(companyId: number) {
+  //   this.httpClient.delete<DeleteCompanyResponseModel>(this.API_ENDPOINT + companyId)
+  //     .pipe(
+  //       switchMap(response => {
+  //         alert(response.message);
+  //         const { value } = this.appStore.company;
+  //         if (value?.id === response.body.id) {
+  //           this.appStore.company.next(undefined);
+  //         }
+  //         const userId = this.appStore.user.value?.id ?? -1;
+  //         return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
+  //       })
+  //     )
+  //     .subscribe(response => {
+  //       this.appStore.companies.next(response.body);
+  //     });
+  // }
+}

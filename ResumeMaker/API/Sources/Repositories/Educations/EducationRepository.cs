@@ -1,15 +1,16 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.Educations;
 
-public class EducationRepository(EducationStore store) : IEducationRepository
+public class EducationRepository(AppDbContext appDbContext, EducationStore store) : IEducationRepository
 {
     public RepositoryDTO<Education> Create(Education education)
     {
-        education.Id = store.Data.Count;
-        store.Data.Add(education);
+        appDbContext.Educations.Add(education);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<Education>
         {
             Success = true,

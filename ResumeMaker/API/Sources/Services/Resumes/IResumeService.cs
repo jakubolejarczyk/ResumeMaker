@@ -5,13 +5,13 @@ namespace API.Sources.Services.Resumes;
 
 public interface IResumeService
 {
-    ResponseCore<ResumeResponse> CreateResume(ResumeResponse request);
+    ResponseCore<ResumeResponse> CreateResume(ResumeRequest request);
 
     ResponseCore<ResumeResponse> ReadResume(int id);
 
     ResponseCore<List<ResumeResponse>> ReadResumes();
 
-    ResponseCore<ResumeResponse> UpdateResume(int id, ResumeResponse request);
+    ResponseCore<ResumeResponse> UpdateResume(int id, ResumeRequest request);
 
     ResponseCore<ResumeResponse> DeleteResume(int id);
 

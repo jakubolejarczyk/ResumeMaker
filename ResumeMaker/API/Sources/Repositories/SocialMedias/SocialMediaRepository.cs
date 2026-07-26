@@ -1,15 +1,16 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.SocialMedias;
 
-public class SocialMediaRepository(SocialMediaStore store) : ISocialMediaRepository
+public class SocialMediaRepository(AppDbContext appDbContext, SocialMediaStore store) : ISocialMediaRepository
 {
     public RepositoryDTO<SocialMedia> Create(SocialMedia socialMedia)
     {
-        socialMedia.Id = store.Data.Count;
-        store.Data.Add(socialMedia);
+        appDbContext.SocialMedias.Add(socialMedia);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<SocialMedia>
         {
             Success = true,

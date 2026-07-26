@@ -1,15 +1,15 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.Resumes;
 
-public class ResumeRepository(ResumeStore store) : IResumeRepository
+public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IResumeRepository
 {
     public RepositoryDTO<Resume> Create(Resume resume)
     {
-        resume.Id = store.Data.Count;
-        var nameExists = store.Data.FirstOrDefault(r => r.Name == resume.Name);
+        var nameExists = appDbContext.Resumes.FirstOrDefault(r => r.Name == resume.Name);
         if (nameExists != null)
         {
             return new RepositoryDTO<Resume>
@@ -18,7 +18,8 @@ public class ResumeRepository(ResumeStore store) : IResumeRepository
                 Message = "The resume name is already taken."
             };
         }
-        store.Data.Add(resume);
+        appDbContext.Resumes.Add(resume);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<Resume>
         {
             Success = true,

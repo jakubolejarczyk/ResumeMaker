@@ -3,4 +3,3 @@ GO
 
 SELECT *
 FROM Companies;
-

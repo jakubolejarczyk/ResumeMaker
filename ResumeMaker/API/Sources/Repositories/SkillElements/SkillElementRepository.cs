@@ -1,15 +1,16 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.SkillElements;
 
-public class SkillElementRepository(SkillElementStore store) : ISkillElementRepository
+public class SkillElementRepository(AppDbContext appDbContext, SkillElementStore store) : ISkillElementRepository
 {
     public RepositoryDTO<SkillElement> Create(SkillElement skillElement)
     {
-        skillElement.Id = store.Data.Count;
-        store.Data.Add(skillElement);
+        appDbContext.SkillElements.Add(skillElement);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<SkillElement>
         {
             Success = true,

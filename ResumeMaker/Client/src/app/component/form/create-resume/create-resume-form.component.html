@@ -58,7 +58,7 @@
     }
     <button type="button" (click)="addEducation()">Add</button>
   </div>
-  <div class="form-section" formArrayName="experience">
+  <div class="form-section" formArrayName="experiences">
     <h4 class="form-title">Experiences</h4>
     @for (control of getExperience().controls; track control; let i = $index) {
     <div class="form-section" [formGroupName]="i">
@@ -72,13 +72,13 @@
       </div>
       <div class="form-item">
         <label class="form-label">Start date</label>
-        <input class="form-input-text" type="text" formControlName="startDate" />
+        <input class="form-input-text" type="date" formControlName="startDate" />
       </div>
       <div class="form-item">
         <label class="form-label">End date</label>
-        <input class="form-input-text" type="text" formControlName="endDate" />
+        <input class="form-input-text" type="date" formControlName="endDate" />
       </div>
-      <div class="form-section" formArrayName="experienceDescription">
+      <div class="form-section" formArrayName="experienceDescriptions">
         <h5 class="form-title">Experience description</h5>
         @for(control of getExperienceDescription(i).controls; track control; let j = $index) {
         <div class="form-section" [formGroupName]="j">
@@ -100,7 +100,7 @@
     }
     <button type="button" (click)="addExperience()">Add experience</button>
   </div>
-  <div class="form-section" formArrayName="skillGroup">
+  <div class="form-section" formArrayName="skillGroups">
     <h4 class="form-title">Skill group</h4>
     @for (control of getSkillGroup().controls; track control; let i = $index) {
     <div class="form-section" [formGroupName]="i">
@@ -108,7 +108,7 @@
         <label class="form-label">Name</label>
         <input class="form-input-text" type="text" formControlName="name" />
       </div>
-      <div class="form-section" formArrayName="skillElement">
+      <div class="form-section" formArrayName="skillElements">
         <h4 class="form-title">Skill element</h4>
         @for(control of getSkillElement(i).controls; track control; let j = $index) {
         <div class="form-section" [formGroupName]="j">

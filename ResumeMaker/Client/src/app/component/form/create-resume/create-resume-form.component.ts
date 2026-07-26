@@ -2,6 +2,10 @@ import { Component, inject } from "@angular/core";
 import { FormArray, FormBuilder, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 
+import { ResumeRequestService } from "../../../service/request/resume-request.service";
+import { CreateResumeEducationRequestModel, CreateResumeExperienceDescriptionRequestModel, CreateResumeExperienceRequestModel, CreateResumeRequestModel, CreateResumeSkillElementRequestModel, CreateResumeSkillGroupRequestModel, CreateResumeSocialMediaRequestModel } from "../../../model/request/create-resume-request.model";
+import { AppStore } from "../../../store/app-store";
+
 @Component({
   selector: 'app-create-resume-form-component',
   templateUrl: './create-resume-form.component.html',
@@ -11,19 +15,68 @@ import { HttpClient } from "@angular/common/http";
 export class CreateResumeFormComponent {
   formBuilder = inject(FormBuilder);
   httpClient = inject(HttpClient);
+  resumeRequestService = inject(ResumeRequestService);
+  appStore = inject(AppStore);
 
   createResumeForm = this.formBuilder.group({
     name: ['', Validators.required],
     jobTitle: ['', Validators.required],
     description: ['', Validators.required],
-    socialMedias: this.formBuilder.array([]),
-    educations: this.formBuilder.array([]),
-    experience: this.formBuilder.array([]),
-    skillGroup: this.formBuilder.array([])
+    socialMedias: this.formBuilder.array<Omit<CreateResumeSocialMediaRequestModel, 'order'>>([]),
+    educations: this.formBuilder.array<CreateResumeEducationRequestModel>([]),
+    experiences: this.formBuilder.array<CreateResumeExperienceRequestModel>([]),
+    skillGroups: this.formBuilder.array<CreateResumeSkillGroupRequestModel>([])
   });
 
   onSubmit() {
-    console.log(this.createResumeForm.value);
+    const { valid } = this.createResumeForm;
+    if (!valid) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    const userId = this.appStore.user.value?.id ?? -1;
+    const { value } = this.createResumeForm;
+    const request: CreateResumeRequestModel = {
+      name: value.name ?? '',
+      jobTitle: value.jobTitle ?? '',
+      description: value.description ?? '',
+      userId: userId,
+      socialMedias: value.socialMedias?.map((socialMedia, index) => ({
+        label: socialMedia?.label ?? '',
+        link: socialMedia?.link ?? '',
+        order: index
+      })) ?? [],
+      educations: value.educations?.map(education => ({
+        institutionName: education?.institutionName ?? '',
+        fieldOfStudy: education?.fieldOfStudy ?? '',
+        degree: education?.degree ?? '',
+        graduationYear: education?.graduationYear ?? 0
+      })) ?? [],
+      experiences: value.experiences?.map(experience => ({
+        companyName: experience?.companyName ?? '',
+        jobTitle: experience?.jobTitle ?? '',
+        startDate: experience?.startDate ?? new Date(),
+        endDate: experience?.endDate ?? undefined,
+        experienceDescriptions: <CreateResumeExperienceDescriptionRequestModel[]><unknown>experience?.experienceDescriptions.map((experienceDescription, index) => ({
+            description: experienceDescription.description,
+            order: index
+        })) ?? []
+      })) ?? [],
+      skillGroups: value.skillGroups?.map((skillGroup, index) => ({
+        name: skillGroup?.name ?? '',
+        order: index,
+        skillElements: <CreateResumeSkillElementRequestModel[]><unknown>skillGroup?.skillElements.map((skillElement, index) => ({
+          name: skillElement.name,
+          order: index
+        })) ?? []
+      })) ?? [],
+    };
+    this.resumeRequestService.createResume(request);
+    this.createResumeForm.reset();
+    this.getSocialMedias().clear();
+    this.getEducations().clear();
+    this.getExperience().clear();
+    this.getSkillGroup().clear();
   }
 
   getSocialMedias() {
@@ -97,7 +150,7 @@ export class CreateResumeFormComponent {
   }
 
   getExperience() {
-    return this.createResumeForm.get('experience') as FormArray;
+    return this.createResumeForm.get('experiences') as FormArray;
   }
 
   addExperience() {
@@ -105,8 +158,8 @@ export class CreateResumeFormComponent {
       companyName: ['', Validators.required],
       jobTitle: ['', Validators.required],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      experienceDescription: this.formBuilder.array([])
+      endDate: [''],
+      experienceDescriptions: this.formBuilder.array([])
     });
 
     this.getExperience().push(control);
@@ -134,11 +187,10 @@ export class CreateResumeFormComponent {
     this.getExperience().removeAt(index);
   }
 
-
   getExperienceDescription(experienceIndex: number) {
     return this.getExperience()
       .at(experienceIndex)
-      .get('experienceDescription') as FormArray;
+      .get('experienceDescriptions') as FormArray;
   }
 
   addExperienceDescription(experienceIndex: number) {
@@ -175,13 +227,13 @@ export class CreateResumeFormComponent {
   }
 
   getSkillGroup() {
-    return this.createResumeForm.get('skillGroup') as FormArray;
+    return this.createResumeForm.get('skillGroups') as FormArray;
   }
 
   addSkillGroup() {
     const control = this.formBuilder.group({
       name: ['', Validators.required],
-      skillElement: this.formBuilder.array([])
+      skillElements: this.formBuilder.array([])
     });
 
     this.getSkillGroup().push(control);
@@ -212,7 +264,7 @@ export class CreateResumeFormComponent {
   getSkillElement(experienceIndex: number) {
     return this.getSkillGroup()
       .at(experienceIndex)
-      .get('skillElement') as FormArray;
+      .get('skillElements') as FormArray;
   }
 
   addSkillElement(experienceIndex: number) {

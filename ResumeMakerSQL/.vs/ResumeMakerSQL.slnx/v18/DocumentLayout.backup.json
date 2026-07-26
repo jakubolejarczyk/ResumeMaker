@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Companies.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\Companies.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\SocialMedias.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
       "RelativeMoniker": "D:0:0:{18DB8E4F-1ECA-38D3-B58E-E94836E1831E}|ResumeMakerSQL\\ResumeMakerSQL.ssmssqlproj|solutionrelative:ResumeMakerSQL\\SocialMedias.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
     }
@@ -19,13 +23,24 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (80))",
+              "Title": "Companies.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (92))",
+              "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\Companies.sql",
+              "RelativeDocumentMoniker": "ResumeMakerSQL\\Companies.sql",
+              "ToolTip": "Companies.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (92))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-07-14T15:27:36.509Z",
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (92))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (83))",
               "DocumentMoniker": "C:\\Users\\jakub\\Desktop\\Projects\\ResumeMaker\\ResumeMakerSQL\\ResumeMakerSQL\\SocialMedias.sql",
               "RelativeDocumentMoniker": "ResumeMakerSQL\\SocialMedias.sql",
-              "ToolTip": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (80))",
+              "ToolTip": "SocialMedias.sql - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (83))",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2026-07-13T20:06:48.858Z",
-              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (80))"
+              "EditorCaption": " - jakub\\SQLEXPRESS.ResumeMaker (JAKUB\\jakub (83))"
             }
           ]
         }

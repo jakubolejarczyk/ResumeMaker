@@ -1,15 +1,16 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.ExperienceDescriptions;
 
-public class ExperienceDescriptionRepository(ExperienceDescriptionStore store) : IExperienceDescriptionRepository
+public class ExperienceDescriptionRepository(AppDbContext appDbContext, ExperienceDescriptionStore store) : IExperienceDescriptionRepository
 {
     public RepositoryDTO<ExperienceDescription> Create(ExperienceDescription experienceDescription)
     {
-        experienceDescription.Id = store.Data.Count;
-        store.Data.Add(experienceDescription);
+        appDbContext.ExperienceDescriptions.Add(experienceDescription);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<ExperienceDescription>
         {
             Success = true,

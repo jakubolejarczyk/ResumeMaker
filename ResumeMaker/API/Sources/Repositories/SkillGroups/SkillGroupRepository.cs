@@ -1,15 +1,16 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Contexts;
+using API.Sources.DTOs;
 using API.Sources.Entities;
 using API.Sources.Stores;
 
 namespace API.Sources.Repositories.SkillGroups;
 
-public class SkillGroupRepository(SkillGroupStore store) : ISkillGroupRepository
+public class SkillGroupRepository(AppDbContext appDbContext, SkillGroupStore store) : ISkillGroupRepository
 {
     public RepositoryDTO<SkillGroup> Create(SkillGroup skillGroup)
     {
-        skillGroup.Id = store.Data.Count;
-        store.Data.Add(skillGroup);
+        appDbContext.SkillGroups.Add(skillGroup);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<SkillGroup>
         {
             Success = true,
