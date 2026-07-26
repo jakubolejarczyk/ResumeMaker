@@ -10,9 +10,16 @@ namespace API.Sources.Controllers;
 public class ResumeController(IResumeService service) : ControllerBase
 {
     [HttpPost]
-    public ActionResult<ResponseCore<ResumeResponse>> CreateCompany([FromBody] ResumeRequest request)
+    public ActionResult<ResponseCore<ResumeResponse>> CreateResume([FromBody] ResumeRequest request)
     {
         var response = service.CreateResume(request);
+        return Ok(response);
+    }
+
+    [HttpGet("user/{userId}")]
+    public ActionResult<ResponseCore<List<ResumeResponse>>> ReadResumes(int userId)
+    {
+        var response = service.ReadResumesByUserId(userId);
         return Ok(response);
     }
 }

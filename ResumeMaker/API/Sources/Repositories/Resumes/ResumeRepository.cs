@@ -47,9 +47,9 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
         };
     }
 
-    public RepositoryDTO<List<Resume>> ReadAll()
+    public RepositoryDTO<List<Resume>> ReadAllByUserId(int userId)
     {
-        var resumes = store.Data;
+        var resumes = appDbContext.Resumes.Where(c => c.UserId == userId).ToList();
         return new RepositoryDTO<List<Resume>>
         {
             Success = true,

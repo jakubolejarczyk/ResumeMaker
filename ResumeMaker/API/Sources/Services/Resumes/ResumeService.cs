@@ -24,7 +24,6 @@ public class ResumeService(
 {
     public ResponseCore<ResumeResponse> CreateResume(ResumeRequest request)
     {
-        Console.WriteLine("asdasdasdasdasdasasdas");
         // Resume
         var resume = new Resume()
         {
@@ -118,6 +117,7 @@ public class ResumeService(
                             {
                                 return new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
                                 {
+                                    Id = dto2.Body.Id,
                                     Description = dto2.Body.Description,
                                     Order = dto2.Body.Order,
                                     ExperienceId = experienceBody.Id
@@ -171,6 +171,7 @@ public class ResumeService(
                             {
                                 return new ResumeResponse.SkillGroupResponse.SkillElementResponse
                                 {
+                                    Id = dto2.Body.Id,
                                     Name = dto2.Body.Name,
                                     Order = dto2.Body.Order,
                                     SkillGroupId = skillGroupBody.Id
@@ -223,9 +224,90 @@ public class ResumeService(
         throw new NotImplementedException();
     }
 
-    public ResponseCore<List<ResumeResponse>> ReadResumes()
+    public ResponseCore<List<ResumeResponse>> ReadResumesByUserId(int userId)
     {
-        throw new NotImplementedException();
+        var dto = resumeRepository.ReadAllByUserId(userId);
+        var body = dto.Body;
+        return new ResponseCore<List<ResumeResponse>>
+        {
+            Success = dto.Success,
+            Message = dto.Message,
+            Body = body == null ? [] : body
+                .Select(b => new ResumeResponse
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    JobTitle = b.JobTitle,
+                    Description = b.Description,
+                    SocialMedias = b.SocialMedias.Select(i =>
+                    {
+                        return new ResumeResponse.SocialMediaResponse
+                        {
+                            Id = i.Id,
+                            Label = i.Label,
+                            Link = i.Link,
+                            Order = i.Order,
+                            ResumeId = i.ResumeId
+                        };
+                    }).ToList(),
+                    Educations = b.Educations.Select(i =>
+                    {
+                        return new ResumeResponse.EducationResponse
+                        {
+                            Id = i.Id,
+                            InstitutionName = i.InstitutionName,
+                            FieldOfStudy = i.FieldOfStudy,
+                            Degree = i.Degree,
+                            GraduationYear = i.GraduationYear,
+                            ResumeId = i.ResumeId
+                        };
+                    }).ToList(),
+                    Experiences = b.Experiences.Select(i =>
+                    {
+                        return new ResumeResponse.ExperienceResponse
+                        {
+                            Id = i.Id,
+                            CompanyName = i.CompanyName,
+                            JobTitle = i.JobTitle,
+                            StartDate = i.StartDate,
+                            EndDate = i.EndDate,
+                            ResumeId = i.ResumeId,
+                            ExperienceDescriptions = i.ExperienceDescriptions.Select(j =>
+                            {
+                                return new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                                {
+                                    Id = j.Id,
+                                    Description = j.Description,
+                                    Order = j.Order,
+                                    ExperienceId = j.ExperienceId
+                                };
+                            }).ToList()
+                        };
+                    }).ToList(),
+                    SkillGroups = b.SkillGroups.Select(i =>
+                    {
+                        return new ResumeResponse.SkillGroupResponse
+                        {
+                            Id = i.Id,
+                            Name = i.Name,
+                            Order = i.Order,
+                            ResumeId = i.ResumeId,
+                            SkillElements = i.SkillElements.Select(j =>
+                            {
+                                return new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                                {
+                                    Id = j.Id,
+                                    Name = j.Name,
+                                    Order = j.Order,
+                                    SkillGroupId = j.SkillGroupId
+                                };
+                            }).ToList()
+                        };
+                    }).ToList(),
+                    UserId = b.UserId
+                })
+                .ToList()
+        };
     }
 
     public ResponseCore<ResumeResponse> UpdateResume(int id, ResumeRequest request)

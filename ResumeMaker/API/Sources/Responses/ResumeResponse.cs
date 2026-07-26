@@ -16,7 +16,7 @@ public class ResumeResponse
 
     public required List<EducationResponse> Educations { get; set; }
 
-    public required List<ExperienceResponse> Experiences{ get; set; }
+    public required List<ExperienceResponse> Experiences { get; set; }
 
     public required List<SkillGroupResponse> SkillGroups { get; set; }
 
@@ -66,6 +66,8 @@ public class ResumeResponse
 
         public class ExperienceDescriptionResponse
         {
+            public required int Id { get; set; }
+
             public required string Description { get; set; }
 
             public required int Order { get; set; }
@@ -89,6 +91,7 @@ public class ResumeResponse
 
         public class SkillElementResponse
         {
+            public required int Id { get; set; }
             public required string Name { get; set; }
 
             public required int Order { get; set; }

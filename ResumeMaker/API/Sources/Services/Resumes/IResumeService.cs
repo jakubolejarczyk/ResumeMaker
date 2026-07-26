@@ -9,7 +9,7 @@ public interface IResumeService
 
     ResponseCore<ResumeResponse> ReadResume(int id);
 
-    ResponseCore<List<ResumeResponse>> ReadResumes();
+    ResponseCore<List<ResumeResponse>> ReadResumesByUserId(int userId);
 
     ResponseCore<ResumeResponse> UpdateResume(int id, ResumeRequest request);
 

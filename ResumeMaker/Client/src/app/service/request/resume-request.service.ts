@@ -3,9 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { switchMap } from "rxjs";
 
 import { AppStore } from "../../store/app-store";
-import { ReadCompaniesResponseModel } from "../../model/response/read-companies-response.model";
 import { CreateResumeRequestModel } from "../../model/request/create-resume-request.model";
 import { CreateResumeResponseModel } from "../../model/response/create-resume-response.model";
+import { ReadResumesResponseModel } from "../../model/response/read-resumes-response.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -15,17 +15,15 @@ export class ResumeRequestService {
   appStore = inject(AppStore);
 
   createResume(request: CreateResumeRequestModel) {
-    this.httpClient.post<CreateResumeResponseModel>(this.API_ENDPOINT, request).subscribe(response => {
-      console.log(response);
-    });
-      // .pipe(
-      //   switchMap(response => {
-      //     alert(response.message);
-      //     const userId = this.appStore.user.value?.id ?? -1;
-      //     return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
-      //   })
-      // )
-      // .subscribe(response => this.appStore.companies.next(response.body));
+    this.httpClient.post<CreateResumeResponseModel>(this.API_ENDPOINT, request)
+      .pipe(
+        switchMap(response => {
+          alert(response.message);
+          const userId = this.appStore.user.value?.id ?? -1;
+          return this.httpClient.get<ReadResumesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
+        })
+    )
+      .subscribe(response => this.appStore.resumes.next(response.body));
   }
 
   // readCompany(id: string, updateCompanyForm: FormGroup<{
@@ -47,6 +45,16 @@ export class ResumeRequestService {
   //     }
   //   });
   // }
+
+  readResumes() {
+    const userId = this.appStore.user.value?.id ?? -1;
+    this.httpClient.get<ReadResumesResponseModel>(this.API_ENDPOINT + `user/${userId}`).subscribe(response => {
+      if (!response.success) {
+        alert(response.message);
+      }
+      this.appStore.resumes.next(response.body);
+    });
+  }
 
   // readCompanies() {
   //   const userId = this.appStore.user.value?.id ?? -1;

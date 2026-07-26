@@ -9,7 +9,7 @@ public interface IResumeRepository
 
     RepositoryDTO<Resume> Read(int id);
 
-    RepositoryDTO<List<Resume>> ReadAll();
+    RepositoryDTO<List<Resume>> ReadAllByUserId(int userId);
 
     RepositoryDTO<Resume> Update(int id, Resume resume);
 

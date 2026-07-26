@@ -1,0 +1,34 @@
+<div class="list">
+  @if (resumes.length > 0) {
+    @for (resume of resumes; track resume.id) {
+      <div class="list-item">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <td>{{ resume.name}}</td>
+            </tr>
+            <tr>
+              <th>Job title</th>
+              <td>{{ resume.jobTitle }}</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td>{{ resume.description }}</td>
+            </tr>
+            <tr>
+              <th>Actions</th>
+              <td>
+                <!--<button (click)="onSelect(company)">Select</button>
+                <button (click)="onUpdate(company.id)">Update</button>
+                <button (click)="onDelete(company.id)">Delete</button>-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+  <p class="list-empty">No companies found.</p>
+  }
+</div>
