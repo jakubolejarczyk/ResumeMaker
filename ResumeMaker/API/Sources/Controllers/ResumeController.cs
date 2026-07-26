@@ -1,6 +1,5 @@
 ﻿using API.Sources.Cores;
 using API.Sources.Requests;
-using API.Sources.Responses;
 using API.Sources.Services.Resumes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +13,13 @@ public class ResumeController(IResumeService service) : ControllerBase
     public ActionResult<ResponseCore<ResumeResponse>> CreateResume([FromBody] ResumeRequest request)
     {
         var response = service.CreateResume(request);
+        return Ok(response);
+    }
+
+    [HttpGet("{userId}")]
+    public ActionResult<ResponseCore<ResumeResponse>> ReadResume(int userId)
+    {
+        var response = service.ReadResume(userId);
         return Ok(response);
     }
 

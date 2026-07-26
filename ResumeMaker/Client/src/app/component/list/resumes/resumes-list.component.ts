@@ -38,9 +38,9 @@ export class ResumesListComponent implements OnInit, OnDestroy {
     this.appStore.resume.next(resume);
   }
 
-  // onUpdate(userId: number) {
-  //   this.router.navigate(['/company', userId]);
-  // }
+  onUpdate(resumeId: number) {
+    this.router.navigate(['/resume', resumeId]);
+  }
 
   onDelete(companyId: number) {
     this.resumeRequestService.deleteResume(companyId);

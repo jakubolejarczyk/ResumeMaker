@@ -7,6 +7,8 @@ import { CreateResumeRequestModel } from "../../model/request/create-resume-requ
 import { CreateResumeResponseModel } from "../../model/response/create-resume-response.model";
 import { ReadResumesResponseModel } from "../../model/response/read-resumes-response.model";
 import { DeleteResumeResponseModel } from "../../model/response/delete-resume-response.model";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { ReadResumeResponseModel } from "../../model/response/read-resume-response.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -27,25 +29,28 @@ export class ResumeRequestService {
       .subscribe(response => this.appStore.resumes.next(response.body));
   }
 
-  // readCompany(id: string, updateCompanyForm: FormGroup<{
-  //   companyName: FormControl,
-  //   city: FormControl,
-  //   country: FormControl,
-  //   includeConsentClause: FormControl,
-  //   customConsentClause: FormControl,
-  //   recruitmentStatus: FormControl
-  // }>) {
-  //   this.httpClient.get<ReadCompanyResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
-  //     if (response.success) {
-  //       updateCompanyForm.controls.companyName.setValue(response.body.companyName);
-  //       updateCompanyForm.controls.city.setValue(response.body.city);
-  //       updateCompanyForm.controls.country.setValue(response.body.country);
-  //       updateCompanyForm.controls.includeConsentClause.setValue(response.body.includeConsentClause);
-  //       updateCompanyForm.controls.customConsentClause.setValue(response.body.customConsentClause);
-  //       updateCompanyForm.controls.recruitmentStatus.setValue(response.body.recruitmentStatus);
-  //     }
-  //   });
-  // }
+  readResume(id: string, updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>) {
+    this.httpClient.get<ReadResumeResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
+      console.log(response);
+      if (response.success) {
+        updateResumeForm.controls.name.setValue(response.body.name);
+        updateResumeForm.controls.jobTitle.setValue(response.body.jobTitle);
+        updateResumeForm.controls.description.setValue(response.body.description);
+        updateResumeForm.controls.socialMedias.setValue(response.body.socialMedias);
+        updateResumeForm.controls.educations.setValue(response.body.educations);
+        updateResumeForm.controls.experiences.setValue(response.body.experiences);
+        updateResumeForm.controls.skillGroups.setValue(response.body.skillGroups);
+      }
+    });
+  }
 
   readResumes() {
     const userId = this.appStore.user.value?.id ?? -1;

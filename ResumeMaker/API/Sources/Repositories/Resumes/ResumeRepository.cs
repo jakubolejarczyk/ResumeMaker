@@ -30,7 +30,7 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
 
     public RepositoryDTO<Resume> Read(int id)
     {
-        var resume = store.Data.FirstOrDefault(r => r.Id == id);
+        var resume = appDbContext.Resumes.FirstOrDefault(r => r.Id == id);
         if (resume == null)
         {
             return new RepositoryDTO<Resume>
