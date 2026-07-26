@@ -16,7 +16,7 @@ public class ResumeRequest
 
     public required List<ExperienceRequest> Experiences { get; set; }
 
-    public required List<SkillGroup> SkillGroups { get; set; }
+    public required List<SkillGroupRequest> SkillGroups { get; set; }
 
     public class SocialMediaRequest
     {
@@ -58,15 +58,15 @@ public class ResumeRequest
         }
     }
 
-    public class SkillGroup
+    public class SkillGroupRequest
     {
         public required string Name { get; set; }
 
         public required int Order { get; set; }
 
-        public required List<SkillElement> SkillElements { get; set; }
+        public required List<SkillElementRequest> SkillElements { get; set; }
 
-        public class SkillElement
+        public class SkillElementRequest
         {
             public required string Name { get; set; }
 

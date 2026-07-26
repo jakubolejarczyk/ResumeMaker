@@ -152,7 +152,7 @@ public class ResumeService(
                 {
                     Name = s.Name,
                     Order = s.Order,
-                    ResumeId = resume.Id
+                    ResumeId = resume.Id,
                 };
                 var dto = skillGroupRepository.Create(skillGroup);
                 var skillGroupBody = dto.Body;
