@@ -9,7 +9,7 @@ import { ReadResumesResponseModel } from "../../model/response/read-resumes-resp
 import { DeleteResumeResponseModel } from "../../model/response/delete-resume-response.model";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ReadResumeResponseModel } from "../../model/response/read-resume-response.model";
-import { ResumeEducationEntityModel, ResumeExperienceEntityModel, ResumeSocialMediaEntityModel } from "../../model/entity/resume-entity.model";
+import { ResumeEducationEntityModel, ResumeExperienceDescriptionEntityModel, ResumeExperienceEntityModel, ResumeSocialMediaEntityModel } from "../../model/entity/resume-entity.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -51,10 +51,12 @@ export class ResumeRequestService {
         response.body.educations.forEach(education => {
           this.addEducation(updateResumeForm, education);
         });
-        response.body.experiences.forEach(experience => {
+        response.body.experiences.forEach((experience, experienceIndex) => {
           this.addExperience(updateResumeForm, experience);
+          experience.experienceDescriptions.forEach(experienceDescription => {
+            this.addExperienceDescription(updateResumeForm, experienceDescription, experienceIndex);
+          });
         });
-
         // updateResumeForm.controls.skillGroups.setValue(response.body.skillGroups);
       }
     });
@@ -208,5 +210,40 @@ export class ResumeRequestService {
       experienceDescriptions: []
     });
     this.getExperience(updateResumeForm).push(control);
+  }
+
+  getExperienceDescription(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>, experienceIndex: number) {
+    return this.getExperience(updateResumeForm)
+      .at(experienceIndex)
+      .get('experienceDescriptions') as FormArray;
+  }
+
+  private addExperienceDescription(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>, experienceDescription: ResumeExperienceDescriptionEntityModel, experienceIndex: number) {
+    const control = this.formBuilder.group({
+      description: ['', Validators.required],
+      order: [0, Validators.required],
+    });
+    control.setValue({
+      description: experienceDescription.description,
+      order: parseInt(experienceDescription.order)
+    });
+    const descriptions = this.getExperienceDescription(updateResumeForm, experienceIndex);
+    descriptions.push(control);
   }
 }
