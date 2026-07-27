@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { ComponentModule } from './component/component-module';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [App],
@@ -14,8 +15,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     BrowserModule,
     AppRoutingModule,
     ComponentModule,
-    NgxsModule.forRoot([], { developmentMode: /** !environment.production */ false }),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsStoreModule,
   ],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],
