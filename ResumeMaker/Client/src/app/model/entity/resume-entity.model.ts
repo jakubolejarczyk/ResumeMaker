@@ -1,4 +1,4 @@
-interface ResumeSocialMediaEntityModel {
+export interface ResumeSocialMediaEntityModel {
   id: number;
   label: string;
   link: string;
@@ -6,7 +6,7 @@ interface ResumeSocialMediaEntityModel {
   resumeId: number;
 }
 
-interface ResumeEducationEntityModel {
+export  interface ResumeEducationEntityModel {
   id: number;
   institutionName: string;
   fieldOfStudy: string;
@@ -15,14 +15,14 @@ interface ResumeEducationEntityModel {
   resumeId: number;
 }
 
-interface ResumeExperienceDescriptionEntityModel {
+export interface ResumeExperienceDescriptionEntityModel {
   id: number;
   description: string;
   order: string;
   experienceId: number;
 }
 
-interface ResumeExperienceEntityModel {
+export interface ResumeExperienceEntityModel {
   id: number;
   companyName: string;
   jobTitle: string;
@@ -32,14 +32,14 @@ interface ResumeExperienceEntityModel {
   resumeId: number;
 }
 
-interface ResumeSkillElementEntityModel {
+export interface ResumeSkillElementEntityModel {
   id: number;
   name: string;
   order: string;
   skillGroupId: number;
 }
 
-interface ResumeSkillGroupEntityModel {
+export interface ResumeSkillGroupEntityModel {
   id: number;
   name: string;
   order: string;

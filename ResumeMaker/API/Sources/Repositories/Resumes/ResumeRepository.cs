@@ -39,6 +39,23 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
                 Message = "Failed to retrieve the resume."
             };
         }
+        var socialMedias = appDbContext.SocialMedias.Where(s => s.ResumeId == resume.Id).ToList();
+        resume.SocialMedias = socialMedias;
+        var educations = appDbContext.Educations.Where(e => e.ResumeId == resume.Id).ToList();
+        resume.Educations = educations;
+        var experiences = appDbContext.Experiences
+            .Where(e => e.ResumeId == resume.Id)
+            .ToList()
+            .Select(e =>
+            {
+                var experienceDescription = appDbContext.ExperienceDescriptions
+                    .Where(ee => ee.ExperienceId == e.Id)
+                    .ToList();
+                e.ExperienceDescriptions = experienceDescription;
+                return e;
+            })
+            .ToList();
+        resume.Experiences = experiences;
         return new RepositoryDTO<Resume>
         {
             Success = true,

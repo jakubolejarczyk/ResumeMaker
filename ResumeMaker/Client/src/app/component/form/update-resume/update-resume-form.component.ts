@@ -126,7 +126,7 @@ export class UpdateResumeFormComponent implements OnInit {
       institutionName: ['', Validators.required],
       fieldOfStudy: ['', Validators.required],
       degree: ['', Validators.required],
-      graduationYear: ['', Validators.required]
+      graduationYear: [0, Validators.required]
     });
     this.getEducations().push(control);
   }
@@ -143,7 +143,6 @@ export class UpdateResumeFormComponent implements OnInit {
       endDate: [''],
       experienceDescriptions: this.formBuilder.array([])
     });
-
     this.getExperience().push(control);
   }
 
@@ -182,7 +181,6 @@ export class UpdateResumeFormComponent implements OnInit {
         description: ['', Validators.required]
       })
     );
-
   }
 
   removeExperienceDescription(experienceIndex: number, descriptionIndex: number) {
