@@ -9,6 +9,7 @@ import { CompanyViewComponent } from "./company/company-view.component";
 import { FormModule } from "../form/form-module";
 import { ListModule } from "../list/list-module";
 import { ResumeViewComponent } from "./resume/resume-view.component";
+import { AsyncPipe, CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { ResumeViewComponent } from "./resume/resume-view.component";
   imports: [
     FormModule,
     ListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     CompaniesViewComponent,

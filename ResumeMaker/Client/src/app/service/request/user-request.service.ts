@@ -50,15 +50,6 @@ export class UserRequestService {
     });
   }
 
-  readUsers() {
-    this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT).subscribe(response => {
-      if (!response.success) {
-        alert(response.message);
-      }
-      this.appStore.users.next(response.body);
-    });
-  }
-
   updateUser(id: string, request: UpdateUserRequestModel) {
     this.httpClient.patch<UpdateUserResponseModel>(this.API_ENDPOINT + id, request)
       .pipe(
@@ -72,30 +63,5 @@ export class UserRequestService {
         })
     )
       .subscribe(response => this.appStore.users.next(response.body));
-  }
-
-  deleteUser(userId: number) {
-    this.httpClient.delete<DeleteUserResponseModel>(this.API_ENDPOINT + userId)
-      .pipe(
-        switchMap(response => {
-          alert(response.message);
-          const userValue = this.appStore.user.value;
-          if (userValue?.id === response.body.id) {
-            this.appStore.user.next(undefined);
-          }
-          const companyValue = this.appStore.company.value;
-          if (companyValue?.userId === response.body.id) {
-            this.appStore.company.next(undefined);
-          }
-          const resumeValue = this.appStore.resume.value;
-          if (resumeValue?.userId === response.body.id) {
-            this.appStore.resume.next(undefined);
-          }
-          return this.httpClient.get<ReadUsersResponseModel>(this.API_ENDPOINT);
-        })
-      )
-      .subscribe(response => {
-        this.appStore.users.next(response.body);
-      });
   }
 }

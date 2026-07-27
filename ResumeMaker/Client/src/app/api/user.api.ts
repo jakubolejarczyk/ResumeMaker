@@ -20,4 +20,15 @@ export class UserApi extends BaseApi {
         })
       );
   }
+
+  deleteUser(userId: number) {
+    return this.httpClient.delete<ResponseModel<UserEntityModel>>(this.getUserEndpoint(userId))
+      .pipe(
+        tap(response => {
+          if (!response.success) {
+            alert(response.message);
+          }
+        })
+      );
+  }
 }

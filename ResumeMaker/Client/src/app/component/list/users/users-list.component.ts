@@ -1,49 +1,36 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Component, inject } from "@angular/core";
+import { Store } from "@ngxs/store";
 import { Router } from "@angular/router";
 
-import { AppStore } from "../../../store/app-store";
+import { UsersState } from "../../../store/state/users.state";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
-import { UserRequestService } from "../../../service/request/user-request.service";
+import { DeleteUserAction } from "../../../store/action/user/delete-user.action";
+import { FetchAllUserAction } from "../../../store/action/user/fetch-all-user.action";
 
 @Component({
-  selector: 'app-user-list-component',
+  selector: 'app-users-list-component',
   templateUrl: './users-list.component.html',
   styleUrl: '../base/base-list.component.css',
   standalone: false
 })
-export class UsersListComponent implements OnInit, OnDestroy {
-  appStore = inject(AppStore);
-  userRequestService = inject(UserRequestService);
-  cdr = inject(ChangeDetectorRef);
+export class UsersListComponent {
+  store = inject(Store);
   router = inject(Router);
 
-  users: UserEntityModel[] = [];
-
-  sub!: Subscription;
-
-  ngOnInit() {
-    this.sub = this.appStore.users.subscribe(users => {
-      this.users = users;
-      this.cdr.detectChanges();
-    });
-    this.userRequestService.readUsers();
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+  users$ = this.store.select(UsersState.getUsers);
 
   onSelect(user: UserEntityModel) {
-    this.appStore.user.next(user);
-    this.appStore.company.next(undefined);
+    // this.appStore.user.next(user);
+    // this.appStore.company.next(undefined);
   }
 
-  onUpdate(userId: number) {
-    this.router.navigate(['/user', userId]);
+  onUpdate(user: UserEntityModel) {
+    this.router.navigate(['/user', user.id]);
   }
 
-  onDelete(userId: number) {
-    this.userRequestService.deleteUser(userId);
+  onDelete(user: UserEntityModel) {
+    this.store.dispatch(new DeleteUserAction(user.id)).subscribe(() => {
+      this.store.dispatch(new FetchAllUserAction());
+    });
   }
 }
