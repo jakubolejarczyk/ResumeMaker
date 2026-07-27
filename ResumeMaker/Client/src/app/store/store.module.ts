@@ -6,13 +6,15 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import {
   DEVTOOLS_REDUX_CONFIG,
   OPTIONS_CONFIG,
-  STATES_MODULES,
 } from './store.config';
+import { UsersState } from './state/users.state';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgxsModule.forRoot(STATES_MODULES, OPTIONS_CONFIG),
+    NgxsModule.forRoot([
+      UsersState
+    ], OPTIONS_CONFIG),
     NgxsReduxDevtoolsPluginModule.forRoot(DEVTOOLS_REDUX_CONFIG),
     // NgxsLoggerPluginModule.forRoot(LOGGER_CONFIG),
   ],

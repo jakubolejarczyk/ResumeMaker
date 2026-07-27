@@ -10,6 +10,7 @@ import { CompanyViewComponent } from './component/view/company/company-view.comp
 import { userToUpdateExists } from './guard/user-to-update-exists.guard';
 import { companyIsSelectedGuard } from './guard/company-is-selected.guard';
 import { ResumeViewComponent } from './component/view/resume/resume-view.component';
+import { initGuard } from './guard/init.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UsersViewComponent
+    component: UsersViewComponent,
+    canActivate: [initGuard]
   },
   {
     path: 'companies',
