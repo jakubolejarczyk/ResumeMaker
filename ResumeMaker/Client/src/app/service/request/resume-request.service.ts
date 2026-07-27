@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { switchMap } from "rxjs";
 
-import { AppStore } from "../../store/app-store";
+import { AppStore } from "../../old/app-store";
 import { CreateResumeRequestModel } from "../../model/request/create-resume-request.model";
 import { CreateResumeResponseModel } from "../../model/response/create-resume-response.model";
 import { ReadResumesResponseModel } from "../../model/response/read-resumes-response.model";

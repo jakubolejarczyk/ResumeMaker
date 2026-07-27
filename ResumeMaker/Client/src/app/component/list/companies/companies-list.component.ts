@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angula
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 import { CompanyRequestService } from "../../../service/request/company-request.service";
 import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
 

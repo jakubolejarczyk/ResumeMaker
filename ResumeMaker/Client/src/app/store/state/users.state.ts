@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { switchMap, tap } from "rxjs";
+import { tap } from "rxjs";
 
 import { UsersStateModel } from "../../model/state/users-state.model";
 import { FetchAllUserAction } from "../action/user/fetch-all-user.action";

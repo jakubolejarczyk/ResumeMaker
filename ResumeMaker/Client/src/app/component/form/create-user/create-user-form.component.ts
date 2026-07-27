@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 import { UserRequestService } from "../../../service/request/user-request.service";
 import { CreateUserRequestModel } from "../../../model/request/create-user-request.model";
 

@@ -5,7 +5,7 @@ import { switchMap } from "rxjs";
 import { CreateUserRequestModel } from "../../model/request/create-user-request.model";
 import { CreateUserResponseModel } from "../../model/response/create-user-response.model";
 import { ReadUsersResponseModel } from "../../model/response/read-users-response.model";
-import { AppStore } from "../../store/app-store";
+import { AppStore } from "../../old/app-store";
 import { DeleteUserResponseModel } from "../../model/response/delete-user-response.model";
 import { ReadUserResponseModel } from "../../model/response/read-user-response.model";
 import { UpdateUserRequestModel } from "../../model/request/update-user-request.model";

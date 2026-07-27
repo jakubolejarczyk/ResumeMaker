@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angula
 import { Subscription } from "rxjs";
 
 import { UserEntityModel } from "../../model/entity/user-entity.model";
-import { AppStore } from "../../store/app-store";
+import { AppStore } from "../../old/app-store";
 import { CompanyEntityModel } from "../../model/entity/company-entity.model";
 import { ResumeEntityModel } from "../../model/entity/resume-entity.model";
 

@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { ResumeRequestService } from "../../../service/request/resume-request.service";
 import { CreateResumeEducationRequestModel, CreateResumeExperienceDescriptionRequestModel, CreateResumeExperienceRequestModel, CreateResumeRequestModel, CreateResumeSkillElementRequestModel, CreateResumeSkillGroupRequestModel, CreateResumeSocialMediaRequestModel } from "../../../model/request/create-resume-request.model";
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 
 @Component({
   selector: 'app-create-resume-form-component',

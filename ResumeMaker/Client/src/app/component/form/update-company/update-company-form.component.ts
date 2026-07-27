@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 import { CompanyRequestService } from "../../../service/request/company-request.service";
 import { UpdateCompanyRequestModel } from "../../../model/request/update-company-request.model";
 

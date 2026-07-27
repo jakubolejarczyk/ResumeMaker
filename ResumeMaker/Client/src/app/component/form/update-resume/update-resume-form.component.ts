@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 import { ResumeRequestService } from "../../../service/request/resume-request.service";
 import {
   CreateResumeEducationRequestModel,

@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
 
-import { AppStore } from "../store/app-store";
+import { AppStore } from "../old/app-store";
 
 export const userIsSelectedGuard: CanActivateFn = () => {
   const appStore = inject(AppStore);

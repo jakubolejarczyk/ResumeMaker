@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
-import { AppStore } from "../../../store/app-store";
+import { AppStore } from "../../../old/app-store";
 import { CreateCompanyRequestModel } from "../../../model/request/create-company-request.model";
 import { CompanyRequestService } from "../../../service/request/company-request.service";
 

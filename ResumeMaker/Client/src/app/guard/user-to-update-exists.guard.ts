@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
 
-import { AppStore } from "../store/app-store";
+import { AppStore } from "../old/app-store";
 
 export const userToUpdateExists: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const appStore = inject(AppStore);
