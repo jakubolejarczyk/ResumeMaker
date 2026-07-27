@@ -10,6 +10,7 @@ import {
   CreateResumeSkillGroupRequestModel,
   CreateResumeSocialMediaRequestModel
 } from "../../../model/request/create-resume-request.model";
+import { UpdateResumeExperienceDescriptionRequestModel, UpdateResumeRequestModel, UpdateResumeSkillElementRequestModel } from "../../../model/request/update-resume-request.model";
 
 @Component({
   selector: 'app-update-resume-form-component',
@@ -40,25 +41,51 @@ export class UpdateResumeFormComponent implements OnInit {
   }
 
   onSubmit() {
-  //   const { valid } = this.updateCompanyForm;
-  //   if (!valid) {
-  //     alert('Please fill in all required fields.');
-  //     return;
-  //   }
-  //   const id = this.route.snapshot.paramMap.get('id');
-  //   if (!id) return;
-  //   const userId = <number><unknown>id ?? -1;
-  //   const { value } = this.updateCompanyForm;
-  //   const request: UpdateCompanyRequestModel = {
-  //     companyName: value.companyName ?? '',
-  //     city: value.city ?? '',
-  //     country: value.country ?? '',
-  //     includeConsentClause: value.includeConsentClause ?? false,
-  //     customConsentClause: value.customConsentClause ?? '',
-  //     recruitmentStatus: value.recruitmentStatus ?? '',
-  //     userId
-  //   };
-  //   this.companyRequestService.updateCompany(id, request);
+    const { valid } = this.updateResumeForm;
+    if (!valid) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) return;
+    const userId = <number><unknown>id ?? -1;
+    const { value } = this.updateResumeForm;
+    const request: UpdateResumeRequestModel = {
+      name: value.name ?? '',
+      jobTitle: value.jobTitle ?? '',
+      description: value.description ?? '',
+      userId: userId,
+      socialMedias: value.socialMedias?.map((socialMedia, index) => ({
+        label: socialMedia?.label ?? '',
+        link: socialMedia?.link ?? '',
+        order: index
+      })) ?? [],
+      educations: value.educations?.map(education => ({
+        institutionName: education?.institutionName ?? '',
+        fieldOfStudy: education?.fieldOfStudy ?? '',
+        degree: education?.degree ?? '',
+        graduationYear: education?.graduationYear ?? 0
+      })) ?? [],
+      experiences: value.experiences?.map(experience => ({
+        companyName: experience?.companyName ?? '',
+        jobTitle: experience?.jobTitle ?? '',
+        startDate: experience?.startDate ?? new Date(),
+        endDate: experience?.endDate ?? new Date(),
+        experienceDescriptions: <UpdateResumeExperienceDescriptionRequestModel[]><unknown>experience?.experienceDescriptions.map((experienceDescription, index) => ({
+          description: experienceDescription.description,
+          order: index
+        })) ?? []
+      })) ?? [],
+      skillGroups: value.skillGroups?.map((skillGroup, index) => ({
+        name: skillGroup?.name ?? '',
+        order: index,
+        skillElements: <UpdateResumeSkillElementRequestModel[]><unknown>skillGroup?.skillElements.map((skillElement, index) => ({
+          name: skillElement.name,
+          order: index
+        })) ?? []
+      })) ?? [],
+    };
+    this.resumeRequestService.updateResume(id, request);
   }
 
   getSocialMedias() {

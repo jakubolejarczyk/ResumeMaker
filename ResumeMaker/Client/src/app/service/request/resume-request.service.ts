@@ -10,6 +10,9 @@ import { DeleteResumeResponseModel } from "../../model/response/delete-resume-re
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ReadResumeResponseModel } from "../../model/response/read-resume-response.model";
 import { ResumeEducationEntityModel, ResumeExperienceDescriptionEntityModel, ResumeExperienceEntityModel, ResumeSkillElementEntityModel, ResumeSkillGroupEntityModel, ResumeSocialMediaEntityModel } from "../../model/entity/resume-entity.model";
+import { UpdateResumeResponseModel } from "../../model/response/update-resume-response.model";
+import { UpdateCompanyRequestModel } from "../../model/request/update-company-request.model";
+import { UpdateResumeRequestModel } from "../../model/request/update-resume-request.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -79,21 +82,17 @@ export class ResumeRequestService {
     });
   }
 
-  // updateCompany(id: string, request: UpdateCompanyRequestModel) {
-  //   this.httpClient.patch<UpdateCompanyResponseModel>(this.API_ENDPOINT + id, request)
-  //     .pipe(
-  //       switchMap(response => {
-  //         alert(response.message);
-  //         const { value } = this.appStore.company;
-  //         if (value?.id === response.body.id) {
-  //           this.appStore.company.next(response.body);
-  //         }
-  //         const userId = this.appStore.user.value?.id ?? -1;
-  //         return this.httpClient.get<ReadCompaniesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
-  //       })
-  //   )
-  //     .subscribe(response => this.appStore.companies.next(response.body));
-  // }
+  updateResume(id: string, request: UpdateResumeRequestModel) {
+    this.httpClient.patch<UpdateResumeResponseModel>(this.API_ENDPOINT + id, request)
+        .pipe(
+          switchMap(response => {
+            alert(response.message);
+            const userId = this.appStore.user.value?.id ?? -1;
+            return this.httpClient.get<ReadResumesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
+          })
+      )
+        .subscribe(response => this.appStore.resumes.next(response.body));
+  }
 
   deleteResume(resumeId: number) {
     this.httpClient.delete<DeleteResumeResponseModel>(this.API_ENDPOINT + resumeId)
