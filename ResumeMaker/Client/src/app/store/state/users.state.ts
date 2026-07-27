@@ -2,10 +2,10 @@ import { inject, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs";
 
-import { UsersStateModel } from "../../model/state/users-state.model";
-import { FetchAllUserAction } from "../action/user/fetch-all-user.action";
 import { UserApi } from "../../api/user.api";
-import { DeleteUserAction } from "../action/user/delete-user.action";
+import { UsersStateModel } from "../../model/state/users-state.model";
+import { FetchAllUsersAction } from "../action/users/fetch-all-users.action";
+import { DeleteUsersAction } from "../action/users/delete-users.action";
 
 @State<UsersStateModel>({
   name: 'usersState',
@@ -22,7 +22,7 @@ export class UsersState {
     return state.users;
   }
 
-  @Action(FetchAllUserAction)
+  @Action(FetchAllUsersAction)
   fetchAllUser(context: StateContext<UsersStateModel>) {
     return this.userApi.fetchAllUser().pipe(
       tap(response => {
@@ -32,8 +32,8 @@ export class UsersState {
     );
   }
 
-  @Action(DeleteUserAction)
-  deleteUser(_context: StateContext<UsersStateModel>, action: DeleteUserAction) {
+  @Action(DeleteUsersAction)
+  deleteUser(_: StateContext<UsersStateModel>, action: DeleteUsersAction) {
     return this.userApi.deleteUser(action.userId);
   }
 }
