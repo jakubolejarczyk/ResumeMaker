@@ -9,7 +9,7 @@ import { ReadResumesResponseModel } from "../../model/response/read-resumes-resp
 import { DeleteResumeResponseModel } from "../../model/response/delete-resume-response.model";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ReadResumeResponseModel } from "../../model/response/read-resume-response.model";
-import { ResumeEducationEntityModel, ResumeExperienceDescriptionEntityModel, ResumeExperienceEntityModel, ResumeSocialMediaEntityModel } from "../../model/entity/resume-entity.model";
+import { ResumeEducationEntityModel, ResumeExperienceDescriptionEntityModel, ResumeExperienceEntityModel, ResumeSkillElementEntityModel, ResumeSkillGroupEntityModel, ResumeSocialMediaEntityModel } from "../../model/entity/resume-entity.model";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeRequestService {
@@ -42,6 +42,7 @@ export class ResumeRequestService {
   }>) {
     this.httpClient.get<ReadResumeResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
       if (response.success) {
+        console.log(response);
         updateResumeForm.controls.name.setValue(response.body.name);
         updateResumeForm.controls.jobTitle.setValue(response.body.jobTitle);
         updateResumeForm.controls.description.setValue(response.body.description);
@@ -57,7 +58,13 @@ export class ResumeRequestService {
             this.addExperienceDescription(updateResumeForm, experienceDescription, experienceIndex);
           });
         });
-        // updateResumeForm.controls.skillGroups.setValue(response.body.skillGroups);
+        response.body.skillGroups.forEach((skillGroup, skillGroupIndex) => {
+          console.log(skillGroup);
+          this.addSkillGroup(updateResumeForm, skillGroup);
+          skillGroup.skillElements.forEach(skillElement => {
+            this.addSkillElement(updateResumeForm, skillElement, skillGroupIndex);
+          });
+        });
       }
     });
   }
@@ -244,6 +251,75 @@ export class ResumeRequestService {
       order: parseInt(experienceDescription.order)
     });
     const descriptions = this.getExperienceDescription(updateResumeForm, experienceIndex);
+    descriptions.push(control);
+  }
+
+  private getSkillGroup(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>) {
+    return updateResumeForm.get('skillGroups') as FormArray;
+  }
+
+  private addSkillGroup(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>, skillGroup: ResumeSkillGroupEntityModel) {
+    const control = this.formBuilder.group({
+      name: ['', Validators.required],
+      order: ['', Validators.required],
+      skillElements: this.formBuilder.array([])
+    });
+    control.setValue({
+      name: skillGroup.name,
+      order: skillGroup.order,
+      skillElements: []
+    });
+    this.getSkillGroup(updateResumeForm).push(control);
+  }
+
+  private getSkillElement(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>, experienceIndex: number) {
+    return this.getSkillGroup(updateResumeForm)
+      .at(experienceIndex)
+      .get('skillElements') as FormArray;
+  }
+
+  private addSkillElement(updateResumeForm: FormGroup<{
+    name: FormControl,
+    jobTitle: FormControl,
+    description: FormControl,
+    socialMedias: FormArray,
+    educations: FormArray,
+    experiences: FormArray,
+    skillGroups: FormArray
+  }>, experienceDescription: ResumeSkillElementEntityModel, experienceIndex: number) {
+    const control = this.formBuilder.group({
+      name: ['', Validators.required],
+      order: [0, Validators.required],
+    });
+    control.setValue({
+      name: experienceDescription.name,
+      order: parseInt(experienceDescription.order)
+    });
+    const descriptions = this.getSkillElement(updateResumeForm, experienceIndex);
     descriptions.push(control);
   }
 }

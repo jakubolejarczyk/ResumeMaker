@@ -56,6 +56,19 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
             })
             .ToList();
         resume.Experiences = experiences;
+        var skillGroups = appDbContext.SkillGroups
+            .Where(e => e.ResumeId == resume.Id)
+            .ToList()
+            .Select(e =>
+            {
+                var skillElements = appDbContext.SkillElements
+                    .Where(ee => ee.SkillGroupId == e.Id)
+                    .ToList();
+                e.SkillElements = skillElements;
+                return e;
+            })
+            .ToList();
+        resume.SkillGroups = skillGroups;
         return new RepositoryDTO<Resume>
         {
             Success = true,
