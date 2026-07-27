@@ -51,7 +51,7 @@ public class SocialMediaRepository(AppDbContext appDbContext, SocialMediaStore s
 
     public RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia)
     {
-        var currentSocialMedia = store.Data.FirstOrDefault(s => s.Id == id);
+        var currentSocialMedia = appDbContext.SocialMedias.FirstOrDefault(s => s.Id == id);
         if (currentSocialMedia == null)
         {
             return new RepositoryDTO<SocialMedia>
@@ -71,7 +71,8 @@ public class SocialMediaRepository(AppDbContext appDbContext, SocialMediaStore s
         currentSocialMedia.Label = socialMedia.Label;
         currentSocialMedia.Link = socialMedia.Link;
         currentSocialMedia.Order = socialMedia.Order;
-        store.Data = store.Data.Select(s => s.Id == id ? currentSocialMedia : s).ToList();
+        appDbContext.SocialMedias.Update(currentSocialMedia);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<SocialMedia>
         {
             Success = true,

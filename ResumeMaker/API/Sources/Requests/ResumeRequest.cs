@@ -20,6 +20,8 @@ public class ResumeRequest
 
     public class SocialMediaRequest
     {
+        public int Id { get; set; }
+
         public required string Label { get; set; }
 
         public required string Link { get; set; }

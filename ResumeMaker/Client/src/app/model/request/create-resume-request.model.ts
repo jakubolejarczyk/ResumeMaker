@@ -1,4 +1,5 @@
 export interface CreateResumeSocialMediaRequestModel {
+  id?: number;
   label: string;
   link: string;
   order: number;

@@ -1,10 +1,12 @@
 export interface UpdateResumeSocialMediaRequestModel {
+  id: number;
   label: string;
   link: string;
   order: number;
 }
 
 export interface UpdateResumeEducationRequestModel {
+  id: number;
   institutionName: string;
   fieldOfStudy: string;
   degree: string;
@@ -12,11 +14,13 @@ export interface UpdateResumeEducationRequestModel {
 }
 
 export interface UpdateResumeExperienceDescriptionRequestModel {
+  id: number;
   description: string;
   order: string;
 }
 
 export interface UpdateResumeExperienceRequestModel {
+  id: number;
   companyName: string;
   jobTitle: string;
   startDate: Date;
@@ -25,17 +29,20 @@ export interface UpdateResumeExperienceRequestModel {
 }
 
 export interface UpdateResumeSkillElementRequestModel {
+  id: number;
   name: string;
   order: number;
 }
 
 export interface UpdateResumeSkillGroupRequestModel {
+  id: number;
   name: string;
   order: number;
   skillElements: UpdateResumeSkillElementRequestModel[];
 }
 
 export interface UpdateResumeRequestModel {
+  id: number;
   name: string;
   jobTitle: string;
   description: string;

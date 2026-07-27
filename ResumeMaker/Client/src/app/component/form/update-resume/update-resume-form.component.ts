@@ -51,35 +51,42 @@ export class UpdateResumeFormComponent implements OnInit {
     const userId = <number><unknown>id ?? -1;
     const { value } = this.updateResumeForm;
     const request: UpdateResumeRequestModel = {
+      id: userId,
       name: value.name ?? '',
       jobTitle: value.jobTitle ?? '',
       description: value.description ?? '',
       userId: userId,
       socialMedias: value.socialMedias?.map((socialMedia, index) => ({
+        id: socialMedia?.id ?? -1,
         label: socialMedia?.label ?? '',
         link: socialMedia?.link ?? '',
         order: index
       })) ?? [],
-      educations: value.educations?.map(education => ({
+      educations: value.educations?.map((education, index) => ({
+        id: index,
         institutionName: education?.institutionName ?? '',
         fieldOfStudy: education?.fieldOfStudy ?? '',
         degree: education?.degree ?? '',
         graduationYear: education?.graduationYear ?? 0
       })) ?? [],
-      experiences: value.experiences?.map(experience => ({
+      experiences: value.experiences?.map((experience, index) => ({
+        id: index,
         companyName: experience?.companyName ?? '',
         jobTitle: experience?.jobTitle ?? '',
         startDate: experience?.startDate ?? new Date(),
         endDate: experience?.endDate ?? new Date(),
         experienceDescriptions: <UpdateResumeExperienceDescriptionRequestModel[]><unknown>experience?.experienceDescriptions.map((experienceDescription, index) => ({
+          id: index,
           description: experienceDescription.description,
           order: index
         })) ?? []
       })) ?? [],
       skillGroups: value.skillGroups?.map((skillGroup, index) => ({
+        id: index,
         name: skillGroup?.name ?? '',
         order: index,
         skillElements: <UpdateResumeSkillElementRequestModel[]><unknown>skillGroup?.skillElements.map((skillElement, index) => ({
+          id: index,
           name: skillElement.name,
           order: index
         })) ?? []
@@ -116,6 +123,7 @@ export class UpdateResumeFormComponent implements OnInit {
 
   addSocialMedia() {
     const control = this.formBuilder.group({
+      id: [0, Validators.required],
       label: ['', Validators.required],
       link: ['', Validators.required]
     });

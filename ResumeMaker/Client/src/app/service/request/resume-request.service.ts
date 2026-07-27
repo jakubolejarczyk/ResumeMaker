@@ -45,7 +45,6 @@ export class ResumeRequestService {
   }>) {
     this.httpClient.get<ReadResumeResponseModel>(this.API_ENDPOINT + id).subscribe(response => {
       if (response.success) {
-        console.log(response);
         updateResumeForm.controls.name.setValue(response.body.name);
         updateResumeForm.controls.jobTitle.setValue(response.body.jobTitle);
         updateResumeForm.controls.description.setValue(response.body.description);
@@ -62,7 +61,6 @@ export class ResumeRequestService {
           });
         });
         response.body.skillGroups.forEach((skillGroup, skillGroupIndex) => {
-          console.log(skillGroup);
           this.addSkillGroup(updateResumeForm, skillGroup);
           skillGroup.skillElements.forEach(skillElement => {
             this.addSkillElement(updateResumeForm, skillElement, skillGroupIndex);
@@ -83,9 +81,11 @@ export class ResumeRequestService {
   }
 
   updateResume(id: string, request: UpdateResumeRequestModel) {
+    console.log(request);
     this.httpClient.patch<UpdateResumeResponseModel>(this.API_ENDPOINT + id, request)
         .pipe(
           switchMap(response => {
+            console.log("update", response);
             alert(response.message);
             const userId = this.appStore.user.value?.id ?? -1;
             return this.httpClient.get<ReadResumesResponseModel>(this.API_ENDPOINT + `user/${userId}`);
@@ -134,10 +134,12 @@ export class ResumeRequestService {
     skillGroups: FormArray
   }>, socialMedia: ResumeSocialMediaEntityModel) {
     const control = this.formBuilder.group({
+      id: [0, Validators.required],
       label: ['', Validators.required],
       link: ['', Validators.required]
     });
     control.setValue({
+      id: socialMedia.id,
       label: socialMedia.label,
       link: socialMedia.link
     });

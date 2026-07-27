@@ -90,7 +90,7 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
 
     public RepositoryDTO<Resume> Update(int id, Resume resume)
     {
-        var currentResume = store.Data.FirstOrDefault(r => r.Id == id);
+        var currentResume = appDbContext.Resumes.FirstOrDefault(r => r.Id == id);
         if (currentResume == null)
         {
             return new RepositoryDTO<Resume>
@@ -107,7 +107,7 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
                 Message = "Failed to update the resume due to an internal error."
             };
         }
-        var nameExists = store.Data.FirstOrDefault(r => r.Name == resume.Name);
+        var nameExists = appDbContext.Resumes.FirstOrDefault(r => r.Name == resume.Name);
         if (nameExists != null)
         {
             return new RepositoryDTO<Resume>
@@ -119,7 +119,8 @@ public class ResumeRepository(AppDbContext appDbContext, ResumeStore store) : IR
         currentResume.Name = resume.Name;
         currentResume.JobTitle = resume.JobTitle;
         currentResume.Description = resume.Description;
-        store.Data = store.Data.Select(r => r.Id == id ? currentResume : r).ToList();
+        appDbContext.Resumes.Update(currentResume);
+        appDbContext.SaveChanges();
         return new RepositoryDTO<Resume>
         {
             Success = true,

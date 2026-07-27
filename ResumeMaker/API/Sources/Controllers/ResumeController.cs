@@ -30,6 +30,13 @@ public class ResumeController(IResumeService service) : ControllerBase
         return Ok(response);
     }
 
+    [HttpPatch("{userId}")]
+    public ActionResult<ResponseCore<ResumeResponse>> UpdateResumes(int userId, [FromBody] ResumeRequest request)
+    {
+        var response = service.UpdateResume(userId, request);
+        return Ok(response);
+    }
+
     [HttpDelete("{resumeId}")]
     public ActionResult<ResponseCore<ResumeResponse>> DeleteResume(int resumeId)
     {

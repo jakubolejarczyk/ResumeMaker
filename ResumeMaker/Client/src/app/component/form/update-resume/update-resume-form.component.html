@@ -17,6 +17,10 @@
     @for (control of getSocialMedias().controls; track control; let i = $index) {
     <div class="form-section" [formGroupName]="i">
       <div class="form-item">
+        <label class="form-label" for="label">Id</label>
+        <input id="label" class="form-input-text" type="text" formControlName="id" />
+      </div>
+      <div class="form-item">
         <label class="form-label" for="label">Label</label>
         <input id="label" class="form-input-text" type="text" formControlName="label" />
       </div>
