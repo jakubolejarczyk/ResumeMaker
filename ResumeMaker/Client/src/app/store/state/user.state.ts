@@ -3,6 +3,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 
 import { UserStateModel } from "../../model/state/user-state.model";
 import { SelectUserAction } from "../action/user/select-user.action";
+import { UnselectUserAction } from "../action/user/unselect-user.action";
 
 @State<UserStateModel>({
   name: 'userState',
@@ -18,7 +19,12 @@ export class UserState {
   }
 
   @Action(SelectUserAction)
-  fetchAllUser(context: StateContext<UserStateModel>, action: SelectUserAction) {
+  selectUser(context: StateContext<UserStateModel>, action: SelectUserAction) {
     context.setState({ selectedUserId: action.userId });
+  }
+
+  @Action(UnselectUserAction)
+  unselectUser(context: StateContext<UserStateModel>) {
+    context.setState({ selectedUserId: undefined });
   }
 }

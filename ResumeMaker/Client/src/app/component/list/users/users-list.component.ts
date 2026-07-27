@@ -1,13 +1,11 @@
 import { Component, inject } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Router } from "@angular/router";
-import { switchMap } from "rxjs";
 
 import { UsersState } from "../../../store/state/users.state";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { SelectUserAction } from "../../../store/action/user/select-user.action";
 import { DeleteUsersAction } from "../../../store/action/users/delete-users.action";
-import { FetchAllUsersAction } from "../../../store/action/users/fetch-all-users.action";
 
 @Component({
   selector: 'app-users-list-component',
@@ -30,10 +28,6 @@ export class UsersListComponent {
   }
 
   onDelete(user: UserEntityModel) {
-    this.store.dispatch(new DeleteUsersAction(user.id))
-      .pipe(
-        switchMap(() => this.store.dispatch(new FetchAllUsersAction()))
-      )
-      .subscribe();
+    this.store.dispatch(new DeleteUsersAction(user.id));
   }
 }

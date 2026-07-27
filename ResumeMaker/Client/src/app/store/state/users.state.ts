@@ -1,11 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { tap } from "rxjs";
+import { switchMap, tap } from "rxjs";
 
 import { UserApi } from "../../api/user.api";
 import { UsersStateModel } from "../../model/state/users-state.model";
 import { FetchAllUsersAction } from "../action/users/fetch-all-users.action";
 import { DeleteUsersAction } from "../action/users/delete-users.action";
+import { UnselectUserAction } from "../action/user/unselect-user.action";
 
 @State<UsersStateModel>({
   name: 'usersState',
@@ -33,7 +34,10 @@ export class UsersState {
   }
 
   @Action(DeleteUsersAction)
-  deleteUser(_: StateContext<UsersStateModel>, action: DeleteUsersAction) {
-    return this.userApi.deleteUser(action.userId);
+  deleteUser(context: StateContext<UsersStateModel>, action: DeleteUsersAction) {
+    return this.userApi.deleteUser(action.userId).pipe(
+      switchMap(() => context.dispatch(new FetchAllUsersAction())),
+      switchMap(() => context.dispatch(new UnselectUserAction()))
+    );
   }
 }
