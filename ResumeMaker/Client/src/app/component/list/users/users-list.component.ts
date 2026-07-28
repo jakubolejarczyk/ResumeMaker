@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
 import { UsersService } from "../../../service/users.service";
-import { UserService } from "../../../service/user.service";
 
 @Component({
   selector: 'app-users-list-component',
@@ -14,12 +13,11 @@ import { UserService } from "../../../service/user.service";
 export class UsersListComponent {
   router = inject(Router);
   users = inject(UsersService);
-  user = inject(UserService);
 
   users$ = this.users.getUsers();
 
   onSelect(user: UserEntityModel) {
-    this.user.select(user.id);
+    this.users.select(user.id);
   }
 
   onUpdate(user: UserEntityModel) {

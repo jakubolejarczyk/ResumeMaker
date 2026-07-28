@@ -4,11 +4,11 @@ import { concatMap, map, of, switchMap } from "rxjs";
 
 import { FetchAllUsersAction } from "../store/action/users/fetch-all-users.action";
 import { DeleteUsersAction } from "../store/action/users/delete-users.action";
-import { DeselectUserAction } from "../store/action/user/deselect-user.action";
 import { UsersState } from "../store/state/users.state";
-import { UserState } from "../store/state/user.state";
 import { CreateUserRequestModel } from "../model/request/create-user-request.model";
 import { CreateUsersAction } from "../store/action/users/create-users.action";
+import { DeselectUsersAction } from "../store/action/users/deselect-users.action";
+import { SelectUsersAction } from "../store/action/users/select-users.action";
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -23,12 +23,12 @@ export class UsersService {
       concatMap(() => this.store.dispatch(new FetchAllUsersAction())),
       map(() => ({
         users: this.store.selectSnapshot(UsersState.getUsers),
-        selectedUserId: this.store.selectSnapshot(UserState.getSelectedUserId)
+        selectedUserId: this.store.selectSnapshot(UsersState.getSelectedUserId)
       })),
       switchMap(({ users, selectedUserId }) => {
         if (selectedUserId === undefined) return of(true);
         const selectedUserExists = users.some(user => user.id === selectedUserId);
-        return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUserAction());
+        return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUsersAction());
       })
     ).subscribe();
   }
@@ -42,13 +42,21 @@ export class UsersService {
       concatMap(() => this.store.dispatch(new FetchAllUsersAction())),
       map(() => ({
         users: this.store.selectSnapshot(UsersState.getUsers),
-        selectedUserId: this.store.selectSnapshot(UserState.getSelectedUserId)
+        selectedUserId: this.store.selectSnapshot(UsersState.getSelectedUserId)
       })),
       switchMap(({ users, selectedUserId }) => {
         if (selectedUserId === undefined) return of(true);
         const selectedUserExists = users.some(user => user.id === selectedUserId);
-        return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUserAction());
+        return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUsersAction());
       })
     ).subscribe();
+  }
+
+  getSelectedUserId() {
+    return this.store.select(UsersState.getSelectedUserId);
+  }
+
+  select(userId: number) {
+    this.store.dispatch(new SelectUsersAction(userId));
   }
 }

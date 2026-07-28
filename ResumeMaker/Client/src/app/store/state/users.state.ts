@@ -7,10 +7,13 @@ import { FetchAllUsersAction } from "../action/users/fetch-all-users.action";
 import { UsersApi } from "../../api/users.api";
 import { DeleteUsersAction } from "../action/users/delete-users.action";
 import { CreateUsersAction } from "../action/users/create-users.action";
+import { SelectUsersAction } from "../action/users/select-users.action";
+import { DeselectUsersAction } from "../action/users/deselect-users.action";
 
 @State<UsersStateModel>({
   name: 'usersState',
   defaults: {
+    selectedUserId: undefined,
     users: []
   }
 })
@@ -23,6 +26,11 @@ export class UsersState {
     return state.users;
   }
 
+  @Selector()
+  static getSelectedUserId(state: UsersStateModel) {
+    return state.selectedUserId;
+  }
+
   @Action(CreateUsersAction)
   create(_context: StateContext<UsersStateModel>, action: CreateUsersAction) {
     return this.usersApi.create(action.request);
@@ -33,7 +41,8 @@ export class UsersState {
     return this.usersApi.fetchAll().pipe(
       map(response => {
         const users = response.success ? response.body : [];
-        context.setState({ users });
+        const state = context.getState();
+        context.setState({ ...state, users });
         return response;
       })
     );
@@ -42,5 +51,17 @@ export class UsersState {
   @Action(DeleteUsersAction)
   delete(_context: StateContext<UsersStateModel>, action: DeleteUsersAction) {
     return this.usersApi.delete(action.userId);
+  }
+
+  @Action(SelectUsersAction)
+  select(context: StateContext<UsersStateModel>, action: SelectUsersAction) {
+    const state = context.getState();
+    context.setState({ ...state, selectedUserId: action.userId });
+  }
+
+  @Action(DeselectUsersAction)
+  deselect(context: StateContext<UsersStateModel>) {
+    const state = context.getState();
+    context.setState({ ...state, selectedUserId: undefined });
   }
 }
