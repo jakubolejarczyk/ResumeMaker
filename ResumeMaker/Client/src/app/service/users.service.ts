@@ -15,8 +15,8 @@ import { UserEntityModel } from "../model/entity/user-entity.model";
 export class UsersService {
   store = inject(Store);
 
-  getUsers() {
-    return this.store.select(UsersState.getUsers);
+  getState() {
+    return this.store.select(UsersState.getState);
   }
 
   getSelectedUserId() {

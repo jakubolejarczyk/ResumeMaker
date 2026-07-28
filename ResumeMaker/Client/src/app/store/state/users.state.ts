@@ -14,12 +14,21 @@ import { DeselectUsersAction } from "../action/users/deselect-users.action";
   name: 'usersState',
   defaults: {
     selectedUser: undefined,
-    users: []
+    users: [],
+    fetchAll: {
+      success: undefined,
+      message: 'No data was loaded.'
+    }
   }
 })
 @Injectable()
 export class UsersState {
   usersApi = inject(UsersApi);
+
+  @Selector()
+  static getState(state: UsersStateModel) {
+    return state;
+  }
 
   @Selector()
   static getUsers(state: UsersStateModel) {
@@ -40,9 +49,17 @@ export class UsersState {
   fetchAll(context: StateContext<UsersStateModel>) {
     return this.usersApi.fetchAll().pipe(
       map(response => {
-        const users = response.success ? response.body : [];
+        const { success, message, body } = response;
         const state = context.getState();
-        context.setState({ ...state, users });
+        context.setState({
+          ...state,
+          users: success ? body : [],
+          fetchAll: {
+           ...state.fetchAll,
+            success,
+            message
+          }
+        });
         return response;
       })
     );

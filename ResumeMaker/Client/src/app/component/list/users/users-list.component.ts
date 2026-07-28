@@ -14,7 +14,7 @@ export class UsersListComponent {
   router = inject(Router);
   users = inject(UsersService);
 
-  users$ = this.users.getUsers();
+  state$ = this.users.getState();
 
   onSelect(user: UserEntityModel) {
     this.users.select(user);
