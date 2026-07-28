@@ -1,17 +1,17 @@
-﻿using API.Sources.DTOs;
+﻿using API.Sources.Cores;
 using API.Sources.Entities;
 
 namespace API.Sources.Repositories.Users;
 
 public interface IUserRepository
 {
-    RepositoryDTO<User> Create(User user);
+    ResponseCore<User> Create(User user);
 
-    RepositoryDTO<User> Read(int id);
+    ResponseCore<User> Read(int id);
 
-    RepositoryDTO<List<User>> ReadAll();
+    ResponseCore<List<User>> ReadAll();
 
-    RepositoryDTO<User> Update(User user);
+    ResponseCore<User> Update(User user);
 
-    RepositoryDTO<User> Delete(int id);
+    ResponseCore<User> Delete(int id);
 }

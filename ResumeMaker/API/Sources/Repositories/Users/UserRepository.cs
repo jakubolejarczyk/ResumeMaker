@@ -1,25 +1,25 @@
 ﻿using API.Sources.Contexts;
-using API.Sources.DTOs;
+using API.Sources.Cores;
 using API.Sources.Entities;
 
 namespace API.Sources.Repositories.Users;
 
-public class UserRepository(AppDbContext appDbContext) : IUserRepository
+public class UserRepository(AppDbContext context) : IUserRepository
 {
-    public RepositoryDTO<User> Create(User user)
+    public ResponseCore<User> Create(User user)
     {
-        var emailExists = appDbContext.Users.FirstOrDefault(u => u.Email == user.Email);
+        var emailExists = context.Users.FirstOrDefault(u => u.Email == user.Email);
         if (emailExists != null)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
                 Message = "The email address is already taken."
             };
         }
-        appDbContext.Add(user);
-        appDbContext.SaveChanges();
-        return new RepositoryDTO<User>
+        context.Users.Add(user);
+        context.SaveChanges();
+        return new ResponseCore<User>
         {
             Success = true,
             Message = "The user was created successfully.",
@@ -27,18 +27,18 @@ public class UserRepository(AppDbContext appDbContext) : IUserRepository
         };
     }
 
-    public RepositoryDTO<User> Read(int id)
+    public ResponseCore<User> Read(int id)
     {
-        var user = appDbContext.Users.FirstOrDefault(u => u.Id == id);
+        var user = context.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
                 Message = "Failed to retrieve the user."
             };
         }
-        return new RepositoryDTO<User>
+        return new ResponseCore<User>
         {
             Success = true,
             Message = "Successfully retrieved the user.",
@@ -46,78 +46,86 @@ public class UserRepository(AppDbContext appDbContext) : IUserRepository
         };
     }
 
-    public RepositoryDTO<List<User>> ReadAll()
+    public ResponseCore<List<User>> ReadAll()
     {
-        var users = appDbContext.Users.ToList();
-        return new RepositoryDTO<List<User>>
+        var users = context.Users.ToList();
+        if (users.Count > 0)
         {
-            Success = true,
-            Message = $"Successfully retrieved {users.Count} users.",
-            Body = users
+            return new ResponseCore<List<User>>
+            {
+                Success = true,
+                Message = $"Successfully retrieved {users.Count} users.",
+                Body = users
+            };
+        }
+        return new ResponseCore<List<User>>
+        {
+            Success = false,
+            Message = "No users found."
         };
     }
 
-    public RepositoryDTO<User> Update(int id, User user)
+    public ResponseCore<User> Update(User user)
     {
-        var currentUser = appDbContext.Users.FirstOrDefault(u => u.Id == id);
-        if (currentUser == null)
+        var userById = context.Users.FirstOrDefault(u => u.Id == user.Id);
+        if (userById == null)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
                 Message = "Failed to update the user because it does not exist."
             };
         }
-        if (currentUser.Id != user.Id)
+        if (userById.Id != user.Id)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
                 Message = "Failed to update the user due to an internal error."
             };
         }
-        var emailExists = appDbContext.Users.FirstOrDefault(u => u.Email == user.Email);
-        if (emailExists != null && currentUser.Email != user.Email)
+        var emailExists = context.Users.FirstOrDefault(u => u.Email == user.Email);
+        if (emailExists != null && userById.Email != user.Email)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
                 Message = "The email address is already taken."
             };
         }
-        currentUser.Email = user.Email;
-        currentUser.FirstName = user.FirstName;
-        currentUser.LastName = user.LastName;
-        currentUser.City = user.City;
-        currentUser.Country = user.Country;
-        currentUser.PhoneNumber = user.PhoneNumber;
-        appDbContext.Update(currentUser);
-        appDbContext.SaveChanges();
-        return new RepositoryDTO<User>
+        userById.Email = user.Email;
+        userById.FirstName = user.FirstName;
+        userById.LastName = user.LastName;
+        userById.City = user.City;
+        userById.Country = user.Country;
+        userById.PhoneNumber = user.PhoneNumber;
+        context.Users.Update(userById);
+        context.SaveChanges();
+        return new ResponseCore<User>
         {
             Success = true,
             Message = "Successfully updated the user.",
-            Body = currentUser
+            Body = userById
         };
     }
 
-    public RepositoryDTO<User> Delete(int id)
+    public ResponseCore<User> Delete(int id)
     {
-        var user = appDbContext.Users.FirstOrDefault(u => u.Id == id);
+        var user = context.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
-            return new RepositoryDTO<User>
+            return new ResponseCore<User>
             {
                 Success = false,
-                Message = "Failed to delete the user because it does not exist."
+                Message = $"Failed to delete user because user with ID {id} does not exist."
             };
         }
-        appDbContext.Users.Remove(user);
-        appDbContext.SaveChanges();
-        return new RepositoryDTO<User>
+        context.Users.Remove(user);
+        context.SaveChanges();
+        return new ResponseCore<User>
         {
             Success = true,
-            Message = "Successfully deleted the user.",
+            Message = $"User with ID {id} has been deleted successfully.",
             Body = user
         };
     }
