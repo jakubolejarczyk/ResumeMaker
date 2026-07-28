@@ -6,7 +6,7 @@ import { UserEntityModel } from "../model/entity/user-entity.model";
 import { UserRequestModel } from "../model/request/user-request.model";
 
 @Injectable({ providedIn: 'root' })
-export class UsersDal extends BaseDal {
+export class UserDal extends BaseDal {
   create(request: UserRequestModel) {
     return this.httpClient.post<ResponseModel<UserEntityModel>>(this.getEndpoint(), request);
   }
