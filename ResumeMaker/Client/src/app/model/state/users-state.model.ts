@@ -1,6 +1,6 @@
 import { UserEntityModel } from "../entity/user-entity.model";
 
 export interface UsersStateModel {
-  selectedUserId?: number;
+  selectedUser?: UserEntityModel;
   users: UserEntityModel[];
 }

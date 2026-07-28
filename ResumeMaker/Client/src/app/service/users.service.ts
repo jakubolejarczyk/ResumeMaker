@@ -9,6 +9,7 @@ import { CreateUserRequestModel } from "../model/request/create-user-request.mod
 import { CreateUsersAction } from "../store/action/users/create-users.action";
 import { DeselectUsersAction } from "../store/action/users/deselect-users.action";
 import { SelectUsersAction } from "../store/action/users/select-users.action";
+import { UserEntityModel } from "../model/entity/user-entity.model";
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -18,16 +19,20 @@ export class UsersService {
     return this.store.select(UsersState.getUsers);
   }
 
+  getSelectedUserId() {
+    return this.store.select(UsersState.getSelectedUser);
+  }
+
   create(request: CreateUserRequestModel) {
     this.store.dispatch(new CreateUsersAction(request)).pipe(
       concatMap(() => this.store.dispatch(new FetchAllUsersAction())),
       map(() => ({
         users: this.store.selectSnapshot(UsersState.getUsers),
-        selectedUserId: this.store.selectSnapshot(UsersState.getSelectedUserId)
+        selectedUser: this.store.selectSnapshot(UsersState.getSelectedUser)
       })),
-      switchMap(({ users, selectedUserId }) => {
-        if (selectedUserId === undefined) return of(true);
-        const selectedUserExists = users.some(user => user.id === selectedUserId);
+      switchMap(({ users, selectedUser }) => {
+        if (selectedUser === undefined) return of(true);
+        const selectedUserExists = users.some(user => user.id === selectedUser.id);
         return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUsersAction());
       })
     ).subscribe();
@@ -42,21 +47,17 @@ export class UsersService {
       concatMap(() => this.store.dispatch(new FetchAllUsersAction())),
       map(() => ({
         users: this.store.selectSnapshot(UsersState.getUsers),
-        selectedUserId: this.store.selectSnapshot(UsersState.getSelectedUserId)
+        selectedUser: this.store.selectSnapshot(UsersState.getSelectedUser)
       })),
-      switchMap(({ users, selectedUserId }) => {
-        if (selectedUserId === undefined) return of(true);
-        const selectedUserExists = users.some(user => user.id === selectedUserId);
+      switchMap(({ users, selectedUser }) => {
+        if (selectedUser === undefined) return of(true);
+        const selectedUserExists = users.some(user => user.id === selectedUser.id);
         return selectedUserExists ? of(true) : this.store.dispatch(new DeselectUsersAction());
       })
     ).subscribe();
   }
 
-  getSelectedUserId() {
-    return this.store.select(UsersState.getSelectedUserId);
-  }
-
-  select(userId: number) {
-    this.store.dispatch(new SelectUsersAction(userId));
+  select(user: UserEntityModel) {
+    this.store.dispatch(new SelectUsersAction(user));
   }
 }

@@ -17,7 +17,7 @@ export class UsersListComponent {
   users$ = this.users.getUsers();
 
   onSelect(user: UserEntityModel) {
-    this.users.select(user.id);
+    this.users.select(user);
   }
 
   onUpdate(user: UserEntityModel) {

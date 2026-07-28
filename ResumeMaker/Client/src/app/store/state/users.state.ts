@@ -13,7 +13,7 @@ import { DeselectUsersAction } from "../action/users/deselect-users.action";
 @State<UsersStateModel>({
   name: 'usersState',
   defaults: {
-    selectedUserId: undefined,
+    selectedUser: undefined,
     users: []
   }
 })
@@ -27,8 +27,8 @@ export class UsersState {
   }
 
   @Selector()
-  static getSelectedUserId(state: UsersStateModel) {
-    return state.selectedUserId;
+  static getSelectedUser(state: UsersStateModel) {
+    return state.selectedUser;
   }
 
   @Action(CreateUsersAction)
@@ -56,12 +56,12 @@ export class UsersState {
   @Action(SelectUsersAction)
   select(context: StateContext<UsersStateModel>, action: SelectUsersAction) {
     const state = context.getState();
-    context.setState({ ...state, selectedUserId: action.userId });
+    context.setState({ ...state, selectedUser: action.user });
   }
 
   @Action(DeselectUsersAction)
   deselect(context: StateContext<UsersStateModel>) {
     const state = context.getState();
-    context.setState({ ...state, selectedUserId: undefined });
+    context.setState({ ...state, selectedUser: undefined });
   }
 }
