@@ -1,18 +1,18 @@
-﻿using API.Sources.Cores;
-using API.Sources.Requests;
-using API.Sources.Responses;
+﻿//using API.Sources.Cores;
+//using API.Sources.Requests;
+//using API.Sources.Responses;
 
-namespace API.Sources.Services.Companies;
+//namespace API.Sources.Services.Companies;
 
-public interface ICompanyService
-{
-    ResponseCore<CompanyResponse> CreateCompany(CompanyRequest request);
+//public interface ICompanyService
+//{
+//    ResponseCore<CompanyResponse> CreateCompany(CompanyRequest request);
 
-    ResponseCore<CompanyResponse> ReadCompany(int id);
+//    ResponseCore<CompanyResponse> ReadCompany(int id);
 
-    ResponseCore<List<CompanyResponse>> ReadCompaniesByUserId(int userId);
+//    ResponseCore<List<CompanyResponse>> ReadCompaniesByUserId(int userId);
 
-    ResponseCore<CompanyResponse> UpdateCompany(int id, CompanyRequest request);
+//    ResponseCore<CompanyResponse> UpdateCompany(int id, CompanyRequest request);
 
-    ResponseCore<CompanyResponse> DeleteCompany(int id);
-}
+//    ResponseCore<CompanyResponse> DeleteCompany(int id);
+//}

@@ -1,17 +1,17 @@
-﻿using API.Sources.DTOs;
-using API.Sources.Entities;
+﻿//using API.Sources.DTOs;
+//using API.Sources.Entities;
 
-namespace API.Sources.Repositories.ExperienceDescriptions;
+//namespace API.Sources.Repositories.ExperienceDescriptions;
 
-public interface IExperienceDescriptionRepository
-{
-    RepositoryDTO<ExperienceDescription> Create(ExperienceDescription experienceDescription);
+//public interface IExperienceDescriptionRepository
+//{
+//    RepositoryDTO<ExperienceDescription> Create(ExperienceDescription experienceDescription);
 
-    RepositoryDTO<ExperienceDescription> Read(int id);
+//    RepositoryDTO<ExperienceDescription> Read(int id);
 
-    RepositoryDTO<List<ExperienceDescription>> ReadAll();
+//    RepositoryDTO<List<ExperienceDescription>> ReadAll();
 
-    RepositoryDTO<ExperienceDescription> Update(int id, ExperienceDescription experienceDescription);
+//    RepositoryDTO<ExperienceDescription> Update(int id, ExperienceDescription experienceDescription);
 
-    RepositoryDTO<ExperienceDescription> Delete(int id);
-}
+//    RepositoryDTO<ExperienceDescription> Delete(int id);
+//}

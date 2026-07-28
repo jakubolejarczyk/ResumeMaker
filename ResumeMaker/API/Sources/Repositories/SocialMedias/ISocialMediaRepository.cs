@@ -1,17 +1,17 @@
-﻿using API.Sources.DTOs;
-using API.Sources.Entities;
+﻿//using API.Sources.DTOs;
+//using API.Sources.Entities;
 
-namespace API.Sources.Repositories.SocialMedias;
+//namespace API.Sources.Repositories.SocialMedias;
 
-public interface ISocialMediaRepository
-{
-    RepositoryDTO<SocialMedia> Create(SocialMedia socialMedia);
+//public interface ISocialMediaRepository
+//{
+//    RepositoryDTO<SocialMedia> Create(SocialMedia socialMedia);
 
-    RepositoryDTO<SocialMedia> Read(int id);
+//    RepositoryDTO<SocialMedia> Read(int id);
 
-    RepositoryDTO<List<SocialMedia>> ReadAll();
+//    RepositoryDTO<List<SocialMedia>> ReadAll();
 
-    RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia);
+//    RepositoryDTO<SocialMedia> Update(int id, SocialMedia socialMedia);
 
-    RepositoryDTO<SocialMedia> Delete(int id);
-}
+//    RepositoryDTO<SocialMedia> Delete(int id);
+//}

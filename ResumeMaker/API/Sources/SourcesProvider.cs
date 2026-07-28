@@ -1,7 +1,7 @@
 ﻿using API.Sources.Contexts;
 using API.Sources.Controllers;
 using API.Sources.Repositories;
-using API.Sources.Stores;
+using API.Sources.Services;
 
 namespace API.Sources;
 
@@ -12,7 +12,6 @@ public static class SourcesProvider
         ControllersProvider.GetBuilder(builder);
         RepositoriesProvider.GetBuilder(builder);
         ServicesProvider.GetBuilder(builder);
-        StoresProvider.GetBuilder(builder);
         ContextsProvider.GetBuilder(builder);
     }
 

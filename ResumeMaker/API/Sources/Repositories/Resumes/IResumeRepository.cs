@@ -1,17 +1,17 @@
-﻿using API.Sources.DTOs;
-using API.Sources.Entities;
+﻿//using API.Sources.DTOs;
+//using API.Sources.Entities;
 
-namespace API.Sources.Repositories.Resumes;
+//namespace API.Sources.Repositories.Resumes;
 
-public interface IResumeRepository
-{
-    RepositoryDTO<Resume> Create(Resume resume);
+//public interface IResumeRepository
+//{
+//    RepositoryDTO<Resume> Create(Resume resume);
 
-    RepositoryDTO<Resume> Read(int id);
+//    RepositoryDTO<Resume> Read(int id);
 
-    RepositoryDTO<List<Resume>> ReadAllByUserId(int userId);
+//    RepositoryDTO<List<Resume>> ReadAllByUserId(int userId);
 
-    RepositoryDTO<Resume> Update(int id, Resume resume);
+//    RepositoryDTO<Resume> Update(int id, Resume resume);
 
-    RepositoryDTO<Resume> Delete(int id);
-}
+//    RepositoryDTO<Resume> Delete(int id);
+//}
