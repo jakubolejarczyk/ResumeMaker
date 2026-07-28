@@ -1,20 +1,20 @@
-﻿namespace API.Sources.Entities;
+﻿//namespace API.Sources.Entities;
 
-public class Experience
-{
-    public int Id { get; set; }
+//public class Experience
+//{
+//    public int Id { get; set; }
 
-    public string CompanyName { get; set; } = string.Empty;
+//    public string CompanyName { get; set; } = string.Empty;
 
-    public string JobTitle {  get; set; } = string.Empty;
+//    public string JobTitle {  get; set; } = string.Empty;
 
-    public DateOnly StartDate { get; set; }
+//    public DateOnly StartDate { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+//    public DateOnly? EndDate { get; set; }
 
-    public int ResumeId { get; set; }
+//    public int ResumeId { get; set; }
 
-    public Resume Resume { get; set; } = null!;
+//    public Resume Resume { get; set; } = null!;
 
-    public List<ExperienceDescription> ExperienceDescriptions { get; set; } = [];
-}
+//    public List<ExperienceDescription> ExperienceDescriptions { get; set; } = [];
+//}

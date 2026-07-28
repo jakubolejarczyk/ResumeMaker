@@ -1,14 +1,14 @@
-﻿namespace API.Sources.Entities;
+﻿//namespace API.Sources.Entities;
 
-public class SkillElement
-{
-    public int Id { get; set; }
+//public class SkillElement
+//{
+//    public int Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+//    public string Name { get; set; } = string.Empty;
 
-    public int Order { get; set; }
+//    public int Order { get; set; }
 
-    public int SkillGroupId { get; set; }
+//    public int SkillGroupId { get; set; }
 
-    public SkillGroup SkillGroup { get; set; } = null!;
-}
+//    public SkillGroup SkillGroup { get; set; } = null!;
+//}
