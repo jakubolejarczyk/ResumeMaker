@@ -1,7 +1,7 @@
 ﻿using API.Sources.Cores;
 using API.Sources.Entities;
 
-namespace API.Sources.Repositories.Users;
+namespace API.Sources.Repositories;
 
 public interface IUserRepository
 {

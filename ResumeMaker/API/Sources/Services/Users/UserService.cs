@@ -1,6 +1,6 @@
 ﻿using API.Sources.Cores;
 using API.Sources.Entities;
-using API.Sources.Repositories.Users;
+using API.Sources.Repositories;
 using API.Sources.Requests;
 using API.Sources.Responses;
 

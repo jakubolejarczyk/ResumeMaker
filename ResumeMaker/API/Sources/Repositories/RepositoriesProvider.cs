@@ -1,6 +1,4 @@
-﻿using API.Sources.Repositories.Users;
-
-namespace API.Sources.Repositories;
+﻿namespace API.Sources.Repositories;
 
 public static class RepositoriesProvider
 {
