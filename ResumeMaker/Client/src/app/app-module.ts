@@ -5,9 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { App } from './app';
 import { AppRoutingModule } from './app-routing-module';
 import { ComponentModule } from './component/component-module';
-import { NgxsModule } from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsStoreModule } from './store/store.module';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [App],
@@ -15,7 +13,7 @@ import { NgxsStoreModule } from './store/store.module';
     BrowserModule,
     AppRoutingModule,
     ComponentModule,
-    NgxsStoreModule,
+    StoreModule,
   ],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],

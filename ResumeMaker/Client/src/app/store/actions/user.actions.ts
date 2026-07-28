@@ -13,5 +13,5 @@ export class DeselectUser {
 export class SelectUser {
   static readonly type = '[User] Select';
 
-  constructor(public id: number) { }
+  constructor(public user: UserEntityModel) { }
 }
