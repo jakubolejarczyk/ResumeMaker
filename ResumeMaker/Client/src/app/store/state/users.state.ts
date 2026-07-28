@@ -1,12 +1,11 @@
 import { inject, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { switchMap, tap } from "rxjs";
+import { map } from "rxjs";
 
-import { UserApi } from "../../api/user.api";
 import { UsersStateModel } from "../../model/state/users-state.model";
 import { FetchAllUsersAction } from "../action/users/fetch-all-users.action";
+import { UsersApi } from "../../api/users.api";
 import { DeleteUsersAction } from "../action/users/delete-users.action";
-import { UnselectUserAction } from "../action/user/unselect-user.action";
 
 @State<UsersStateModel>({
   name: 'usersState',
@@ -16,7 +15,7 @@ import { UnselectUserAction } from "../action/user/unselect-user.action";
 })
 @Injectable()
 export class UsersState {
-  userApi = inject(UserApi);
+  usersApi = inject(UsersApi);
 
   @Selector()
   static getUsers(state: UsersStateModel) {
@@ -24,20 +23,18 @@ export class UsersState {
   }
 
   @Action(FetchAllUsersAction)
-  fetchAllUser(context: StateContext<UsersStateModel>) {
-    return this.userApi.fetchAllUser().pipe(
-      tap(response => {
-        const users = response.body;
+  fetchAll(context: StateContext<UsersStateModel>) {
+    return this.usersApi.fetchAll().pipe(
+      map(response => {
+        const users = response.success ? response.body : [];
         context.setState({ users });
+        return response;
       })
     );
   }
 
   @Action(DeleteUsersAction)
-  deleteUser(context: StateContext<UsersStateModel>, action: DeleteUsersAction) {
-    return this.userApi.deleteUser(action.userId).pipe(
-      switchMap(() => context.dispatch(new FetchAllUsersAction())),
-      switchMap(() => context.dispatch(new UnselectUserAction()))
-    );
+  delete(_context: StateContext<UsersStateModel>, action: DeleteUsersAction) {
+    return this.usersApi.delete(action.userId);
   }
 }

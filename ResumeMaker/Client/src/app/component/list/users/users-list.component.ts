@@ -1,11 +1,9 @@
 import { Component, inject } from "@angular/core";
-import { Store } from "@ngxs/store";
 import { Router } from "@angular/router";
 
-import { UsersState } from "../../../store/state/users.state";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
-import { SelectUserAction } from "../../../store/action/user/select-user.action";
-import { DeleteUsersAction } from "../../../store/action/users/delete-users.action";
+import { UsersService } from "../../../service/users.service";
+import { UserService } from "../../../service/user.service";
 
 @Component({
   selector: 'app-users-list-component',
@@ -14,13 +12,14 @@ import { DeleteUsersAction } from "../../../store/action/users/delete-users.acti
   standalone: false
 })
 export class UsersListComponent {
-  store = inject(Store);
   router = inject(Router);
+  users = inject(UsersService);
+  user = inject(UserService);
 
-  users$ = this.store.select(UsersState.getUsers);
+  users$ = this.users.getUsers();
 
   onSelect(user: UserEntityModel) {
-    this.store.dispatch(new SelectUserAction(user.id));
+    this.user.select(user.id);
   }
 
   onUpdate(user: UserEntityModel) {
@@ -28,6 +27,6 @@ export class UsersListComponent {
   }
 
   onDelete(user: UserEntityModel) {
-    this.store.dispatch(new DeleteUsersAction(user.id));
+    this.users.delete(user.id);
   }
 }
