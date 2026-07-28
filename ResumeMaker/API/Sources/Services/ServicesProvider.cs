@@ -2,7 +2,7 @@
 using API.Sources.Services.Resumes;
 using API.Sources.Services.Users;
 
-namespace API.Sources.Repositories;
+namespace API.Sources.Services;
 
 public static class ServicesProvider
 {

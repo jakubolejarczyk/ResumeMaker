@@ -11,37 +11,17 @@ namespace API.Sources.Controllers;
 public class UserController(IUserService service) : ControllerBase
 {
     [HttpPost]
-    public ActionResult<ResponseCore<UserResponse>> CreateUser([FromBody] UserRequest request)
-    {
-        var response = service.CreateUser(request);
-        return Ok(response);
-    }
+    public ActionResult<ResponseCore<UserResponse>> Create([FromBody] UserRequest request) => Ok(service.Create(request));
 
     [HttpGet("{id}")]
-    public ActionResult<ResponseCore<UserResponse>> ReadUser(int id)
-    {
-        var response = service.ReadUser(id);
-        return Ok(response);
-    }
+    public ActionResult<ResponseCore<UserResponse>> Read(int id) => Ok(service.Read(id));
 
     [HttpGet]
-    public ActionResult<ResponseCore<List<UserResponse>>> ReadUsers()
-    {
-        var response = service.ReadUsers();
-        return Ok(response);
-    }
+    public ActionResult<ResponseCore<List<UserResponse>>> ReadAll() => Ok(service.ReadAll());
 
     [HttpPatch("{id}")]
-    public ActionResult<ResponseCore<UserResponse>> UpdateUser(int id, [FromBody] UserRequest request)
-    {
-        var response = service.UpdateUser(id, request);
-        return Ok(response);
-    }
+    public ActionResult<ResponseCore<UserResponse>> Update(int id, [FromBody] UserRequest request) => Ok(service.Update(id, request));
 
-    [HttpDelete("{userId}")]
-    public ActionResult<ResponseCore<UserResponse>> DeleteUsers(int userId)
-    {
-        var response = service.DeleteUser(userId);
-        return Ok(response);
-    }
+    [HttpDelete("{id}")]
+    public ActionResult<ResponseCore<UserResponse>> Delete(int id) => Ok(service.Delete(id));
 }

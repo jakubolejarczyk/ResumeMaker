@@ -6,13 +6,13 @@ namespace API.Sources.Services.Users;
 
 public interface IUserService
 {
-    ResponseCore<UserResponse> CreateUser(UserRequest request);
+    ResponseCore<UserResponse> Create(UserRequest request);
 
-    ResponseCore<UserResponse> ReadUser(int id);
+    ResponseCore<UserResponse> Read(int id);
 
-    ResponseCore<List<UserResponse>> ReadUsers();
+    ResponseCore<List<UserResponse>> ReadAll();
 
-    ResponseCore<UserResponse> UpdateUser(int id, UserRequest request);
+    ResponseCore<UserResponse> Update(int id, UserRequest request);
 
-    ResponseCore<UserResponse> DeleteUser(int id);
+    ResponseCore<UserResponse> Delete(int id);
 }
