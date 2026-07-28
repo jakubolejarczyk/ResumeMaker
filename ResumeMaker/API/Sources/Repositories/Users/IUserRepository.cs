@@ -11,7 +11,7 @@ public interface IUserRepository
 
     RepositoryDTO<List<User>> ReadAll();
 
-    RepositoryDTO<User> Update(int id, User user);
+    RepositoryDTO<User> Update(User user);
 
     RepositoryDTO<User> Delete(int id);
 }
