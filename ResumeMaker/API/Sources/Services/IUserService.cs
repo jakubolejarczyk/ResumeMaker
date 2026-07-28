@@ -2,7 +2,7 @@
 using API.Sources.Requests;
 using API.Sources.Responses;
 
-namespace API.Sources.Services.Users;
+namespace API.Sources.Services;
 
 public interface IUserService
 {

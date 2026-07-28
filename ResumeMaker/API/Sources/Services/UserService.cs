@@ -4,7 +4,7 @@ using API.Sources.Repositories;
 using API.Sources.Requests;
 using API.Sources.Responses;
 
-namespace API.Sources.Services.Users;
+namespace API.Sources.Services;
 
 public class UserService(IUserRepository repository) : IUserService
 {

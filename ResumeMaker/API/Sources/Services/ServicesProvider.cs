@@ -1,6 +1,4 @@
-﻿using API.Sources.Services.Users;
-
-namespace API.Sources.Services;
+﻿namespace API.Sources.Services;
 
 public static class ServicesProvider
 {

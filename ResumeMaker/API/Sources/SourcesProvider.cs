@@ -9,10 +9,10 @@ public static class SourcesProvider
 {
     public static void GetBuilder(WebApplicationBuilder builder)
     {
+        ContextsProvider.GetBuilder(builder);
         ControllersProvider.GetBuilder(builder);
         RepositoriesProvider.GetBuilder(builder);
         ServicesProvider.GetBuilder(builder);
-        ContextsProvider.GetBuilder(builder);
     }
 
     public static void GetApp(WebApplication app)
