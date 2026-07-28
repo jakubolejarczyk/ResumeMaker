@@ -1,8 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
-import { AppStore } from "../../../old/app-store";
-import { UserRequestService } from "../../../service/request/user-request.service";
+import { UsersService } from "../../../service/users.service";
 import { CreateUserRequestModel } from "../../../model/request/create-user-request.model";
 
 @Component({
@@ -13,8 +12,7 @@ import { CreateUserRequestModel } from "../../../model/request/create-user-reque
 })
 export class CreateUserFormComponent {
   formBuilder = inject(FormBuilder);
-  appStore = inject(AppStore);
-  userRequestService = inject(UserRequestService);
+  users = inject(UsersService);
 
   createUserForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -40,7 +38,7 @@ export class CreateUserFormComponent {
       country: value.country ?? '',
       phoneNumber: value.phoneNumber ?? ''
     };
-    this.userRequestService.createUser(request);
+    this.users.create(request);
     this.createUserForm.reset();
   }
 }

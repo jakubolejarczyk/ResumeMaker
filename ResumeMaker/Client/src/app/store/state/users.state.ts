@@ -6,6 +6,7 @@ import { UsersStateModel } from "../../model/state/users-state.model";
 import { FetchAllUsersAction } from "../action/users/fetch-all-users.action";
 import { UsersApi } from "../../api/users.api";
 import { DeleteUsersAction } from "../action/users/delete-users.action";
+import { CreateUsersAction } from "../action/users/create-users.action";
 
 @State<UsersStateModel>({
   name: 'usersState',
@@ -20,6 +21,11 @@ export class UsersState {
   @Selector()
   static getUsers(state: UsersStateModel) {
     return state.users;
+  }
+
+  @Action(CreateUsersAction)
+  create(_context: StateContext<UsersStateModel>, action: CreateUsersAction) {
+    return this.usersApi.create(action.request);
   }
 
   @Action(FetchAllUsersAction)

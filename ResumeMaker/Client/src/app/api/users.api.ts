@@ -3,9 +3,14 @@ import { Injectable } from "@angular/core";
 import { BaseApi } from "./base.api";
 import { UserEntityModel } from "../model/entity/user-entity.model";
 import { ResponseModel } from "../model/response/response.model";
+import { CreateUserRequestModel } from "../model/request/create-user-request.model";
 
 @Injectable({ providedIn: 'root' })
 export class UsersApi extends BaseApi {
+  create(request: CreateUserRequestModel) {
+    return this.httpClient.post<ResponseModel<UserEntityModel>>(this.getUserEndpoint(), request);
+  }
+
   fetchAll() {
     return this.httpClient.get<ResponseModel<UserEntityModel[]>>(this.getUserEndpoint());
   }

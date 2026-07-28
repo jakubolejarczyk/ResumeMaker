@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { switchMap } from "rxjs";
 
 import { CreateUserRequestModel } from "../../model/request/create-user-request.model";
-import { CreateUserResponseModel } from "../../model/response/create-user-response.model";
+// import { CreateUserResponseModel } from "../../model/response/create-user-response.model";
 import { ReadUsersResponseModel } from "../../model/response/read-users-response.model";
 import { AppStore } from "../../old/app-store";
 import { DeleteUserResponseModel } from "../../model/response/delete-user-response.model";
@@ -20,7 +20,7 @@ export class UserRequestService {
   appStore = inject(AppStore);
 
   createUser(request: CreateUserRequestModel) {
-    this.httpClient.post<CreateUserResponseModel>(this.API_ENDPOINT, request)
+    this.httpClient.post<any>(this.API_ENDPOINT, request)
       .pipe(
         switchMap(response => {
           alert(response.message);
