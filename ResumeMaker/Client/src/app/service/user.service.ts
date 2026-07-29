@@ -50,8 +50,12 @@ export class UserService {
         const selectedUser = this.store.selectSnapshot(UserState.getSelectedUser);
         if (selectedUser === undefined) return of(void 0);
         const users = this.store.selectSnapshot(UserState.getUsers);
-        const selectedUserExists = users.some(user => user.id === selectedUser.id);
-        if (!selectedUserExists) this.store.dispatch(new DeselectUser());
+        const selectedUserCopy = users.find(user => user.id === selectedUser.id);
+        if (selectedUserCopy) {
+          this.store.dispatch(new SelectUser(selectedUserCopy));
+        } else {
+          this.store.dispatch(new DeselectUser());
+        }
         return of(void 0);
       })
     );
