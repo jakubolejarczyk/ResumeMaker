@@ -15,9 +15,3 @@ export class SelectUser {
 
   constructor(public user: UserEntityModel) { }
 }
-
-export class SetReadAll {
-  static readonly type = '[User] Set Read All';
-
-  constructor(public success: boolean, public message: string) { }
-}

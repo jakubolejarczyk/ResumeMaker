@@ -50,8 +50,8 @@ export class CreateUserFormComponent implements OnInit {
       phoneNumber: value.phoneNumber ?? ''
     };
     this.service.create(request).subscribe({
-      error: (err) => {
-        alert(err);
+      error: (message) => {
+        alert(message);
       }
     });
     this.createUserForm.reset();
