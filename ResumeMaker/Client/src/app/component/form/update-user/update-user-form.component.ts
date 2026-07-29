@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { UserDal } from "../../../dal/user.dal";
+import { UserRequestModel } from "../../../model/request/user-request.model";
+import { UserService } from "../../../service/user.service";
 
 @Component({
   selector: 'app-update-user-form-component',
@@ -14,9 +16,7 @@ export class UpdateUserFormComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   dal = inject(UserDal);
   route = inject(ActivatedRoute);
-
-  // appStore = inject(AppStore);
-  // userRequestService = inject(UserRequestService);
+  service = inject(UserService);
 
   updateUserForm = this.formBuilder.group({
     id: [0, Validators.required],
@@ -48,22 +48,32 @@ export class UpdateUserFormComponent implements OnInit {
   }
 
   onSubmit() {
-  //   const { valid } = this.updateUserForm;
-  //   if (!valid) {
-  //     alert('Please fill in all required fields.');
-  //     return;
-  //   }
-  //   const id = this.route.snapshot.paramMap.get('id');
-  //   if (!id) return;
-  //   const { value } = this.updateUserForm;
-  //   const request: UpdateUserRequestModel = {
-  //     email: value.email ?? '',
-  //     firstName: value.firstName ?? '',
-  //     lastName: value.lastName ?? '',
-  //     city: value.city ?? '',
-  //     country: value.country ?? '',
-  //     phoneNumber: value.phoneNumber ?? ''
-  //   };
-  //   this.userRequestService.updateUser(id, request);
+    const { valid } = this.updateUserForm;
+    if (!valid) {
+      alert('Not all required fields have been completed.');
+      return;
+    }
+    const { value } = this.updateUserForm;
+    const request: UserRequestModel = {
+      email: value.email ?? '',
+      firstName: value.firstName ?? '',
+      lastName: value.lastName ?? '',
+      city: value.city ?? '',
+      country: value.country ?? '',
+      phoneNumber: value.phoneNumber ?? ''
+    };
+    const id = value.id;
+    if (!id) throw new Error("Id is not defined!");
+    this.service.update(id, request).subscribe({
+      next: (response) => {
+        const { success, message } = response;
+        if (success) {
+          alert(message);
+        }
+      },
+      error: (message) => {
+        alert(message);
+      }
+    });
   }
 }

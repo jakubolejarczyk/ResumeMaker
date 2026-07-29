@@ -74,11 +74,20 @@ export class UserService {
     );
   }
 
-  // getSelectedUserId() {
-  //   return this.store.select(UsersState.getSelectedUser);
-  // }
-
-  // fetchAll() {
-  //   this.store.dispatch(new FetchAllUsersAction());
-  // }
+  update(id: number, request: UserRequestModel) {
+    return this.dal.update(id, request).pipe(
+      concatMap(response => {
+        const { success, message } = response;
+        if (success) {
+          return of(response);
+        }
+        throw new Error(message);
+      }),
+      concatMap(response => {
+        return this.readAll().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
 }

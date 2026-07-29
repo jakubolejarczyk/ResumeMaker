@@ -10,13 +10,9 @@ import { UserRequestModel } from "../../../model/request/user-request.model";
   styleUrl: '../base/base-form.component.css',
   standalone: false
 })
-export class CreateUserFormComponent implements OnInit {
+export class CreateUserFormComponent {
   formBuilder = inject(FormBuilder);
   service = inject(UserService);
-
-  showMessage = false;
-  isError = false;
-  message = '';
 
   createUserForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -27,17 +23,10 @@ export class CreateUserFormComponent implements OnInit {
     phoneNumber: ['', Validators.required]
   });
 
-  ngOnInit() {
-    this.resetMessage();
-  }
-
   onSubmit() {
-    this.resetMessage();
     const { valid } = this.createUserForm;
     if (!valid) {
-      this.showMessage = true;
-      this.isError = true;
-      this.message = 'Not all required fields have been completed.';
+      alert('Not all required fields have been completed.');
       return;
     }
     const { value } = this.createUserForm;
@@ -61,11 +50,5 @@ export class CreateUserFormComponent implements OnInit {
         alert(message);
       }
     });
-  }
-
-  private resetMessage() {
-    this.showMessage = false;
-    this.isError = false;
-    this.message = '';
   }
 }
