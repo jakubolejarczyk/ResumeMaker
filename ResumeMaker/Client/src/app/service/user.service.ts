@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { concatMap, of } from "rxjs";
+import { concatMap, map, of } from "rxjs";
 import { Store } from "@ngxs/store";
 
 import { UserDal } from "../dal/user.dal";
@@ -15,12 +15,17 @@ export class UserService {
   create(request: UserRequestModel) {
     return this.dal.create(request).pipe(
       concatMap(response => {
-        if (response.success) {
-          return of(void 0);
+        const { success, message } = response;
+        if (success) {
+          return of(response);
         }
         throw new Error(response.message);
       }),
-      concatMap(() => this.readAll())
+      concatMap(response => {
+        return this.readAll().pipe(
+          map(() => response)
+        );
+      })
     );
   }
 
