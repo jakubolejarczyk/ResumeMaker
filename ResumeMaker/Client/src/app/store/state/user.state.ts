@@ -2,13 +2,17 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 
 import { UserStateModel } from "../../model/state/user-state.model";
-import { DeselectUser, SelectUser, SetUsers } from "../actions/user.actions";
+import { DeselectUser, SelectUser, SetReadAll, SetUsers } from "../actions/user.actions";
 
 @State<UserStateModel>({
   name: 'userState',
   defaults: {
     selectedUser: undefined,
-    users: []
+    users: [],
+    readAll: {
+      success: false,
+      message: ''
+    }
   }
 })
 @Injectable()
@@ -24,20 +28,42 @@ export class UserState {
   }
 
   @Action(SetUsers)
-  set(context: StateContext<UserStateModel>, action: SetUsers) {
+  setUsers(context: StateContext<UserStateModel>, action: SetUsers) {
     const state = context.getState();
-    context.setState({ ...state, users: action.users });
+    context.setState({
+      ...state,
+      users: action.users
+    });
   }
 
   @Action(DeselectUser)
-  deselect(context: StateContext<UserStateModel>) {
+  deselectUser(context: StateContext<UserStateModel>) {
     const state = context.getState();
-    context.setState({ ...state, selectedUser: undefined });
+    context.setState({
+      ...state,
+      selectedUser: undefined
+    });
   }
 
   @Action(SelectUser)
-  select(context: StateContext<UserStateModel>, action: SelectUser) {
+  selectUser(context: StateContext<UserStateModel>, action: SelectUser) {
     const state = context.getState();
-    context.setState({ ...state, selectedUser: action.user });
+    context.setState({
+      ...state,
+      selectedUser: action.user
+    });
+  }
+
+  @Action(SetReadAll)
+  setReadAll(context: StateContext<UserStateModel>, action: SetReadAll) {
+    const state = context.getState();
+    context.setState({
+      ...state,
+      readAll: {
+        ...state.readAll,
+        success: action.success,
+        message: action.message
+      }
+    });
   }
 }
