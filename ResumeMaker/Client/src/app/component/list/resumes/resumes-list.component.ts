@@ -1,48 +1,48 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { Router } from "@angular/router";
+// import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angular/core";
+// import { Subscription } from "rxjs";
+// import { Router } from "@angular/router";
 
-import { AppStore } from "../../../old/app-store";
-import { ResumeRequestService } from "../../../service/request/resume-request.service";
-import { ResumeEntityModel } from "../../../model/entity/resume-entity.model";
+// import { AppStore } from "../../../old/app-store";
+// import { ResumeRequestService } from "../../../service/request/resume-request.service";
+// import { ResumeEntityModel } from "../../../model/entity/resume-entity.model";
 
-@Component({
-  selector: 'app-resumes-list-component',
-  templateUrl: './resumes-list.component.html',
-  styleUrl: '../base/base-list.component.css',
-  standalone: false
-})
-export class ResumesListComponent implements OnInit, OnDestroy {
-  appStore = inject(AppStore);
-  resumeRequestService = inject(ResumeRequestService);
-  cdr = inject(ChangeDetectorRef);
-  router = inject(Router);
+// @Component({
+//   selector: 'app-resumes-list-component',
+//   templateUrl: './resumes-list.component.html',
+//   styleUrl: '../base/base-list.component.css',
+//   standalone: false
+// })
+// export class ResumesListComponent implements OnInit, OnDestroy {
+//   appStore = inject(AppStore);
+//   resumeRequestService = inject(ResumeRequestService);
+//   cdr = inject(ChangeDetectorRef);
+//   router = inject(Router);
 
-  resumes: ResumeEntityModel[] = [];
+//   resumes: ResumeEntityModel[] = [];
 
-  sub!: Subscription;
+//   sub!: Subscription;
 
-  ngOnInit() {
-    this.sub = this.appStore.resumes.subscribe(resumes => {
-      this.resumes = resumes;
-      this.cdr.detectChanges();
-    });
-    this.resumeRequestService.readResumes();
-  }
+//   ngOnInit() {
+//     this.sub = this.appStore.resumes.subscribe(resumes => {
+//       this.resumes = resumes;
+//       this.cdr.detectChanges();
+//     });
+//     this.resumeRequestService.readResumes();
+//   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+//   ngOnDestroy() {
+//     this.sub.unsubscribe();
+//   }
 
-  onSelect(resume: ResumeEntityModel) {
-    this.appStore.resume.next(resume);
-  }
+//   onSelect(resume: ResumeEntityModel) {
+//     this.appStore.resume.next(resume);
+//   }
 
-  onUpdate(resumeId: number) {
-    this.router.navigate(['/resume', resumeId]);
-  }
+//   onUpdate(resumeId: number) {
+//     this.router.navigate(['/resume', resumeId]);
+//   }
 
-  onDelete(companyId: number) {
-    this.resumeRequestService.deleteResume(companyId);
-  }
-}
+//   onDelete(companyId: number) {
+//     this.resumeRequestService.deleteResume(companyId);
+//   }
+// }
