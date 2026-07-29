@@ -6,6 +6,7 @@ import { App } from './app';
 import { ComponentModule } from './component/component.module';
 import { StoreModule } from './store/store.module';
 import { AppRoutesModule } from './app-routes.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [App],

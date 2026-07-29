@@ -35,6 +35,11 @@
   width: calc(100% - 160px);
 }
 
+.error-message,
+.success-message {
+  margin-top: 0.5rem;
+}
+
 @media screen and (max-width: 640px) {
   .form-label {
     width: 150px;
