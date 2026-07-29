@@ -1,4 +1,4 @@
-import { CompanyEntityModel } from "../entity/company-entity.model";
+// import { CompanyEntityModel } from "../entity/company-entity.model";
 
-export interface UpdateCompanyRequestModel extends Omit<CompanyEntityModel, 'id'> {
-}
+// export interface UpdateCompanyRequestModel extends Omit<CompanyEntityModel, 'id'> {
+// }

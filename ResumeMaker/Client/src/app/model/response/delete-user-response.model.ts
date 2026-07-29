@@ -1,7 +1,7 @@
-import { UserEntityModel } from "../entity/user-entity.model";
+// import { UserEntityModel } from "../entity/user-entity.model";
 
-export interface DeleteUserResponseModel {
-  success: boolean;
-  message: string;
-  body: UserEntityModel;
-}
+// export interface DeleteUserResponseModel {
+//   success: boolean;
+//   message: string;
+//   body: UserEntityModel;
+// }

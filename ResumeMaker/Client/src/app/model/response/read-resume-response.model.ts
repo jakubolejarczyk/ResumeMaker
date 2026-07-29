@@ -1,7 +1,7 @@
-import { ResumeEntityModel } from "../entity/resume-entity.model";
+// import { ResumeEntityModel } from "../entity/resume-entity.model";
 
-export interface ReadResumeResponseModel {
-  success: boolean;
-  message: string;
-  body: ResumeEntityModel;
-}
+// export interface ReadResumeResponseModel {
+//   success: boolean;
+//   message: string;
+//   body: ResumeEntityModel;
+// }
