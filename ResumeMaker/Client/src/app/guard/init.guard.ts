@@ -1,11 +1,12 @@
-// import { inject } from "@angular/core";
-// import { CanActivateFn } from "@angular/router";
-// import { Store } from "@ngxs/store";
+import { inject } from "@angular/core";
+import { CanActivateFn } from "@angular/router";
+import { map } from "rxjs";
 
-// import { FetchAllUsersAction } from "../store/action/users/fetch-all-users.action";
+import { UserService } from "../service/user.service";
 
-// export const initGuard: CanActivateFn = () => {
-//   const store = inject(Store);
-//   store.dispatch(new FetchAllUsersAction());
-//   return true;
-// };
+export const initGuard: CanActivateFn = () => {
+  const service = inject(UserService);
+  return service.readAll().pipe(
+    map(() => true)
+  );
+};

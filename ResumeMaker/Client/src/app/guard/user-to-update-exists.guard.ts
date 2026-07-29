@@ -1,15 +1,17 @@
-// import { inject } from "@angular/core";
-// import { ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
+import { inject } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
+import { Store } from "@ngxs/store";
 
-// import { AppStore } from "../old/app-store";
+import { UserState } from "../store/state/user.state";
 
-// export const userToUpdateExists: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-//   const appStore = inject(AppStore);
-//   const router = inject(Router);
-//   const userId = route.paramMap.get('id');
-//   const hasUser = appStore.users.value.some(user => user.id.toString() === userId);
-//   if (hasUser) {
-//     return true;
-//   }
-//   return router.createUrlTree(['/']);
-// };
+export const userToUpdateExistsGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
+  const store = inject(Store);
+  const router = inject(Router);
+  const param = route.paramMap.get('id');
+  if (!param) return false;
+  const id = parseInt(param);
+  const users = store.selectSnapshot(UserState.getUsers);
+  const userExists = users.some(user => user.id === id);
+  if (userExists) return true;
+  return router.createUrlTree(['/']);
+};

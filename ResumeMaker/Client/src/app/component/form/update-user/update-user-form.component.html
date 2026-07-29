@@ -1,5 +1,9 @@
-<!--<form class="form" [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
   <h3 class="form-title">Update user</h3>
+  <div class="form-item">
+    <label class="form-label" for="id">Id</label>
+    <input id="id" class="form-input-text" type="text" formControlName="id" />
+  </div>
   <div class="form-item">
     <label class="form-label" for="email">Email</label>
     <input id="email" class="form-input-text" type="text" formControlName="email" />
@@ -25,4 +29,4 @@
     <input id="phoneNumber" class="form-input-text" type="text" formControlName="phoneNumber" />
   </div>
   <input type="submit" [disabled]="!updateUserForm.valid" value="Update" />
-</form>-->
+</form>

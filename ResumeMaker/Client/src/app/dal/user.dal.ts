@@ -12,7 +12,7 @@ export class UserDal extends BaseDal {
   }
 
   read(id: number) {
-    return this.httpClient.get<ResponseModel<UserEntityModel[]>>(this.getEndpoint(id));
+    return this.httpClient.get<ResponseModel<UserEntityModel>>(this.getEndpoint(id));
   }
 
   readAll() {
