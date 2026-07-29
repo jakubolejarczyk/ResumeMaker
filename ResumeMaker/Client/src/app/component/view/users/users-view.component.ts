@@ -1,8 +1,8 @@
-// import { Component } from "@angular/core";
+import { Component } from "@angular/core";
 
-// @Component({
-//   selector: 'app-users-view-component',
-//   templateUrl: './users-view.component.html',
-//   standalone: false
-// })
-// export class UsersViewComponent {}
+@Component({
+  selector: 'app-users-view-component',
+  templateUrl: './users-view.component.html',
+  standalone: false
+})
+export class UsersViewComponent {}
