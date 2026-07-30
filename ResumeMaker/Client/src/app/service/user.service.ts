@@ -1,10 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { concatMap, of } from "rxjs";
+import { combineLatest, concatMap, map, of } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
-import { SetUsers } from "../store/actions/user.actions";
+import { DeselectUser, SelectUser, SetUsers } from "../store/actions/user.actions";
 import { UserState } from "../store/state/user.state";
+import { UserRequestModel } from "../model/request/user-request.model";
+import { UserEntityModel } from "../model/entity/user-entity.model";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -15,38 +17,23 @@ export class UserService {
     return this.store.select(UserState.getSelectedUser);
   }
 
-  // getUsers$() {
-  //   return this.store.select(UserState.getUsers);
-  // }
-
-  // getSelectedUser() {
-  //   return this.store.selectOnce(UserState.getSelectedUser);
-  // }
-
-  // getUsers() {
-  //   return this.store.selectOnce(UserState.getUsers);
-  // }
+  getUsers$() {
+    return this.store.select(UserState.getUsers);
+  }
 
   // select(user: UserEntityModel) {
   //   this.store.dispatch(new SelectUser(user));
   // }
 
-  // create(request: UserRequestModel) {
-  //   return this.dal.create(request).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAll().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
+  create$(request: UserRequestModel) {
+    return this.dal.create$(request).pipe(
+      concatMap(response => {
+        return this.readAll$().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
 
   readAll$() {
     return this.dal.readAll$().pipe(
@@ -55,26 +42,10 @@ export class UserService {
         const users = success ? body : [];
         this.store.dispatch(new SetUsers(users));
         return of(true);
-      })
+      }),
+      concatMap(() => this.deselect$())
     );
   }
-
-  // delete(id: number) {
-  //   return this.dal.delete(id).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAll().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
 
   // update(id: number, request: UserRequestModel) {
   //   return this.dal.update(id, request).pipe(
@@ -93,20 +64,25 @@ export class UserService {
   //   );
   // }
 
-  // select$(id: number) {
-  //   return this.getUsers$().pipe(
-  //     concatMap(users => )
-  //   );
+  delete$(id: number) {
+    return this.dal.delete$(id).pipe(
+      concatMap(() => this.readAll$())
+    );
+  }
 
-  //   this.store.dispatch(new SelectUser(id));
+  select$(user: UserEntityModel) {
+    return this.store.dispatch(new SelectUser(user));
+  }
 
-  //   return this.dal.readAll().pipe(
-  //     concatMap(response => {
-  //       const { success, message, body } = response;
-  //       const users = success ? body : [];
-  //       this.store.dispatch(new SetUsers(users));
-  //       return of({ success, message });
-  //     })
-  //   );
-  // }
+  deselect$() {
+    return combineLatest([this.getSelectedUser$(), this.getUsers$()]).pipe(
+      concatMap(([selectedUser, users]) => {
+        if (!selectedUser) return of(void 0);
+        const selectedUserExists = users.some(user => user.id === selectedUser.id);
+        if (selectedUserExists) return of(void 0);
+        this.store.dispatch(new DeselectUser());
+        return of(void 0);
+      })
+    );
+  }
 }

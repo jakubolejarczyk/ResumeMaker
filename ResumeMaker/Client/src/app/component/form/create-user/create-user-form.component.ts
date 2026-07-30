@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 
 import { UserService } from "../../../service/user.service";
 import { UserRequestModel } from "../../../model/request/user-request.model";
+import { concatMap, of } from "rxjs";
 
 @Component({
   selector: 'app-create-user-form-component',
@@ -38,17 +39,12 @@ export class CreateUserFormComponent {
       country: value.country ?? '',
       phoneNumber: value.phoneNumber ?? ''
     };
-    // this.service.create(request).subscribe({
-    //   next: (response) => {
-    //     const { success, message } = response;
-    //     if (success) {
-    //       alert(message);
-    //       this.createUserForm.reset();
-    //     }
-    //   },
-    //   error: (message) => {
-    //     alert(message);
-    //   }
-    // });
+    this.service.create$(request).subscribe(response => {
+      const { success, message } = response;
+      if (success) {
+        this.createUserForm.reset();
+      }
+      alert(message);
+    });
   }
 }

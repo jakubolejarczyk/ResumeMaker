@@ -14,10 +14,10 @@ export class UsersListComponent {
   service = inject(UserService);
   router = inject(Router);
 
-  // users$ = this.service.getUsers();
+  users$ = this.service.getUsers$();
 
   onSelect(user: UserEntityModel) {
-    // this.service.select(user);
+    this.service.select$(user).subscribe();
   }
 
   onUpdate(user: UserEntityModel) {
@@ -25,6 +25,6 @@ export class UsersListComponent {
   }
 
   onDelete(user: UserEntityModel) {
-    // this.service.delete(user.id).subscribe();
+    this.service.delete$(user.id).subscribe();
   }
 }
