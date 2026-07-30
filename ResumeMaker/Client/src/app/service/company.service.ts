@@ -1,7 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
+import { concatMap, of } from "rxjs";
 
 import { CompanyDal } from "../dal/company.dal";
+import { UserState } from "../store/state/user.state";
+import { CompanyEntityModel } from "../model/entity/company-entity.model";
+import { ResponseModel } from "../model/response/response.model";
+import { SetCompanies } from "../store/actions/company.actions";
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
@@ -77,6 +82,27 @@ export class CompanyService {
   //     })
   //   );
   // }
+
+  readAllForUser$() {
+    return this.store.selectOnce(UserState.getSelectedUser).pipe(
+      concatMap(user => {
+        if (user) {
+          return this.dal.readAllForUser$(user.id);
+        }
+        const response: ResponseModel<CompanyEntityModel[]> = {
+          success: false,
+          message: 'No companies found.',
+          body: []
+        };
+        return of(response);
+      }),
+      concatMap(response => {
+        const { body } = response;
+        this.store.dispatch(new SetCompanies(body));
+        return of(true);
+      })
+    );
+  }
 
   // delete(id: number) {
   //   return this.dal.delete(id).pipe(

@@ -47,7 +47,7 @@ export class UserService {
   //   );
   // }
 
-  readAll$$() {
+  readAll$() {
     return this.dal.readAll$().pipe(
       concatMap(response => {
         const { success, body } = response;
