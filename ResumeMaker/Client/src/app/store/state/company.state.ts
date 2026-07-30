@@ -14,7 +14,7 @@ import { DeselectCompany, SelectCompany, SetCompanies } from "../actions/company
 @Injectable()
 export class CompanyState {
   @Selector()
-  static getUsers(state: CompanyStateModel) {
+  static getCompanies(state: CompanyStateModel) {
     return state.companies;
   }
 
