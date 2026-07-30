@@ -38,17 +38,17 @@ export class CreateUserFormComponent {
       country: value.country ?? '',
       phoneNumber: value.phoneNumber ?? ''
     };
-    this.service.create(request).subscribe({
-      next: (response) => {
-        const { success, message } = response;
-        if (success) {
-          alert(message);
-          this.createUserForm.reset();
-        }
-      },
-      error: (message) => {
-        alert(message);
-      }
-    });
+    // this.service.create(request).subscribe({
+    //   next: (response) => {
+    //     const { success, message } = response;
+    //     if (success) {
+    //       alert(message);
+    //       this.createUserForm.reset();
+    //     }
+    //   },
+    //   error: (message) => {
+    //     alert(message);
+    //   }
+    // });
   }
 }

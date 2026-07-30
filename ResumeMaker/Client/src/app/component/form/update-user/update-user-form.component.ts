@@ -33,18 +33,18 @@ export class UpdateUserFormComponent implements OnInit {
     if (!param) throw new Error('Id was not provided!');
     const id = parseInt(param);
     if (!id) throw new Error('Id is not a number!');
-    this.dal.read(id).subscribe(response => {
-      const { success, body } = response;
-      if (success && body) {
-        this.updateUserForm.controls.id.setValue(body.id);
-        this.updateUserForm.controls.email.setValue(body.email);
-        this.updateUserForm.controls.firstName.setValue(body.firstName);
-        this.updateUserForm.controls.lastName.setValue(body.lastName);
-        this.updateUserForm.controls.city.setValue(body.city);
-        this.updateUserForm.controls.country.setValue(body.country);
-        this.updateUserForm.controls.phoneNumber.setValue(body.phoneNumber);
-      }
-    });
+    // this.dal.read(id).subscribe(response => {
+    //   const { success, body } = response;
+    //   if (success && body) {
+    //     this.updateUserForm.controls.id.setValue(body.id);
+    //     this.updateUserForm.controls.email.setValue(body.email);
+    //     this.updateUserForm.controls.firstName.setValue(body.firstName);
+    //     this.updateUserForm.controls.lastName.setValue(body.lastName);
+    //     this.updateUserForm.controls.city.setValue(body.city);
+    //     this.updateUserForm.controls.country.setValue(body.country);
+    //     this.updateUserForm.controls.phoneNumber.setValue(body.phoneNumber);
+    //   }
+    // });
   }
 
   onSubmit() {
@@ -64,16 +64,16 @@ export class UpdateUserFormComponent implements OnInit {
     };
     const id = value.id;
     if (!id) throw new Error("Id is not defined!");
-    this.service.update(id, request).subscribe({
-      next: (response) => {
-        const { success, message } = response;
-        if (success) {
-          alert(message);
-        }
-      },
-      error: (message) => {
-        alert(message);
-      }
-    });
+    // this.service.update(id, request).subscribe({
+    //   next: (response) => {
+    //     const { success, message } = response;
+    //     if (success) {
+    //       alert(message);
+    //     }
+    //   },
+    //   error: (message) => {
+    //     alert(message);
+    //   }
+    // });
   }
 }

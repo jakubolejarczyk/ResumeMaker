@@ -5,8 +5,8 @@ import { map } from "rxjs";
 import { UserService } from "../service/user.service";
 
 export const initGuard: CanActivateFn = () => {
-  const service = inject(UserService);
-  return service.readAll().pipe(
-    map(() => true)
+  const userService = inject(UserService);
+  return userService.readAll$$().pipe(
+    map(success => success)
   );
 };

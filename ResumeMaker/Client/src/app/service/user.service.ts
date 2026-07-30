@@ -1,7 +1,9 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
+import { concatMap, of } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
+import { SetUsers } from "../store/actions/user.actions";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -45,16 +47,16 @@ export class UserService {
   //   );
   // }
 
-  // readAll$() {
-  //   return this.dal.readAll$().pipe(
-  //     concatMap(response => {
-  //       const { success, message, body } = response;
-  //       const users = success ? body : [];
-  //       this.store.dispatch(new SetUsers(users));
-  //       return of({ success, message });
-  //     })
-  //   );
-  // }
+  readAll$$() {
+    return this.dal.readAll$().pipe(
+      concatMap(response => {
+        const { success, body } = response;
+        const users = success ? body : [];
+        this.store.dispatch(new SetUsers(users));
+        return of(true);
+      })
+    );
+  }
 
   // delete(id: number) {
   //   return this.dal.delete(id).pipe(
