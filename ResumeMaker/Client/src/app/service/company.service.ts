@@ -2,34 +2,31 @@ import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
 
 import { CompanyDal } from "../dal/company.dal";
-import { CompanyState } from "../store/state/company.state";
-import { CompanyEntityModel } from "../model/entity/company-entity.model";
-import { SelectCompany } from "../store/actions/company.actions";
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
   private dal = inject(CompanyDal);
   private store = inject(Store);
 
-  getSelectedCompany$() {
-    return this.store.select(CompanyState.getSelectedCompany);
-  }
+  // getSelectedCompany$() {
+  //   return this.store.select(CompanyState.getSelectedCompany);
+  // }
 
-  getCompanies$() {
-    return this.store.select(CompanyState.getCompanies);
-  }
+  // getCompanies$() {
+  //   return this.store.select(CompanyState.getCompanies);
+  // }
 
-  getSelectedCompany() {
-    return this.store.selectOnce(CompanyState.getSelectedCompany);
-  }
+  // getSelectedCompany() {
+  //   return this.store.selectOnce(CompanyState.getSelectedCompany);
+  // }
 
-  getCompanies() {
-    return this.store.selectOnce(CompanyState.getCompanies);
-  }
+  // getCompanies() {
+  //   return this.store.selectOnce(CompanyState.getCompanies);
+  // }
 
-  select(company: CompanyEntityModel) {
-    this.store.dispatch(new SelectCompany(company));
-  }
+  // select(company: CompanyEntityModel) {
+  //   this.store.dispatch(new SelectCompany(company));
+  // }
 
   // create(request: CompanyRequestModel) {
   //   return this.dal.create(request).pipe(
@@ -49,26 +46,32 @@ export class CompanyService {
   // }
 
   // readAllForUser() {
-  //   const selectedUser = this.store.selectSnapshot(UserState.getSelectedUser);
-  //   if (!selectedUser) {
-  //     throw new Error('User was not selected!');
-  //   }
-  //   return this.dal.readAllForUser(selectedUser.id).pipe(
+  //   return this.store.selectOnce(UserState.getSelectedUser).pipe(
+  //     concatMap(selectedUser => {
+  //       if (selectedUser) {
+  //         return this.dal.readAllForUser(selectedUser.id);
+  //       }
+  //       throw new Error('User was not selected!');
+  //     }),
   //     concatMap(response => {
   //       const { success, body } = response;
   //       const companies = success ? body : [];
   //       this.store.dispatch(new SetCompanies(companies));
-  //       return of(void 0);
+  //       return this.getSelectedCompany$();
   //     }),
-  //     concatMap(() => {
-  //       const selectedCompany = this.store.selectSnapshot(CompanyState.getSelectedCompany);
-  //       if (selectedCompany === undefined) return of(void 0);
-  //       const companies = this.store.selectSnapshot(CompanyState.getCompanies);
-  //       const selectedCompanyCopy = companies.find(company => company.id === selectedCompany.id);
-  //       if (selectedCompanyCopy) {
-  //         this.store.dispatch(new SelectCompany(selectedCompanyCopy));
-  //       } else {
-  //         this.store.dispatch(new DeselectCompany());
+  //     concatMap(selectedCompany => {
+  //       return forkJoin({ companies: this.getCompanies$() }).pipe(
+  //         map(({ companies }) => ({ selectedCompany, companies }))
+  //       )
+  //     }),
+  //     concatMap(({ selectedCompany, companies }) => {
+  //       if (selectedCompany) {
+  //         const currentSelectedCompany = companies.find(company => company.id === selectedCompany.id);
+  //         if (currentSelectedCompany) {
+  //           this.store.dispatch(new SelectCompany(currentSelectedCompany));
+  //         } else {
+  //           this.store.dispatch(new DeselectCompany());
+  //         }
   //       }
   //       return of(void 0);
   //     })

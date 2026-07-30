@@ -7,23 +7,23 @@ import { UserRequestModel } from "../model/request/user-request.model";
 
 @Injectable({ providedIn: 'root' })
 export class UserDal extends BaseDal {
-  create(request: UserRequestModel) {
+  create$(request: UserRequestModel) {
     return this.httpClient.post<ResponseModel<UserEntityModel>>(this.getEndpoint(), request);
   }
 
-  read(id: number) {
+  read$(id: number) {
     return this.httpClient.get<ResponseModel<UserEntityModel>>(this.getEndpoint(id));
   }
 
-  readAll() {
+  readAll$() {
     return this.httpClient.get<ResponseModel<UserEntityModel[]>>(this.getEndpoint());
   }
 
-  update(id: number, request: UserRequestModel) {
+  update$(id: number, request: UserRequestModel) {
     return this.httpClient.patch<ResponseModel<UserEntityModel>>(this.getEndpoint(id), request);
   }
 
-  delete(id: number) {
+  delete$(id: number) {
     return this.httpClient.delete<ResponseModel<UserEntityModel>>(this.getEndpoint(id));
   }
 
