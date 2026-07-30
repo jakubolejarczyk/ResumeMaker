@@ -16,6 +16,7 @@ public class User
 
     public string PhoneNumber { get; set; } = string.Empty;
 
-    //public List<Company> Companies { get; set; } = [];
+    public List<Company> Companies { get; set; } = [];
+
     //public List<Resume> Resumes { get; set; } = [];
 }
