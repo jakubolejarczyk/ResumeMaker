@@ -4,15 +4,16 @@ import { concatMap, of } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
 import { SetUsers } from "../store/actions/user.actions";
+import { UserState } from "../store/state/user.state";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private dal = inject(UserDal);
   private store = inject(Store);
 
-  // getSelectedUser$() {
-  //   return this.store.select(UserState.getSelectedUser);
-  // }
+  getSelectedUser$() {
+    return this.store.select(UserState.getSelectedUser);
+  }
 
   // getUsers$() {
   //   return this.store.select(UserState.getUsers);

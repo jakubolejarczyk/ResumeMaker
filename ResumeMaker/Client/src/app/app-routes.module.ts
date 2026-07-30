@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersViewComponent } from './component/view/users/users-view.component';
 import { UserViewComponent } from './component/view/user/user-view.component';
 import { initGuard } from './guard/init.guard';
-import { userToUpdateExistsGuard } from './guard/user-to-update-exists.guard';
 import { CompaniesViewComponent } from './component/view/companies/companies-view.component';
+import { userIsSelectedGuard } from './guard/user-is-selected.guard';
 
 const routes: Routes = [
   {
@@ -21,12 +21,12 @@ const routes: Routes = [
   {
     path: 'user/:id',
     component: UserViewComponent,
-    canActivate: [initGuard, userToUpdateExistsGuard]
+    canActivate: [initGuard]
   },
   {
     path: 'companies',
     component: CompaniesViewComponent,
-    canActivate: [initGuard]
+    canActivate: [initGuard, userIsSelectedGuard]
   },
   {
     path: '**',
