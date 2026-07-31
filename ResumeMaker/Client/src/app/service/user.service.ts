@@ -26,24 +26,20 @@ export class UserService {
   // }
 
   create$(request: UserRequestModel) {
-    return this.dal.create$(request).pipe(
-      concatMap(response => {
-        return this.readAll$().pipe(
-          map(() => response)
-        );
-      })
-    );
+    return of(true);
+    // return this.dal.create$(request).pipe(
+    //   concatMap(response => {
+    //     return this.readAll$().pipe(
+    //       map(() => response)
+    //     );
+    //   })
+    // );
   }
 
   readAll$() {
     return this.dal.readAll$().pipe(
-      concatMap(response => {
-        const { success, body } = response;
-        const users = success ? body : [];
-        this.store.dispatch(new SetUsers(users));
-        return of(true);
-      }),
-      concatMap(() => this.deselect$())
+      map(response => response.success ? response.body : []),
+      concatMap(users => this.store.dispatch(new SetUsers(users)))
     );
   }
 
