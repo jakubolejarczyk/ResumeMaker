@@ -50,7 +50,10 @@ export class CreateCompanyFormComponent {
       concatMap(request => this.companyService.create$(request)),
       take(1),
       map(response => {
-        const { message } = response;
+        const { success, message } = response;
+        if (success) {
+          this.createCompanyForm.reset();
+        }
         alert(message);
       })
     ).subscribe();

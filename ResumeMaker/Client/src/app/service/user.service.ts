@@ -7,6 +7,7 @@ import { DeselectUser, SelectUser, SetUsers } from "../store/actions/user.action
 import { UserState } from "../store/state/user.state";
 import { UserRequestModel } from "../model/request/user-request.model";
 import { UserEntityModel } from "../model/entity/user-entity.model";
+import { CompanyState } from "../store/state/company.state";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -19,6 +20,14 @@ export class UserService {
 
   getUsers$() {
     return this.store.select(UserState.getUsers);
+  }
+
+  getSelectedCompany$() {
+    return this.store.select(CompanyState.getSelectedCompany);
+  }
+
+  getCompanies$() {
+    return this.store.select(CompanyState.getCompanies);
   }
 
   create$(request: UserRequestModel) {
@@ -59,6 +68,7 @@ export class UserService {
 
   delete$(id: number) {
     return this.dal.delete$(id).pipe(
+      take(1),
       concatMap(() => this.readAll$()),
       concatMap(() => this.refreshSelectedUser$())
     );

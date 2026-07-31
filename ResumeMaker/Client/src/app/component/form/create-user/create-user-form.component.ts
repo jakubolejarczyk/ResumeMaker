@@ -1,9 +1,8 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { UserService } from "../../../service/user.service";
 import { UserRequestModel } from "../../../model/request/user-request.model";
-import { concatMap, of } from "rxjs";
 
 @Component({
   selector: 'app-create-user-form-component',

@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 
 import { CompanyService } from "../../../service/company.service";
 import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-companies-list-component',
@@ -11,6 +12,7 @@ import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
 })
 export class CompaniesListComponent {
   service = inject(CompanyService);
+  router = inject(Router);
 
   companies$ = this.service.getCompanies$();
 
@@ -19,7 +21,7 @@ export class CompaniesListComponent {
   }
 
   onUpdate(company: CompanyEntityModel) {
-    // this.router.navigate(['/company', userId]);
+    this.router.navigate(['/company', company.id]);
   }
 
   onDelete(company: CompanyEntityModel) {

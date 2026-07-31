@@ -23,14 +23,6 @@ export class CompanyService {
     return this.store.select(CompanyState.getCompanies);
   }
 
-  // getSelectedCompany() {
-  //   return this.store.selectOnce(CompanyState.getSelectedCompany);
-  // }
-
-  // getCompanies() {
-  //   return this.store.selectOnce(CompanyState.getCompanies);
-  // }
-
   select$(company: CompanyEntityModel) {
     return this.store.dispatch(new SelectCompany(company));
   }
@@ -67,6 +59,21 @@ export class CompanyService {
     );
   }
 
+  update$(id: number, request: CompanyRequestModel) {
+    return this.dal.update$(id, request).pipe(
+      concatMap(response => {
+        return this.readAllForUser$().pipe(
+          map(() => response)
+        );
+      }),
+      concatMap(response => {
+        return this.refreshSelectedCompany$().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
+
   delete$(id: number) {
     return this.dal.delete$(id).pipe(
       concatMap(() => this.readAllForUser$()),
@@ -97,21 +104,4 @@ export class CompanyService {
   deselect$() {
     return this.store.dispatch(new DeselectCompany());
   }
-
-  // update(id: number, request: UserRequestModel) {
-  //   return this.dal.update(id, request).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAll().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
 }

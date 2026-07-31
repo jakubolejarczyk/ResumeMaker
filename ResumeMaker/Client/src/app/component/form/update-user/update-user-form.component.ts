@@ -17,8 +17,6 @@ export class UpdateUserFormComponent implements OnInit {
   route = inject(ActivatedRoute);
   service = inject(UserService);
 
-  id?: number;
-
   updateUserForm = this.formBuilder.group({
     id: [0, Validators.required],
     email: ['', Validators.required],
@@ -38,7 +36,6 @@ export class UpdateUserFormComponent implements OnInit {
         return parseInt(param);
       }),
       concatMap(id => {
-        this.id = id;
         return this.service.getUsers$().pipe(
           take(1),
           concatMap(users => {
@@ -74,7 +71,7 @@ export class UpdateUserFormComponent implements OnInit {
           alert('Not all required fields have been completed.');
           return;
         }
-        if (!this.id) {
+        if (!id) {
           alert('Id was not defined.');
           return;
         }

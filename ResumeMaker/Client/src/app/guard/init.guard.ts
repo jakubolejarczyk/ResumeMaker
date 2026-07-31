@@ -12,6 +12,7 @@ export const initGuard: CanActivateFn = () => {
     concatMap(() => user.readAll$()),
     concatMap(() => user.refreshSelectedUser$()),
     concatMap(() => company.readAllForUser$()),
+    concatMap(() => company.refreshSelectedCompany$()),
     concatMap(() => of(true))
   );
 };

@@ -1,8 +1,10 @@
 import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
+import { concatMap, take } from "rxjs";
 
 import { UserService } from "../../../service/user.service";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
+import { CompanyService } from "../../../service/company.service";
 
 @Component({
   selector: 'app-users-list-component',
@@ -12,6 +14,7 @@ import { UserEntityModel } from "../../../model/entity/user-entity.model";
 })
 export class UsersListComponent {
   service = inject(UserService);
+  companyService = inject(CompanyService);
   router = inject(Router);
 
   users$ = this.service.getUsers$();
@@ -25,6 +28,10 @@ export class UsersListComponent {
   }
 
   onDelete(user: UserEntityModel) {
-    this.service.delete$(user.id).subscribe();
+    this.service.delete$(user.id).pipe(
+      take(1),
+      concatMap(() => this.companyService.readAllForUser$()),
+      concatMap(() => this.companyService.refreshSelectedCompany$())
+    ).subscribe();
   }
 }
