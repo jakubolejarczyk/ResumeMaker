@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { catchError, concatMap, filter, map, of, tap } from "rxjs";
 
 import { UserService } from "../../../service/user.service";
 import { UserRequestModel } from "../../../model/request/user-request.model";
@@ -24,26 +25,29 @@ export class CreateUserFormComponent {
   });
 
   onSubmit() {
-    const { valid } = this.createUserForm;
-    if (!valid) {
-      alert('Not all required fields have been completed.');
-      return;
-    }
-    const { value } = this.createUserForm;
-    const request: UserRequestModel = {
-      email: value.email ?? '',
-      firstName: value.firstName ?? '',
-      lastName: value.lastName ?? '',
-      city: value.city ?? '',
-      country: value.country ?? '',
-      phoneNumber: value.phoneNumber ?? ''
-    };
-    this.service.create$(request).subscribe(response => {
-      const { success, message } = response;
-      if (success) {
-        this.createUserForm.reset();
-      }
-      alert(message);
-    });
+    of(this.createUserForm).pipe(
+      filter(form => {
+        if (form.valid) return true;
+        throw new Error('Not all required fields have been set.');
+      }),
+      map(form => form.value),
+      map(value => {
+        const { email, firstName, lastName, city, country, phoneNumber } = value;
+        if (!email) throw new Error('Email has not been set.');
+        if (!firstName) throw new Error('First name has not been set.');
+        if (!lastName) throw new Error('Last name has not been set.');
+        if (!city) throw new Error('City has not been set.');
+        if (!country) throw new Error('Country has not been set.');
+        if (!phoneNumber) throw new Error('Phone number has not been set.');
+        const request: UserRequestModel = { email, firstName, lastName, city, country, phoneNumber };
+        return request;
+      }),
+      concatMap(request => this.service.create$(request)),
+      tap(() => this.createUserForm.reset()),
+      catchError(error => {
+        alert(error)
+        return of(void 0);
+      })
+    ).subscribe();
   }
 }

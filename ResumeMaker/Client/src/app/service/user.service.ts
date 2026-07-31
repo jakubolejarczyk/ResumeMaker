@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { combineLatest, concatMap, map, of, take } from "rxjs";
+import { combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
 import { DeselectUser, SelectUser, SetUsers } from "../store/actions/user.actions";
@@ -13,6 +13,23 @@ import { CompanyState } from "../store/state/company.state";
 export class UserService {
   private dal = inject(UserDal);
   private store = inject(Store);
+
+  create$(request: UserRequestModel) {
+    return this.dal.create$(request).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAll$())
+    );
+  }
+
+  readAll$() {
+    return this.dal.readAll$().pipe(
+      map(response => response.success ? response.body : []),
+      concatMap(users => this.store.dispatch(new SetUsers(users)))
+    );
+  }
+
+  //
 
   getSelectedUser$() {
     return this.store.select(UserState.getSelectedUser);
@@ -30,25 +47,8 @@ export class UserService {
     return this.store.select(CompanyState.getCompanies);
   }
 
-  create$(request: UserRequestModel) {
-    return this.dal.create$(request).pipe(
-      concatMap(response => {
-        return this.readAll$().pipe(
-          map(() => response)
-        );
-      })
-    );
-  }
-
   read$(id: number) {
     return this.dal.read$(id);
-  }
-
-  readAll$() {
-    return this.dal.readAll$().pipe(
-      map(response => response.success ? response.body : []),
-      concatMap(users => this.store.dispatch(new SetUsers(users)))
-    );
   }
 
   update$(id: number, request: UserRequestModel) {

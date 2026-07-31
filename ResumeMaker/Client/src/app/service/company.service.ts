@@ -15,27 +15,7 @@ export class CompanyService {
   private dal = inject(CompanyDal);
   private store = inject(Store);
 
-  getSelectedCompany$() {
-    return this.store.select(CompanyState.getSelectedCompany);
-  }
-
-  getCompanies$() {
-    return this.store.select(CompanyState.getCompanies);
-  }
-
-  select$(company: CompanyEntityModel) {
-    return this.store.dispatch(new SelectCompany(company));
-  }
-
-  create$(request: CompanyRequestModel) {
-    return this.dal.create$(request).pipe(
-      concatMap(response => {
-        return this.readAllForUser$().pipe(
-          map(() => response)
-        );
-      })
-    );
-  }
+  //
 
   readAllForUser$() {
     return this.store.selectOnce(UserState.getSelectedUser).pipe(
@@ -55,6 +35,28 @@ export class CompanyService {
         const companies = success ? body : [];
         this.store.dispatch(new SetCompanies(companies));
         return of(true);
+      })
+    );
+  }
+
+  getSelectedCompany$() {
+    return this.store.select(CompanyState.getSelectedCompany);
+  }
+
+  getCompanies$() {
+    return this.store.select(CompanyState.getCompanies);
+  }
+
+  select$(company: CompanyEntityModel) {
+    return this.store.dispatch(new SelectCompany(company));
+  }
+
+  create$(request: CompanyRequestModel) {
+    return this.dal.create$(request).pipe(
+      concatMap(response => {
+        return this.readAllForUser$().pipe(
+          map(() => response)
+        );
       })
     );
   }
