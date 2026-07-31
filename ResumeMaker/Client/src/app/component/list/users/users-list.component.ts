@@ -20,7 +20,7 @@ export class UsersListComponent {
   users$ = this.service.getUsers$();
 
   onSelect(user: UserEntityModel) {
-    this.service.select$(user).subscribe();
+    this.service.select(user);
   }
 
   onUpdate(user: UserEntityModel) {

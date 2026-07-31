@@ -14,6 +14,10 @@ export class UserService {
   private dal = inject(UserDal);
   private store = inject(Store);
 
+  select(user: UserEntityModel) {
+    this.store.dispatch(new SelectUser(user));
+  }
+
   readAll$() {
     return this.dal.readAll$().pipe(
       map(response => response.success ? response.body : []),
@@ -74,10 +78,6 @@ export class UserService {
     );
   }
 
-  select$(user: UserEntityModel) {
-    return this.store.dispatch(new SelectUser(user));
-  }
-
   refreshSelectedUser$() {
     return combineLatest({
       selectedUser: this.getSelectedUser$(),
@@ -88,7 +88,7 @@ export class UserService {
         if (selectedUser) {
           const currentSelectedUser = users.find(user => user.id === selectedUser.id);
           if (currentSelectedUser) {
-            return this.select$(currentSelectedUser);
+            this.select(currentSelectedUser);
           } else {
             this.store.dispatch(new DeselectUser())
           }
