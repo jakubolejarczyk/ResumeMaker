@@ -18,6 +18,14 @@ export class UserService {
     this.store.dispatch(new SelectUser(user));
   }
 
+  create$(request: UserRequestModel) {
+    return this.dal.create$(request).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAll$())
+    );
+  }
+
   readAll$() {
     return this.dal.readAll$().pipe(
       map(response => response.success ? response.body : []),
@@ -26,14 +34,6 @@ export class UserService {
   }
 
   //
-
-  create$(request: UserRequestModel) {
-    return this.dal.create$(request).pipe(
-      tap(response => alert(response.message)),
-      filter(response => response.success),
-      concatMap(() => this.readAll$())
-    );
-  }
 
   getSelectedUser$() {
     return this.store.select(UserState.getSelectedUser);

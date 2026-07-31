@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { catchError, concatMap, filter, map, of, tap } from "rxjs";
+import { catchError, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { UserService } from "../../../service/user.service";
 import { UserRequestModel } from "../../../model/request/user-request.model";
@@ -26,6 +26,7 @@ export class CreateUserFormComponent {
 
   onSubmit() {
     of(this.createUserForm).pipe(
+      take(1),
       filter(form => {
         if (form.valid) return true;
         throw new Error('Not all required fields have been set.');
@@ -45,7 +46,7 @@ export class CreateUserFormComponent {
       concatMap(request => this.service.create$(request)),
       tap(() => this.createUserForm.reset()),
       catchError(error => {
-        alert(error)
+        alert(error);
         return of(void 0);
       })
     ).subscribe();
