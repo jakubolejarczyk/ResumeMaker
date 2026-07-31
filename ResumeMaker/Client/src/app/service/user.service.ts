@@ -21,19 +21,23 @@ export class UserService {
     return this.store.select(UserState.getUsers);
   }
 
-  // select(user: UserEntityModel) {
-  //   this.store.dispatch(new SelectUser(user));
-  // }
-
   create$(request: UserRequestModel) {
-    return of(true);
-    // return this.dal.create$(request).pipe(
-    //   concatMap(response => {
-    //     return this.readAll$().pipe(
-    //       map(() => response)
-    //     );
-    //   })
-    // );
+    return this.dal.create$(request).pipe(
+      concatMap(response => {
+        return this.readAll$().pipe(
+          map(() => response)
+        );
+      }),
+      concatMap(response => {
+        return this.refreshSelectedUser$().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
+
+  read$(id: number) {
+    return this.dal.read$(id);
   }
 
   readAll$() {
@@ -43,26 +47,25 @@ export class UserService {
     );
   }
 
-  // update(id: number, request: UserRequestModel) {
-  //   return this.dal.update(id, request).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAll().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
+  update$(id: number, request: UserRequestModel) {
+    return this.dal.update$(id, request).pipe(
+      concatMap(response => {
+        return this.readAll$().pipe(
+          map(() => response)
+        );
+      }),
+      concatMap(response => {
+        return this.refreshSelectedUser$().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
 
   delete$(id: number) {
     return this.dal.delete$(id).pipe(
-      concatMap(() => this.readAll$())
+      concatMap(() => this.readAll$()),
+      concatMap(() => this.refreshSelectedUser$())
     );
   }
 
@@ -80,7 +83,7 @@ export class UserService {
         if (selectedUser) {
           const currentSelectedUser = users.find(user => user.id === selectedUser.id);
           if (currentSelectedUser) {
-            this.store.dispatch(new SelectUser(currentSelectedUser));
+            return this.select$(currentSelectedUser);
           } else {
             this.store.dispatch(new DeselectUser());
           }

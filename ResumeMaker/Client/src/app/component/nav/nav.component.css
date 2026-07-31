@@ -1,7 +1,13 @@
-.nav {
+.container {
   border: 1px solid black;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav {
   display: flex;
   gap: 0.5rem;
 }

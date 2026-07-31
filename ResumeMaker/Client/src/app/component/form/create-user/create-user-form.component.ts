@@ -40,11 +40,11 @@ export class CreateUserFormComponent {
       phoneNumber: value.phoneNumber ?? ''
     };
     this.service.create$(request).subscribe(response => {
-      // const { success, message } = response;
-      // if (success) {
-      //   this.createUserForm.reset();
-      // }
-      // alert(message);
+      const { success, message } = response;
+      if (success) {
+        this.createUserForm.reset();
+      }
+      alert(message);
     });
   }
 }

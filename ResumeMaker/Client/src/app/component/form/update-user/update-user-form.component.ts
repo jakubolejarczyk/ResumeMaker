@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { concatMap, filter, map, of, take } from "rxjs";
 
-import { UserDal } from "../../../dal/user.dal";
 import { UserRequestModel } from "../../../model/request/user-request.model";
 import { UserService } from "../../../service/user.service";
 
@@ -14,9 +14,10 @@ import { UserService } from "../../../service/user.service";
 })
 export class UpdateUserFormComponent implements OnInit {
   formBuilder = inject(FormBuilder);
-  dal = inject(UserDal);
   route = inject(ActivatedRoute);
   service = inject(UserService);
+
+  id?: number;
 
   updateUserForm = this.formBuilder.group({
     id: [0, Validators.required],
@@ -29,51 +30,70 @@ export class UpdateUserFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    const param = this.route.snapshot.paramMap.get('id');
-    if (!param) throw new Error('Id was not provided!');
-    const id = parseInt(param);
-    if (!id) throw new Error('Id is not a number!');
-    // this.dal.read(id).subscribe(response => {
-    //   const { success, body } = response;
-    //   if (success && body) {
-    //     this.updateUserForm.controls.id.setValue(body.id);
-    //     this.updateUserForm.controls.email.setValue(body.email);
-    //     this.updateUserForm.controls.firstName.setValue(body.firstName);
-    //     this.updateUserForm.controls.lastName.setValue(body.lastName);
-    //     this.updateUserForm.controls.city.setValue(body.city);
-    //     this.updateUserForm.controls.country.setValue(body.country);
-    //     this.updateUserForm.controls.phoneNumber.setValue(body.phoneNumber);
-    //   }
-    // });
+    of(this.route.snapshot.paramMap.get('id')).pipe(
+      take(1),
+      map(param => {
+        if (!param) throw new Error('Id parameter was not defined!');
+        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
+        return parseInt(param);
+      }),
+      concatMap(id => {
+        this.id = id;
+        return this.service.getUsers$().pipe(
+          take(1),
+          concatMap(users => {
+            const user = users.find(user => user.id === id);
+            if (user) return of(user);
+            throw new Error('User does not exits!');
+          })
+        );
+      }),
+      map(user => {
+        this.updateUserForm.controls.id.setValue(user.id);
+        this.updateUserForm.controls.email.setValue(user.email);
+        this.updateUserForm.controls.firstName.setValue(user.firstName);
+        this.updateUserForm.controls.lastName.setValue(user.lastName);
+        this.updateUserForm.controls.city.setValue(user.city);
+        this.updateUserForm.controls.country.setValue(user.country);
+        this.updateUserForm.controls.phoneNumber.setValue(user.phoneNumber);
+      })
+    ).subscribe();
   }
 
   onSubmit() {
-    const { valid } = this.updateUserForm;
-    if (!valid) {
-      alert('Not all required fields have been completed.');
-      return;
-    }
-    const { value } = this.updateUserForm;
-    const request: UserRequestModel = {
-      email: value.email ?? '',
-      firstName: value.firstName ?? '',
-      lastName: value.lastName ?? '',
-      city: value.city ?? '',
-      country: value.country ?? '',
-      phoneNumber: value.phoneNumber ?? ''
-    };
-    const id = value.id;
-    if (!id) throw new Error("Id is not defined!");
-    // this.service.update(id, request).subscribe({
-    //   next: (response) => {
-    //     const { success, message } = response;
-    //     if (success) {
-    //       alert(message);
-    //     }
-    //   },
-    //   error: (message) => {
-    //     alert(message);
-    //   }
-    // });
+    of(this.route.snapshot.paramMap.get('id')).pipe(
+      take(1),
+      map(param => {
+        if (!param) throw new Error('Id parameter was not defined!');
+        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
+        return parseInt(param);
+      }),
+      map(id => {
+        const { valid } = this.updateUserForm;
+        if (!valid) {
+          alert('Not all required fields have been completed.');
+          return;
+        }
+        if (!this.id) {
+          alert('Id was not defined.');
+          return;
+        }
+        const { value } = this.updateUserForm;
+        const request: UserRequestModel = {
+          email: value.email ?? '',
+          firstName: value.firstName ?? '',
+          lastName: value.lastName ?? '',
+          city: value.city ?? '',
+          country: value.country ?? '',
+          phoneNumber: value.phoneNumber ?? ''
+        };
+        return this.service.update$(id, request);
+      }),
+      filter(request => request !== undefined),
+      concatMap(request => request)
+    ).subscribe(response => {
+      const { message } = response;
+      alert(message);
+    });
   }
 }

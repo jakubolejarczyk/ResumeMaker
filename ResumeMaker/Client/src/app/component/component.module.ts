@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
+import { CommonModule } from "@angular/common";
 
 import { RootComponent } from "./root/root.component";
 import { ViewModule } from "./view/view.module";
@@ -13,7 +14,8 @@ import { NavComponent } from "./nav/nav.component";
   imports: [
     RouterLink,
     RouterOutlet,
-    ViewModule
+    ViewModule,
+    CommonModule
   ],
   exports: [RootComponent]
 })

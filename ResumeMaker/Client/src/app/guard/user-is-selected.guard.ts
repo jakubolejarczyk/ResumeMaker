@@ -12,6 +12,7 @@ export const userIsSelectedGuard: CanActivateFn = () => {
       if (selectedUser) {
         return true;
       }
+      alert("User is not selected!");
       return router.createUrlTree(['/']);
     })
   );

@@ -1,4 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { map } from "rxjs";
+
+import { UserService } from "../../service/user.service";
 
 @Component({
   selector: 'app-nav-component',
@@ -6,4 +9,15 @@ import { Component } from "@angular/core";
   styleUrl: './nav.component.css',
   standalone: false
 })
-export class NavComponent { }
+export class NavComponent {
+  userService = inject(UserService);
+
+  selectedUser$ = this.userService.getSelectedUser$().pipe(
+    map(selectedUser => {
+      if (selectedUser) {
+        return `${selectedUser.firstName} ${selectedUser.lastName}`;
+      }
+      return 'None';
+    })
+  );
+}

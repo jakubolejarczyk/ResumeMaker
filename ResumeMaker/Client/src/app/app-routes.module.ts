@@ -6,6 +6,7 @@ import { UserViewComponent } from './component/view/user/user-view.component';
 import { initGuard } from './guard/init.guard';
 import { CompaniesViewComponent } from './component/view/companies/companies-view.component';
 import { userIsSelectedGuard } from './guard/user-is-selected.guard';
+import { userToUpdateExists } from './guard/user-to-update-exists.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: 'user/:id',
     component: UserViewComponent,
-    canActivate: [initGuard]
+    canActivate: [initGuard, userToUpdateExists]
   },
   {
     path: 'companies',

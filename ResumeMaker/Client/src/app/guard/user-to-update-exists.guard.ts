@@ -1,17 +1,29 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
-import { Store } from "@ngxs/store";
+import { catchError, concatMap, map, of } from "rxjs";
 
-import { UserState } from "../store/state/user.state";
+import { UserService } from "../service/user.service";
 
-export const userToUpdateExistsGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const store = inject(Store);
+export const userToUpdateExists: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const router = inject(Router);
-  const param = route.paramMap.get('id');
-  if (!param) return false;
-  const id = parseInt(param);
-  const users = store.selectSnapshot(UserState.getUsers);
-  const userExists = users.some(user => user.id === id);
-  if (userExists) return true;
-  return router.createUrlTree(['/']);
+  const userService = inject(UserService);
+  return of(route.paramMap.get('id')).pipe(
+    map(param => {
+      if (!param) throw new Error('Id parameter was not defined!');
+      if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
+      return parseInt(param);
+    }),
+    concatMap(id => {
+      return userService.getUsers$().pipe(
+        concatMap(users => {
+          const userExists = users.some(user => user.id === id);
+          if (userExists) return of(true);
+          throw new Error('User does not exits!');
+        })
+      );
+    }),
+    catchError(() => {
+      return of(router.createUrlTree(['/']))
+    })
+  );
 };
