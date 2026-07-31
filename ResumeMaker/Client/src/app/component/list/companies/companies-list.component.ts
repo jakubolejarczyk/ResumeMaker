@@ -1,48 +1,28 @@
-// import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angular/core";
-// import { Subscription } from "rxjs";
-// import { Router } from "@angular/router";
+import { Component, inject } from "@angular/core";
 
-// import { AppStore } from "../../../old/app-store";
-// import { CompanyRequestService } from "../../../service/request/company-request.service";
-// import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
+import { CompanyService } from "../../../service/company.service";
+import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
 
-// @Component({
-//   selector: 'app-companies-list-component',
-//   templateUrl: './companies-list.component.html',
-//   styleUrl: '../base/base-list.component.css',
-//   standalone: false
-// })
-// export class CompaniesListComponent implements OnInit, OnDestroy {
-//   appStore = inject(AppStore);
-//   companyRequestService = inject(CompanyRequestService);
-//   cdr = inject(ChangeDetectorRef);
-//   router = inject(Router);
+@Component({
+  selector: 'app-companies-list-component',
+  templateUrl: './companies-list.component.html',
+  styleUrl: '../base/base-list.component.css',
+  standalone: false
+})
+export class CompaniesListComponent {
+  service = inject(CompanyService);
 
-//   companies: CompanyEntityModel[] = [];
+  companies$ = this.service.getCompanies$();
 
-//   sub!: Subscription;
+  onSelect(company: CompanyEntityModel) {
+    this.service.select$(company).subscribe();
+  }
 
-//   ngOnInit() {
-//     this.sub = this.appStore.companies.subscribe(companies => {
-//       this.companies = companies;
-//       this.cdr.detectChanges();
-//     });
-//     this.companyRequestService.readCompanies();
-//   }
+  onUpdate(company: CompanyEntityModel) {
+    // this.router.navigate(['/company', userId]);
+  }
 
-//   ngOnDestroy() {
-//     this.sub.unsubscribe();
-//   }
-
-//   onSelect(user: CompanyEntityModel) {
-//     this.appStore.company.next(user);
-//   }
-
-//   onUpdate(userId: number) {
-//     this.router.navigate(['/company', userId]);
-//   }
-
-//   onDelete(companyId: number) {
-//     this.companyRequestService.deleteCompany(companyId);
-//   }
-// }
+  onDelete(company: CompanyEntityModel) {
+    this.service.delete$(company.id).subscribe();
+  }
+}

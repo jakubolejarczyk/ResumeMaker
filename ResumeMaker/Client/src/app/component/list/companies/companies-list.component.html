@@ -1,9 +1,13 @@
-<!--<div class="list">
-  @if (companies.length > 0) {
-    @for (company of companies; track company.id) {
-      <div class="list-item">
-        <table class="table">
-          <tbody>
+<div class="list">
+  @if (companies$ | async; as companies) {
+    @if (companies.length > 0) {
+      @for (company of companies; track company.id) {
+        <div class="list-item">
+          <table class="table">
+            <tr>
+              <th>Id</th>
+              <td>{{ company.id }}</td>
+            </tr>
             <tr>
               <th>Company name</th>
               <td>{{ company.companyName }}</td>
@@ -32,15 +36,17 @@
               <th>Actions</th>
               <td>
                 <button (click)="onSelect(company)">Select</button>
-                <button (click)="onUpdate(company.id)">Update</button>
-                <button (click)="onDelete(company.id)">Delete</button>
+                <button (click)="onUpdate(company)">Update</button>
+                <button (click)="onDelete(company)">Delete</button>
               </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
+      }
+    } @else {
+      <p class="list-empty">No companies found.</p>
     }
   } @else {
     <p class="list-empty">No companies found.</p>
   }
-</div>-->
+</div>

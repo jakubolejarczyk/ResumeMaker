@@ -85,7 +85,7 @@ export class UserService {
           if (currentSelectedUser) {
             return this.select$(currentSelectedUser);
           } else {
-            this.store.dispatch(new DeselectUser());
+            this.store.dispatch(new DeselectUser())
           }
         }
         return of(void 0);

@@ -1,25 +1,27 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { concatMap, of } from "rxjs";
+import { combineLatest, concatMap, map, of, take } from "rxjs";
 
 import { CompanyDal } from "../dal/company.dal";
 import { UserState } from "../store/state/user.state";
 import { CompanyEntityModel } from "../model/entity/company-entity.model";
 import { ResponseModel } from "../model/response/response.model";
-import { SetCompanies } from "../store/actions/company.actions";
+import { DeselectCompany, SelectCompany, SetCompanies } from "../store/actions/company.actions";
+import { CompanyRequestModel } from "../model/request/company-request.model";
+import { CompanyState } from "../store/state/company.state";
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
   private dal = inject(CompanyDal);
   private store = inject(Store);
 
-  // getSelectedCompany$() {
-  //   return this.store.select(CompanyState.getSelectedCompany);
-  // }
+  getSelectedCompany$() {
+    return this.store.select(CompanyState.getSelectedCompany);
+  }
 
-  // getCompanies$() {
-  //   return this.store.select(CompanyState.getCompanies);
-  // }
+  getCompanies$() {
+    return this.store.select(CompanyState.getCompanies);
+  }
 
   // getSelectedCompany() {
   //   return this.store.selectOnce(CompanyState.getSelectedCompany);
@@ -29,26 +31,19 @@ export class CompanyService {
   //   return this.store.selectOnce(CompanyState.getCompanies);
   // }
 
-  // select(company: CompanyEntityModel) {
-  //   this.store.dispatch(new SelectCompany(company));
-  // }
+  select$(company: CompanyEntityModel) {
+    return this.store.dispatch(new SelectCompany(company));
+  }
 
-  // create(request: CompanyRequestModel) {
-  //   return this.dal.create(request).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAllForUser().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
+  create$(request: CompanyRequestModel) {
+    return this.dal.create$(request).pipe(
+      concatMap(response => {
+        return this.readAllForUser$().pipe(
+          map(() => response)
+        );
+      })
+    );
+  }
 
   readAllForUser$() {
     return this.store.selectOnce(UserState.getSelectedUser).pipe(
@@ -72,22 +67,36 @@ export class CompanyService {
     );
   }
 
-  // delete(id: number) {
-  //   return this.dal.delete(id).pipe(
-  //     concatMap(response => {
-  //       const { success, message } = response;
-  //       if (success) {
-  //         return of(response);
-  //       }
-  //       throw new Error(message);
-  //     }),
-  //     concatMap(response => {
-  //       return this.readAll().pipe(
-  //         map(() => response)
-  //       );
-  //     })
-  //   );
-  // }
+  delete$(id: number) {
+    return this.dal.delete$(id).pipe(
+      concatMap(() => this.readAllForUser$()),
+      concatMap(() => this.refreshSelectedCompany$())
+    );
+  }
+
+  refreshSelectedCompany$() {
+    return combineLatest({
+      selectedCompany: this.getSelectedCompany$(),
+      companies: this.getCompanies$()
+    }).pipe(
+      take(1),
+      concatMap(({ selectedCompany, companies }) => {
+        if (selectedCompany) {
+          const currentSelectedCompany = companies.find(company => company.id === selectedCompany.id);
+          if (currentSelectedCompany) {
+            return this.select$(currentSelectedCompany);
+          } else {
+            this.store.dispatch(new DeselectCompany());
+          }
+        }
+        return of(void 0);
+      })
+    );
+  }
+
+  deselect$() {
+    return this.store.dispatch(new DeselectCompany());
+  }
 
   // update(id: number, request: UserRequestModel) {
   //   return this.dal.update(id, request).pipe(
