@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { combineLatest, concatMap, map, of } from "rxjs";
+import { combineLatest, concatMap, map, of, take } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
 import { DeselectUser, SelectUser, SetUsers } from "../store/actions/user.actions";
@@ -70,13 +70,21 @@ export class UserService {
     return this.store.dispatch(new SelectUser(user));
   }
 
-  deselect$() {
-    return combineLatest([this.getSelectedUser$(), this.getUsers$()]).pipe(
-      concatMap(([selectedUser, users]) => {
-        if (!selectedUser) return of(void 0);
-        const selectedUserExists = users.some(user => user.id === selectedUser.id);
-        if (selectedUserExists) return of(void 0);
-        this.store.dispatch(new DeselectUser());
+  refreshSelectedUser$() {
+    return combineLatest({
+      selectedUser: this.getSelectedUser$(),
+      users: this.getUsers$()
+    }).pipe(
+      take(1),
+      concatMap(({ selectedUser, users }) => {
+        if (selectedUser) {
+          const currentSelectedUser = users.find(user => user.id === selectedUser.id);
+          if (currentSelectedUser) {
+            this.store.dispatch(new SelectUser(currentSelectedUser));
+          } else {
+            this.store.dispatch(new DeselectUser());
+          }
+        }
         return of(void 0);
       })
     );

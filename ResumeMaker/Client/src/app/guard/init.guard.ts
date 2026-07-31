@@ -10,6 +10,8 @@ export const initGuard: CanActivateFn = () => {
   const company = inject(CompanyService);
   return of(true).pipe(
     concatMap(() => user.readAll$()),
+    concatMap(() => user.refreshSelectedUser$()),
+    concatMap(() => company.readAllForUser$()),
     concatMap(() => of(true))
   );
 };

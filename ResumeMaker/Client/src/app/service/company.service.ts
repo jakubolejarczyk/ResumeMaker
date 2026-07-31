@@ -50,44 +50,11 @@ export class CompanyService {
   //   );
   // }
 
-  // readAllForUser() {
-  //   return this.store.selectOnce(UserState.getSelectedUser).pipe(
-  //     concatMap(selectedUser => {
-  //       if (selectedUser) {
-  //         return this.dal.readAllForUser(selectedUser.id);
-  //       }
-  //       throw new Error('User was not selected!');
-  //     }),
-  //     concatMap(response => {
-  //       const { success, body } = response;
-  //       const companies = success ? body : [];
-  //       this.store.dispatch(new SetCompanies(companies));
-  //       return this.getSelectedCompany$();
-  //     }),
-  //     concatMap(selectedCompany => {
-  //       return forkJoin({ companies: this.getCompanies$() }).pipe(
-  //         map(({ companies }) => ({ selectedCompany, companies }))
-  //       )
-  //     }),
-  //     concatMap(({ selectedCompany, companies }) => {
-  //       if (selectedCompany) {
-  //         const currentSelectedCompany = companies.find(company => company.id === selectedCompany.id);
-  //         if (currentSelectedCompany) {
-  //           this.store.dispatch(new SelectCompany(currentSelectedCompany));
-  //         } else {
-  //           this.store.dispatch(new DeselectCompany());
-  //         }
-  //       }
-  //       return of(void 0);
-  //     })
-  //   );
-  // }
-
   readAllForUser$() {
     return this.store.selectOnce(UserState.getSelectedUser).pipe(
-      concatMap(user => {
-        if (user) {
-          return this.dal.readAllForUser$(user.id);
+      concatMap(selectedUser => {
+        if (selectedUser) {
+          return this.dal.readAllForUser$(selectedUser.id);
         }
         const response: ResponseModel<CompanyEntityModel[]> = {
           success: false,
@@ -97,8 +64,9 @@ export class CompanyService {
         return of(response);
       }),
       concatMap(response => {
-        const { body } = response;
-        this.store.dispatch(new SetCompanies(body));
+        const { success, body } = response;
+        const companies = success ? body : [];
+        this.store.dispatch(new SetCompanies(companies));
         return of(true);
       })
     );
