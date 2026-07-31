@@ -27,11 +27,6 @@ export class UserService {
         return this.readAll$().pipe(
           map(() => response)
         );
-      }),
-      concatMap(response => {
-        return this.refreshSelectedUser$().pipe(
-          map(() => response)
-        );
       })
     );
   }
