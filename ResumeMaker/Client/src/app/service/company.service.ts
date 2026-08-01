@@ -19,10 +19,9 @@ export class CompanyService {
     return this.store.select(CompanyState.getSelectedCompany);
   }
 
-  //
-
   readAllForUser$() {
-    return this.store.selectOnce(UserState.getSelectedUser).pipe(
+    return this.store.select(UserState.getSelectedUser).pipe(
+      take(1),
       concatMap(selectedUser => {
         if (selectedUser) {
           return this.dal.readAllForUser$(selectedUser.id);
@@ -37,11 +36,12 @@ export class CompanyService {
       concatMap(response => {
         const { success, body } = response;
         const companies = success ? body : [];
-        this.store.dispatch(new SetCompanies(companies));
-        return of(true);
+        return this.store.dispatch(new SetCompanies(companies));
       })
     );
   }
+
+  //
 
   getCompanies$() {
     return this.store.select(CompanyState.getCompanies);
