@@ -1,9 +1,9 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { catchError, combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { CompanyRequestModel } from "../../../model/request/company-request.model";
 import { UserService } from "../../../service/user.service";
-import { concatMap, filter, map, take } from "rxjs";
 import { CompanyService } from "../../../service/company.service";
 
 @Component({
@@ -27,34 +27,42 @@ export class CreateCompanyFormComponent {
   });
 
   onSubmit() {
-    const { valid } = this.createCompanyForm;
-    if (!valid) {
-      alert('Not all required fields have been completed.');
-      return;
-    }
-    const { value } = this.createCompanyForm;
-    this.userService.getSelectedUser$().pipe(
-      filter(selectedUser => selectedUser !== undefined),
-      map(selectedUser => {
+    combineLatest({
+      form: of(this.createCompanyForm),
+      selectedUser: this.userService.getSelectedUser$()
+    }).pipe(
+      take(1),
+      filter(({ form }) => {
+        if (form.valid) return true;
+        throw new Error('Not all required fields have been set.');
+      }),
+      map(({ form, selectedUser }) => ({ value: form.value, selectedUser })),
+      map(({ value, selectedUser }) => {
+        const { companyName, city, country, includeConsentClause, customConsentClause, recruitmentStatus } = value;
+        const userId = selectedUser?.id;
+        if (!companyName) throw new Error('Company name has not been set.');
+        if (!city) throw new Error('City has not been set.');
+        if (!country) throw new Error('Country has not been set.');
+        if (!includeConsentClause) throw new Error('Include consent clause has not been set.');
+        if (!customConsentClause) throw new Error('Custom consent clause has not been set.');
+        if (!recruitmentStatus) throw new Error('Recruitment status has not been set.');
+        if (!userId) throw new Error('User id has not been set.');
         const request: CompanyRequestModel = {
-          companyName: value.companyName ?? '',
-          city: value.city ?? '',
-          country: value.country ?? '',
-          includeConsentClause: value.includeConsentClause ?? false,
-          customConsentClause: value.customConsentClause ?? '',
-          recruitmentStatus: value.recruitmentStatus ?? '',
-          userId: selectedUser.id
+          companyName,
+          city,
+          country,
+          includeConsentClause,
+          customConsentClause,
+          recruitmentStatus,
+          userId
         };
         return request;
       }),
       concatMap(request => this.companyService.create$(request)),
-      take(1),
-      map(response => {
-        const { success, message } = response;
-        if (success) {
-          this.createCompanyForm.reset();
-        }
-        alert(message);
+      tap(() => this.createCompanyForm.reset()),
+      catchError(error => {
+        alert(error);
+        return of(void 0);
       })
     ).subscribe();
   }

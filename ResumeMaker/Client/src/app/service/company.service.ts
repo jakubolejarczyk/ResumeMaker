@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { combineLatest, concatMap, map, of, take } from "rxjs";
+import { combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { CompanyDal } from "../dal/company.dal";
 import { UserState } from "../store/state/user.state";
@@ -17,6 +17,14 @@ export class CompanyService {
 
   getSelectedCompany$() {
     return this.store.select(CompanyState.getSelectedCompany);
+  }
+
+  create$(request: CompanyRequestModel) {
+    return this.dal.create$(request).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAllForUser$())
+    );
   }
 
   readAllForUser$() {
@@ -49,16 +57,6 @@ export class CompanyService {
 
   select$(company: CompanyEntityModel) {
     return this.store.dispatch(new SelectCompany(company));
-  }
-
-  create$(request: CompanyRequestModel) {
-    return this.dal.create$(request).pipe(
-      concatMap(response => {
-        return this.readAllForUser$().pipe(
-          map(() => response)
-        );
-      })
-    );
   }
 
   update$(id: number, request: CompanyRequestModel) {
