@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 
 import { UserService } from "../../../service/user.service";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";
+import { concatMap } from "rxjs";
+import { CompanyService } from "../../../service/company.service";
 
 @Component({
   selector: 'app-users-list-component',
@@ -11,13 +13,14 @@ import { UserEntityModel } from "../../../model/entity/user-entity.model";
   standalone: false
 })
 export class UsersListComponent {
-  service = inject(UserService);
+  userService = inject(UserService);
+  companyService = inject(CompanyService);
   router = inject(Router);
 
-  users$ = this.service.getUsers$();
+  users$ = this.userService.getUsers$();
 
   onSelect(user: UserEntityModel) {
-    this.service.select(user);
+    this.userService.select(user);
   }
 
   onUpdate(user: UserEntityModel) {
@@ -25,6 +28,9 @@ export class UsersListComponent {
   }
 
   onDelete(user: UserEntityModel) {
-    this.service.delete$(user.id).subscribe();
+    this.userService.delete$(user.id).pipe(
+      concatMap(() => this.companyService.readAllForUser$()),
+      concatMap(() => this.companyService.deselect$())
+    ).subscribe();
   }
 }
