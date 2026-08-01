@@ -66,10 +66,6 @@ export class UserService {
 
   //
 
-  read$(id: number) {
-    return this.dal.read$(id);
-  }
-
   update$(id: number, request: UserRequestModel) {
     return this.dal.update$(id, request).pipe(
       concatMap(response => {

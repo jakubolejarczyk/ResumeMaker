@@ -30,29 +30,29 @@ export class UpdateUserFormComponent implements OnInit {
   ngOnInit() {
     of(this.route.snapshot.paramMap.get('id')).pipe(
       take(1),
-      map(param => {
-        if (!param) throw new Error('Id parameter was not defined!');
-        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
-        return parseInt(param);
+      map(paramId => {
+        if (!paramId) throw new Error('Parameter id was not defined!');
+        if (Number.isNaN(paramId)) throw new Error('Parameter id is not a number!');
+        return parseInt(paramId);
       }),
       concatMap(id => {
         return this.service.getUsers$().pipe(
           take(1),
           concatMap(users => {
-            const user = users.find(user => user.id === id);
-            if (user) return of(user);
-            throw new Error('User does not exits!');
+            const userToUpdate = users.find(user => user.id === id);
+            if (userToUpdate) return of(userToUpdate);
+            throw new Error('User to update does not exits!');
           })
         );
       }),
-      map(user => {
-        this.updateUserForm.controls.id.setValue(user.id);
-        this.updateUserForm.controls.email.setValue(user.email);
-        this.updateUserForm.controls.firstName.setValue(user.firstName);
-        this.updateUserForm.controls.lastName.setValue(user.lastName);
-        this.updateUserForm.controls.city.setValue(user.city);
-        this.updateUserForm.controls.country.setValue(user.country);
-        this.updateUserForm.controls.phoneNumber.setValue(user.phoneNumber);
+      map(userToUpdate => {
+        this.updateUserForm.controls.id.setValue(userToUpdate.id);
+        this.updateUserForm.controls.email.setValue(userToUpdate.email);
+        this.updateUserForm.controls.firstName.setValue(userToUpdate.firstName);
+        this.updateUserForm.controls.lastName.setValue(userToUpdate.lastName);
+        this.updateUserForm.controls.city.setValue(userToUpdate.city);
+        this.updateUserForm.controls.country.setValue(userToUpdate.country);
+        this.updateUserForm.controls.phoneNumber.setValue(userToUpdate.phoneNumber);
       })
     ).subscribe();
   }
