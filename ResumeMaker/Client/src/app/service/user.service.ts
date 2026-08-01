@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
+import { combineLatest, concatMap, filter, map, take, tap } from "rxjs";
 
 import { UserDal } from "../dal/user.dal";
 import { DeselectUser, SelectUser, SetUsers } from "../store/actions/user.actions";
@@ -40,6 +40,20 @@ export class UserService {
     );
   }
 
+  updateSelection$() {
+    return combineLatest({
+      selectedUser: this.getSelectedUser$(),
+      users: this.getUsers$()
+    }).pipe(
+      take(1),
+      map(({ selectedUser, users }) => {
+        if (!selectedUser) return;
+        const newSelectedUser = users.find(user => user.id === selectedUser.id);
+        if (newSelectedUser) this.store.dispatch(new SelectUser(newSelectedUser));
+      })
+    );
+  }
+
   create$(request: UserRequestModel) {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
@@ -55,49 +69,21 @@ export class UserService {
     );
   }
 
+  update$(id: number, request: UserRequestModel) {
+    return this.dal.update$(id, request).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAll$()),
+      concatMap(() => this.updateSelection$())
+    );
+  }
+
   delete$(id: number) {
     return this.dal.delete$(id).pipe(
       tap(response => alert(response.message)),
       filter(response => response.success),
       concatMap(() => this.readAll$()),
       concatMap(() => this.deselect$())
-    );
-  }
-
-  //
-
-  update$(id: number, request: UserRequestModel) {
-    return this.dal.update$(id, request).pipe(
-      concatMap(response => {
-        return this.readAll$().pipe(
-          map(() => response)
-        );
-      }),
-      concatMap(response => {
-        return this.refreshSelectedUser$().pipe(
-          map(() => response)
-        );
-      })
-    );
-  }
-
-  refreshSelectedUser$() {
-    return combineLatest({
-      selectedUser: this.getSelectedUser$(),
-      users: this.getUsers$()
-    }).pipe(
-      take(1),
-      concatMap(({ selectedUser, users }) => {
-        if (selectedUser) {
-          const currentSelectedUser = users.find(user => user.id === selectedUser.id);
-          if (currentSelectedUser) {
-            this.select(currentSelectedUser);
-          } else {
-            this.store.dispatch(new DeselectUser())
-          }
-        }
-        return of(void 0);
-      })
     );
   }
 }

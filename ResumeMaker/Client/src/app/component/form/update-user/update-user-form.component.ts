@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { concatMap, filter, map, of, take } from "rxjs";
+import { catchError, combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { UserRequestModel } from "../../../model/request/user-request.model";
 import { UserService } from "../../../service/user.service";
@@ -28,7 +28,49 @@ export class UpdateUserFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    of(this.route.snapshot.paramMap.get('id')).pipe(
+    this.resetForm().subscribe();
+  }
+
+  onSubmit() {
+    combineLatest({
+      paramId: of(this.route.snapshot.paramMap.get('id')),
+      form: of(this.updateUserForm)
+    }).pipe(
+      take(1),
+      map(({ paramId, form }) => {
+        if (!paramId) throw new Error('Parameter id was not defined!');
+        if (Number.isNaN(paramId)) throw new Error('Parameter id is not a number!');
+        const id = parseInt(paramId);
+        return { id, form };
+      }),
+      filter(({ id, form }) => {
+        if (form.valid) return true;
+        throw new Error('Not all required fields have been set.');
+      }),
+      map(({ id, form }) => ({ id, value: form.value })),
+      map(({ id, value }) => {
+        const { email, firstName, lastName, city, country, phoneNumber } = value;
+        if (!email) throw new Error('Email has not been set.');
+        if (!firstName) throw new Error('First name has not been set.');
+        if (!lastName) throw new Error('Last name has not been set.');
+        if (!city) throw new Error('City has not been set.');
+        if (!country) throw new Error('Country has not been set.');
+        if (!phoneNumber) throw new Error('Phone number has not been set.');
+        const request: UserRequestModel = { email, firstName, lastName, city, country, phoneNumber };
+        return ({ id, request });
+      }),
+      concatMap(({ id, request }) => this.service.update$(id, request)),
+      tap(() => this.updateUserForm.reset()),
+      concatMap(() => this.resetForm()),
+      catchError(error => {
+        alert(error);
+        return of(void 0);
+      })
+    ).subscribe();
+  }
+
+  private resetForm() {
+    return of(this.route.snapshot.paramMap.get('id')).pipe(
       take(1),
       map(paramId => {
         if (!paramId) throw new Error('Parameter id was not defined!');
@@ -54,43 +96,6 @@ export class UpdateUserFormComponent implements OnInit {
         this.updateUserForm.controls.country.setValue(userToUpdate.country);
         this.updateUserForm.controls.phoneNumber.setValue(userToUpdate.phoneNumber);
       })
-    ).subscribe();
-  }
-
-  onSubmit() {
-    of(this.route.snapshot.paramMap.get('id')).pipe(
-      take(1),
-      map(param => {
-        if (!param) throw new Error('Id parameter was not defined!');
-        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
-        return parseInt(param);
-      }),
-      map(id => {
-        const { valid } = this.updateUserForm;
-        if (!valid) {
-          alert('Not all required fields have been completed.');
-          return;
-        }
-        if (!id) {
-          alert('Id was not defined.');
-          return;
-        }
-        const { value } = this.updateUserForm;
-        const request: UserRequestModel = {
-          email: value.email ?? '',
-          firstName: value.firstName ?? '',
-          lastName: value.lastName ?? '',
-          city: value.city ?? '',
-          country: value.country ?? '',
-          phoneNumber: value.phoneNumber ?? ''
-        };
-        return this.service.update$(id, request);
-      }),
-      filter(request => request !== undefined),
-      concatMap(request => request)
-    ).subscribe(response => {
-      const { message } = response;
-      alert(message);
-    });
+    )
   }
 }
