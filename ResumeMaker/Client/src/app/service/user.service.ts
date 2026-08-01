@@ -14,8 +14,31 @@ export class UserService {
   private dal = inject(UserDal);
   private store = inject(Store);
 
+  getSelectedUser$() {
+    return this.store.select(UserState.getSelectedUser);
+  }
+
+  getUsers$() {
+    return this.store.select(UserState.getUsers);
+  }
+
   select(user: UserEntityModel) {
     this.store.dispatch(new SelectUser(user));
+  }
+
+  deselect$() {
+    return combineLatest({
+      selectedUser: this.getSelectedUser$(),
+      users: this.getUsers$()
+    }).pipe(
+      take(1),
+      map(({ selectedUser, users }) => {
+        if (!selectedUser) return;
+        const selectedUserExists = users.some(user => user.id === selectedUser.id);
+        if (selectedUserExists) return;
+        this.store.dispatch(new DeselectUser());
+      })
+    );
   }
 
   create$(request: UserRequestModel) {
@@ -33,15 +56,16 @@ export class UserService {
     );
   }
 
+  delete$(id: number) {
+    return this.dal.delete$(id).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAll$()),
+      concatMap(() => this.deselect$())
+    );
+  }
+
   //
-
-  getSelectedUser$() {
-    return this.store.select(UserState.getSelectedUser);
-  }
-
-  getUsers$() {
-    return this.store.select(UserState.getUsers);
-  }
 
   getSelectedCompany$() {
     return this.store.select(CompanyState.getSelectedCompany);
@@ -67,14 +91,6 @@ export class UserService {
           map(() => response)
         );
       })
-    );
-  }
-
-  delete$(id: number) {
-    return this.dal.delete$(id).pipe(
-      take(1),
-      concatMap(() => this.readAll$()),
-      concatMap(() => this.refreshSelectedUser$())
     );
   }
 
