@@ -27,6 +27,21 @@ export class CompanyService {
     this.store.dispatch(new SelectCompany(company));
   }
 
+  deselect$() {
+    return combineLatest({
+      selectedCompany: this.getSelectedCompany$(),
+      companies: this.getCompanies$()
+    }).pipe(
+      take(1),
+      map(({ selectedCompany, companies }) => {
+        if (!selectedCompany) return;
+        const selectedCompanyExists = companies.some(company => company.id === selectedCompany.id);
+        if (selectedCompanyExists) return;
+        this.store.dispatch(new DeselectCompany());
+      })
+    );
+  }
+
   create$(request: CompanyRequestModel) {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
@@ -57,6 +72,15 @@ export class CompanyService {
     );
   }
 
+  delete$(id: number) {
+    return this.dal.delete$(id).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAllForUser$()),
+      concatMap(() => this.deselect$())
+    );
+  }
+
   //
 
   update$(id: number, request: CompanyRequestModel) {
@@ -71,13 +95,6 @@ export class CompanyService {
           map(() => response)
         );
       })
-    );
-  }
-
-  delete$(id: number) {
-    return this.dal.delete$(id).pipe(
-      concatMap(() => this.readAllForUser$()),
-      concatMap(() => this.refreshSelectedCompany$())
     );
   }
 
@@ -99,9 +116,5 @@ export class CompanyService {
         return of(void 0);
       })
     );
-  }
-
-  deselect$() {
-    return this.store.dispatch(new DeselectCompany());
   }
 }
