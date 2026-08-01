@@ -34,7 +34,7 @@ const routes: Routes = [
   {
     path: 'company/:id',
     component: CompanyViewComponent,
-    canActivate: [initGuard, companyToUpdateExists]
+    canActivate: [initGuard, userIsSelectedGuard, companyToUpdateExists]
   },
   {
     path: '**',

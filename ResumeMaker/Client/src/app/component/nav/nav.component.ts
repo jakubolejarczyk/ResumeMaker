@@ -19,7 +19,7 @@ export class NavComponent {
       if (selectedUser) {
         return `${selectedUser.firstName} ${selectedUser.lastName}`;
       }
-      return 'None';
+      return 'Nobody';
     })
   );
 

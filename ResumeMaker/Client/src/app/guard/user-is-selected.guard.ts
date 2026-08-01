@@ -1,17 +1,16 @@
 import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
-import { map } from "rxjs";
+import { map, take } from "rxjs";
 
 import { UserService } from "../service/user.service";
 
 export const userIsSelectedGuard: CanActivateFn = () => {
-  const service = inject(UserService);
   const router = inject(Router);
-  return service.getSelectedUser$().pipe(
+  const userService = inject(UserService);
+  return userService.getSelectedUser$().pipe(
+    take(1),
     map(selectedUser => {
-      if (selectedUser) {
-        return true;
-      }
+      if (selectedUser) return true;
       alert("User is not selected!");
       return router.createUrlTree(['/']);
     })

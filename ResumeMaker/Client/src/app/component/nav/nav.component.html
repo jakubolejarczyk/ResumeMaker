@@ -1,13 +1,9 @@
 <div class="container">
   <nav class="nav">
-    <div class="nav-item">
-      <a routerLink="/users">Users</a>
-    </div>
-    <div class="nav-item">
-      <a routerLink="/companies">Companies</a>
-    </div>
+    <a routerLink="/users">Users</a>
+    <a routerLink="/companies">Companies</a>
   </nav>
-  <div class="selected">
+  <div>
     <p>Selected user: {{ selectedUser$ | async }}</p>
     <p>Selected company: {{ selectedCompany$ | async }}</p>
   </div>
