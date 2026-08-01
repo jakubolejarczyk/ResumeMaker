@@ -42,6 +42,20 @@ export class CompanyService {
     );
   }
 
+  updateSelection$() {
+    return combineLatest({
+      selectedCompany: this.getSelectedCompany$(),
+      companies: this.getCompanies$()
+    }).pipe(
+      take(1),
+      map(({ selectedCompany, companies }) => {
+        if (!selectedCompany) return;
+        const newSelectedCompany = companies.find(company => company.id === selectedCompany.id);
+        if (newSelectedCompany) this.store.dispatch(new SelectCompany(newSelectedCompany));
+      })
+    );
+  }
+
   create$(request: CompanyRequestModel) {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
@@ -72,49 +86,21 @@ export class CompanyService {
     );
   }
 
+  update$(id: number, request: CompanyRequestModel) {
+    return this.dal.update$(id, request).pipe(
+      tap(response => alert(response.message)),
+      filter(response => response.success),
+      concatMap(() => this.readAllForUser$()),
+      concatMap(() => this.updateSelection$())
+    );
+  }
+
   delete$(id: number) {
     return this.dal.delete$(id).pipe(
       tap(response => alert(response.message)),
       filter(response => response.success),
       concatMap(() => this.readAllForUser$()),
       concatMap(() => this.deselect$())
-    );
-  }
-
-  //
-
-  update$(id: number, request: CompanyRequestModel) {
-    return this.dal.update$(id, request).pipe(
-      concatMap(response => {
-        return this.readAllForUser$().pipe(
-          map(() => response)
-        );
-      }),
-      concatMap(response => {
-        return this.refreshSelectedCompany$().pipe(
-          map(() => response)
-        );
-      })
-    );
-  }
-
-  refreshSelectedCompany$() {
-    return combineLatest({
-      selectedCompany: this.getSelectedCompany$(),
-      companies: this.getCompanies$()
-    }).pipe(
-      take(1),
-      concatMap(({ selectedCompany, companies }) => {
-        if (selectedCompany) {
-          const currentSelectedCompany = companies.find(company => company.id === selectedCompany.id);
-          if (currentSelectedCompany) {
-            // return this.select$(currentSelectedCompany);
-          } else {
-            this.store.dispatch(new DeselectCompany());
-          }
-        }
-        return of(void 0);
-      })
     );
   }
 }

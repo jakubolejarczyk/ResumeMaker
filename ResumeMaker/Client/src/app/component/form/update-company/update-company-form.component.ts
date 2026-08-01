@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { concatMap, filter, map, of, take } from "rxjs";
+import { catchError, combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { CompanyService } from "../../../service/company.service";
 import { CompanyRequestModel } from "../../../model/request/company-request.model";
@@ -17,7 +17,7 @@ export class UpdateCompanyFormComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   route = inject(ActivatedRoute);
   userService = inject(UserService);
-  service = inject(CompanyService);
+  companyService = inject(CompanyService);
 
   updateCompanyForm = this.formBuilder.group({
     id: [0, Validators.required],
@@ -30,76 +30,80 @@ export class UpdateCompanyFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    of(this.route.snapshot.paramMap.get('id')).pipe(
+    this.resetForm().subscribe();
+  }
+
+  onSubmit() {
+    combineLatest({
+      form: of(this.updateCompanyForm),
+      selectedUser: this.userService.getSelectedUser$()
+    }).pipe(
       take(1),
-      map(param => {
-        if (!param) throw new Error('Id parameter was not defined!');
-        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
-        return parseInt(param);
+      filter(({ form }) => {
+        if (form.valid) return true;
+        throw new Error('Not all required fields have been set.');
       }),
-      concatMap(id => {
-        return this.service.getCompanies$().pipe(
-          take(1),
-          concatMap(comapnies => {
-            const company = comapnies.find(companies => companies.id === id);
-            if (company) return of(company);
-            throw new Error('Company does not exits!');
-          })
-        );
+      map(({ form, selectedUser }) => ({ value: form.value, selectedUser })),
+      map(({ value, selectedUser }) => {
+        const { id, companyName, city, country, includeConsentClause, customConsentClause, recruitmentStatus } = value;
+        const userId = selectedUser?.id;
+        if (!id) throw new Error('Id has not been set.');
+        if (!companyName) throw new Error('Company name has not been set.');
+        if (!city) throw new Error('City has not been set.');
+        if (!country) throw new Error('Country has not been set.');
+        if (includeConsentClause === undefined || includeConsentClause === null) throw new Error('Include consent clause has not been set.');
+        if (!customConsentClause) throw new Error('Custom consent clause has not been set.');
+        if (!recruitmentStatus) throw new Error('Recruitment status has not been set.');
+        if (!userId) throw new Error('User id has not been set.');
+        const request: CompanyRequestModel = {
+          companyName,
+          city,
+          country,
+          includeConsentClause,
+          customConsentClause,
+          recruitmentStatus,
+          userId
+        };
+        return ({ id, request});
       }),
-      map(user => {
-        this.updateCompanyForm.controls.id.setValue(user.id);
-        this.updateCompanyForm.controls.companyName.setValue(user.companyName);
-        this.updateCompanyForm.controls.city.setValue(user.city);
-        this.updateCompanyForm.controls.country.setValue(user.country);
-        this.updateCompanyForm.controls.includeConsentClause.setValue(user.includeConsentClause);
-        this.updateCompanyForm.controls.customConsentClause.setValue(user.customConsentClause);
-        this.updateCompanyForm.controls.recruitmentStatus.setValue(user.recruitmentStatus);
+      concatMap(({ id, request }) => this.companyService.update$(id, request)),
+      tap(() => this.updateCompanyForm.reset()),
+      tap(() => this.updateCompanyForm.controls.includeConsentClause.setValue(false)),
+      concatMap(() => this.resetForm()),
+      catchError(error => {
+        alert(error);
+        return of(void 0);
       })
     ).subscribe();
   }
 
-  onSubmit() {
-    of(this.route.snapshot.paramMap.get('id')).pipe(
+  private resetForm() {
+    return of(this.route.snapshot.paramMap.get('id')).pipe(
       take(1),
-      map(param => {
-        if (!param) throw new Error('Id parameter was not defined!');
-        if (Number.isNaN(param)) throw new Error('Id parameter is not a number!');
-        return parseInt(param);
+      map(paramId => {
+        if (!paramId) throw new Error('Parameter id was not defined!');
+        if (Number.isNaN(paramId)) throw new Error('Parameter id is not a number!');
+        return parseInt(paramId);
       }),
       concatMap(id => {
-        return this.userService.getSelectedUser$().pipe(
-          map(selectedUser => ({ selectedUser, id }))
-        )
+        return this.companyService.getCompanies$().pipe(
+          take(1),
+          concatMap(companies => {
+            const companyToUpdate = companies.find(company => company.id === id);
+            if (companyToUpdate) return of(companyToUpdate);
+            throw new Error('Company to update does not exits!');
+          })
+        );
       }),
-      map(({ selectedUser, id }) => {
-        const { valid } = this.updateCompanyForm;
-        if (!valid) {
-          alert('Not all required fields have been completed.');
-          return;
-        }
-        if (!id) {
-          alert('Id was not defined.');
-          return;
-        }
-        const { value } = this.updateCompanyForm;
-        const request: CompanyRequestModel = {
-          companyName: value.companyName ?? '',
-          city: value.city ?? '',
-          country: value.country ?? '',
-          includeConsentClause: value.includeConsentClause ?? false,
-          customConsentClause: value.customConsentClause ?? '',
-          recruitmentStatus: value.recruitmentStatus ?? '',
-          userId: selectedUser?.id ?? 0
-        };
-        return this.service.update$(id, request);
-      }),
-      take(1),
-      filter(request => request !== undefined),
-      concatMap(request => request)
-    ).subscribe(response => {
-      const { message } = response;
-      alert(message);
-    });
+      map(companyToUpdate => {
+        this.updateCompanyForm.controls.id.setValue(companyToUpdate.id);
+        this.updateCompanyForm.controls.companyName.setValue(companyToUpdate.companyName);
+        this.updateCompanyForm.controls.city.setValue(companyToUpdate.city);
+        this.updateCompanyForm.controls.country.setValue(companyToUpdate.country);
+        this.updateCompanyForm.controls.includeConsentClause.setValue(companyToUpdate.includeConsentClause);
+        this.updateCompanyForm.controls.customConsentClause.setValue(companyToUpdate.customConsentClause);
+        this.updateCompanyForm.controls.recruitmentStatus.setValue(companyToUpdate.recruitmentStatus);
+      })
+    )
   }
 }
