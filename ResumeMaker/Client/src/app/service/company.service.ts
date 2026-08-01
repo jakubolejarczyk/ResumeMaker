@@ -15,6 +15,10 @@ export class CompanyService {
   private dal = inject(CompanyDal);
   private store = inject(Store);
 
+  getSelectedCompany$() {
+    return this.store.select(CompanyState.getSelectedCompany);
+  }
+
   //
 
   readAllForUser$() {
@@ -37,10 +41,6 @@ export class CompanyService {
         return of(true);
       })
     );
-  }
-
-  getSelectedCompany$() {
-    return this.store.select(CompanyState.getSelectedCompany);
   }
 
   getCompanies$() {
