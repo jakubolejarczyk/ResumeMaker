@@ -1,6 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { concatMap, take } from "rxjs";
 
 import { UserService } from "../../../service/user.service";
 import { UserEntityModel } from "../../../model/entity/user-entity.model";

@@ -5,36 +5,36 @@
         <div class="list-item">
           <table class="table">
             <tr>
-              <th>Id</th>
-              <td>{{ user.id }}</td>
+              <th class="table-header">Id</th>
+              <td class="table-data">{{ user.id }}</td>
             </tr>
             <tr>
-              <th>Email</th>
-              <td>{{ user.email }}</td>
+              <th class="table-header">Email</th>
+              <td class="table-data">{{ user.email }}</td>
             </tr>
             <tr>
-              <th>First name</th>
-              <td>{{ user.firstName }}</td>
+              <th class="table-header">First name</th>
+              <td class="table-data">{{ user.firstName }}</td>
             </tr>
             <tr>
-              <th>Last name</th>
-              <td>{{ user.lastName }}</td>
+              <th class="table-header">Last name</th>
+              <td class="table-data">{{ user.lastName }}</td>
             </tr>
             <tr>
-              <th>City</th>
-              <td>{{ user.city }}</td>
+              <th class="table-header">City</th>
+              <td class="table-data">{{ user.city }}</td>
             </tr>
             <tr>
-              <th>Country</th>
-              <td>{{ user.country }}</td>
+              <th class="table-header">Country</th>
+              <td class="table-data">{{ user.country }}</td>
             </tr>
             <tr>
-              <th>Phone number</th>
-              <td>{{ user.phoneNumber }}</td>
+              <th class="table-header">Phone number</th>
+              <td class="table-data">{{ user.phoneNumber }}</td>
             </tr>
             <tr>
-              <th>Actions</th>
-              <td>
+              <th class="table-header">Actions</th>
+              <td class="table-data">
                 <button (click)="onSelect(user)">Select</button>
                 <button (click)="onUpdate(user)">Update</button>
                 <button (click)="onDelete(user)">Delete</button>
@@ -47,6 +47,6 @@
       <p class="list-empty">No users found.</p>
     }
   } @else {
-    <p class="list-empty">No users found.</p>
+    <p class="list-empty">Failed to load users. An internal error occurred.</p>
   }
 </div>
