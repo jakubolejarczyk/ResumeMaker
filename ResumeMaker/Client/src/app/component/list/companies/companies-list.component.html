@@ -5,36 +5,36 @@
         <div class="list-item">
           <table class="table">
             <tr>
-              <th>Id</th>
-              <td>{{ company.id }}</td>
+              <th class="table-header">Id</th>
+              <td class="table-data">{{ company.id }}</td>
             </tr>
             <tr>
-              <th>Company name</th>
-              <td>{{ company.companyName }}</td>
+              <th class="table-header">Company name</th>
+              <td class="table-data">{{ company.companyName }}</td>
             </tr>
             <tr>
-              <th>City</th>
-              <td>{{ company.city }}</td>
+              <th class="table-header">City</th>
+              <td class="table-data">{{ company.city }}</td>
             </tr>
             <tr>
-              <th>Country</th>
-              <td>{{ company.country }}</td>
+              <th class="table-header">Country</th>
+              <td class="table-data">{{ company.country }}</td>
             </tr>
             <tr>
-              <th>Include consent clause</th>
-              <td>{{ company.includeConsentClause }}</td>
+              <th class="table-header">Include consent clause</th>
+              <td class="table-data">{{ company.includeConsentClause }}</td>
             </tr>
             <tr>
-              <th>Custom consent clause</th>
-              <td>{{ company.customConsentClause }}</td>
+              <th class="table-header">Custom consent clause</th>
+              <td class="table-data">{{ company.customConsentClause }}</td>
             </tr>
             <tr>
-              <th>Recruitment status</th>
-              <td>{{ company.recruitmentStatus }}</td>
+              <th class="table-header">Recruitment status</th>
+              <td class="table-data">{{ company.recruitmentStatus }}</td>
             </tr>
             <tr>
-              <th>Actions</th>
-              <td>
+              <th class="table-header">Actions</th>
+              <td class="table-data">
                 <button (click)="onSelect(company)">Select</button>
                 <button (click)="onUpdate(company)">Update</button>
                 <button (click)="onDelete(company)">Delete</button>
@@ -47,6 +47,6 @@
       <p class="list-empty">No companies found.</p>
     }
   } @else {
-    <p class="list-empty">No companies found.</p>
+    <p class="list-empty">Failed to load companies. An internal error occurred.</p>
   }
 </div>

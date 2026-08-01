@@ -19,6 +19,10 @@ export class CompanyService {
     return this.store.select(CompanyState.getSelectedCompany);
   }
 
+  getCompanies$() {
+    return this.store.select(CompanyState.getCompanies);
+  }
+
   create$(request: CompanyRequestModel) {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
@@ -50,10 +54,6 @@ export class CompanyService {
   }
 
   //
-
-  getCompanies$() {
-    return this.store.select(CompanyState.getCompanies);
-  }
 
   select$(company: CompanyEntityModel) {
     return this.store.dispatch(new SelectCompany(company));

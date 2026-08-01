@@ -1,8 +1,8 @@
 import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { CompanyService } from "../../../service/company.service";
 import { CompanyEntityModel } from "../../../model/entity/company-entity.model";
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-companies-list-component',
