@@ -43,7 +43,7 @@ export class CreateCompanyFormComponent {
         if (!companyName) throw new Error('Company name has not been set.');
         if (!city) throw new Error('City has not been set.');
         if (!country) throw new Error('Country has not been set.');
-        if (!includeConsentClause) throw new Error('Include consent clause has not been set.');
+        if (includeConsentClause === undefined || includeConsentClause === null) throw new Error('Include consent clause has not been set.');
         if (!customConsentClause) throw new Error('Custom consent clause has not been set.');
         if (!recruitmentStatus) throw new Error('Recruitment status has not been set.');
         if (!userId) throw new Error('User id has not been set.');
@@ -60,6 +60,7 @@ export class CreateCompanyFormComponent {
       }),
       concatMap(request => this.companyService.create$(request)),
       tap(() => this.createCompanyForm.reset()),
+      tap(() => this.createCompanyForm.controls.includeConsentClause.setValue(false)),
       catchError(error => {
         alert(error);
         return of(void 0);
