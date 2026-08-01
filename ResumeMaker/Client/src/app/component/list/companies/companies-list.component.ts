@@ -17,7 +17,7 @@ export class CompaniesListComponent {
   companies$ = this.service.getCompanies$();
 
   onSelect(company: CompanyEntityModel) {
-    this.service.select$(company).subscribe();
+    this.service.select(company);
   }
 
   onUpdate(company: CompanyEntityModel) {

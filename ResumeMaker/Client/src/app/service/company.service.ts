@@ -23,6 +23,10 @@ export class CompanyService {
     return this.store.select(CompanyState.getCompanies);
   }
 
+  select(company: CompanyEntityModel) {
+    this.store.dispatch(new SelectCompany(company));
+  }
+
   create$(request: CompanyRequestModel) {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
@@ -54,10 +58,6 @@ export class CompanyService {
   }
 
   //
-
-  select$(company: CompanyEntityModel) {
-    return this.store.dispatch(new SelectCompany(company));
-  }
 
   update$(id: number, request: CompanyRequestModel) {
     return this.dal.update$(id, request).pipe(
@@ -91,7 +91,7 @@ export class CompanyService {
         if (selectedCompany) {
           const currentSelectedCompany = companies.find(company => company.id === selectedCompany.id);
           if (currentSelectedCompany) {
-            return this.select$(currentSelectedCompany);
+            // return this.select$(currentSelectedCompany);
           } else {
             this.store.dispatch(new DeselectCompany());
           }
