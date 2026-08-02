@@ -1,16 +1,16 @@
-﻿//namespace API.Sources.Entities;
+﻿namespace API.Sources.Entities;
 
-//public class SkillGroup
-//{
-//    public int Id { get; set; }
+public class SkillGroup
+{
+    public int Id { get; set; }
 
-//    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-//    public int Order { get; set; }
+    public int Order { get; set; }
 
-//    public int ResumeId { get; set; }
+    public int ResumeId { get; set; }
 
-//    public Resume Resume { get; set; } = null!;
+    public Resume Resume { get; set; } = null!;
 
-//    public List<SkillElement> SkillElements { get; set; } = [];
-//}
+    public List<SkillElement> SkillElements { get; set; } = [];
+}

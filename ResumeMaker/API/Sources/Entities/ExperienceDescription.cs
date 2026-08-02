@@ -1,14 +1,14 @@
-﻿//namespace API.Sources.Entities;
+﻿namespace API.Sources.Entities;
 
-//public class ExperienceDescription
-//{
-//    public int Id { get; set; }
+public class ExperienceDescription
+{
+    public int Id { get; set; }
 
-//    public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-//    public int Order { get; set; }
+    public int Order { get; set; }
 
-//    public int ExperienceId { get; set; }
+    public int ExperienceId { get; set; }
 
-//    public Experience Experience { get; set; } = null!;
-//}
+    public Experience Experience { get; set; } = null!;
+}
