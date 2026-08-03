@@ -6,7 +6,10 @@ public static class RepositoriesProvider
     {
         builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
         builder.Services.AddScoped<IEducationRepository, EducationRepository>();
+        builder.Services.AddScoped<IExperienceRepository, ExperienceRepository>();
+        builder.Services.AddScoped<IExperienceDescriptionRepository, ExperienceDescriptionRepository>();
         builder.Services.AddScoped<IResumeRepository, ResumeRepository>();
+        builder.Services.AddScoped<ISkillGroupRepository, SkillGroupRepository>();
         builder.Services.AddScoped<ISocialMediaRepository, SocialMediaRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
     }
