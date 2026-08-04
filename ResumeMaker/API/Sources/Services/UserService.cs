@@ -120,17 +120,7 @@ public class UserService(IUserRepository repository) : IUserService
         return new ResponseCore<UserResponse>
         {
             Success = user.Success,
-            Message = user.Message,
-            Body = body == null ? null : new UserResponse
-            {
-                Id = body.Id,
-                Email = body.Email,
-                FirstName = body.FirstName,
-                LastName = body.LastName,
-                City = body.City,
-                Country = body.Country,
-                PhoneNumber = body.PhoneNumber
-            }
+            Message = user.Message
         };
     }
 }

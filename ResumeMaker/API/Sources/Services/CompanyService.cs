@@ -121,18 +121,7 @@ public class CompanyService(ICompanyRepository repository) : ICompanyService
         return new ResponseCore<CompanyResponse>
         {
             Success = response.Success,
-            Message = response.Message,
-            Body = response.Body == null ? null : new CompanyResponse
-            {
-                Id = response.Body.Id,
-                CompanyName = response.Body.CompanyName,
-                City = response.Body.City,
-                Country = response.Body.Country,
-                IncludeConsentClause = response.Body.IncludeConsentClause,
-                CustomConsentClause = response.Body.CustomConsentClause,
-                RecruitmentStatus = response.Body.RecruitmentStatus,
-                UserId = response.Body.UserId
-            }
+            Message = response.Message
         };
     }
 }
