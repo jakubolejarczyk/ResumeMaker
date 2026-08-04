@@ -62,7 +62,37 @@ public class ResumeService(
 
     public ResponseCore<ResumeResponse> Update(int id, ResumeRequest request)
     {
-        throw new NotImplementedException();
+        var resumeToUpdate = new Resume
+        {
+            Id = id,
+            Name = request.Name,
+            JobTitle = request.JobTitle,
+            Description = request.Description,
+            UserId = request.UserId
+        };
+        var resume = resumeRepository.Update(id, resumeToUpdate);
+        var resumeBody = resume.Body;
+        var socialMediaResponses = ProcessSocialMedias(request.SocialMedias);
+        var educationResponses = ProcessEducations(request.Educations);
+        var experienceResponses = ProcessExperiences(request.Experiences);
+        var skillGroupResponses = ProcessSkillGroups(request.SkillGroups);
+        return new ResponseCore<ResumeResponse>
+        {
+            Success = resume.Success,
+            Message = resume.Message,
+            Body = resumeBody == null ? null : new ResumeResponse
+            {
+                Id = resumeBody.Id,
+                Name = resumeBody.Name,
+                JobTitle = resumeBody.JobTitle,
+                Description = resumeBody.Description,
+                UserId = resumeBody.UserId,
+                SocialMedias = socialMediaResponses,
+                Educations = educationResponses,
+                Experiences = experienceResponses,
+                SkillGroups = skillGroupResponses
+            }
+        };
     }
 
     public ResponseCore<ResumeResponse> Delete(int id)
