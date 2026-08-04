@@ -3,6 +3,7 @@ using API.Sources.Entities;
 using API.Sources.Repositories;
 using API.Sources.Requests;
 using API.Sources.Responses;
+using static API.Sources.Responses.ResumeResponse;
 
 namespace API.Sources.Services;
 
@@ -52,12 +53,136 @@ public class ResumeService(
 
     public ResponseCore<ResumeResponse> Read(int id)
     {
-        throw new NotImplementedException();
+        var resume = resumeRepository.Read(id);
+        var body = resume.Body;
+        return new ResponseCore<ResumeResponse>
+        {
+            Success = resume.Success,
+            Message = resume.Message,
+            Body = body == null ? null : new ResumeResponse
+            {
+                Id = body.Id,
+                Name = body.Name,
+                JobTitle = body.JobTitle,
+                Description = body.Description,
+                UserId = body.UserId,
+                SocialMedias = (socialMediaRepository.ReadAllForResume(body.Id).Body ?? []).Select(s => new ResumeResponse.SocialMediaResponse
+                {
+                    Id = s.Id,
+                    Label = s.Label,
+                    Link = s.Link,
+                    Order = s.Order,
+                    ResumeId = s.ResumeId
+                }).ToList(),
+                Educations = (educationRepository.ReadAllForResume(body.Id).Body ?? []).Select(e => new ResumeResponse.EducationResponse
+                {
+                    Id = e.Id,
+                    InstitutionName = e.InstitutionName,
+                    FieldOfStudy = e.FieldOfStudy,
+                    Degree = e.Degree,
+                    GraduationYear = e.GraduationYear,
+                    ResumeId = e.ResumeId
+                }).ToList(),
+                Experiences = (experienceRepository.ReadAllForResume(body.Id).Body ?? []).Select(ex => new ResumeResponse.ExperienceResponse
+                {
+                    Id = ex.Id,
+                    CompanyName = ex.CompanyName,
+                    JobTitle = ex.JobTitle,
+                    StartDate = ex.StartDate,
+                    EndDate = ex.EndDate,
+                    ResumeId = ex.ResumeId,
+                    ExperienceDescriptions: (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                    {
+                        Id = ed.Id,
+                        Description = ed.Description,
+                        Order = ed.Order,
+                        ExperienceId = ed.ExperienceId
+                    }).ToList(),
+                }).ToList(),
+                SkillGroups = (skillGroupRepository.ReadAllForResume(body.Id).Body ?? []).Select(sg => new ResumeResponse.SkillGroupResponse
+                {
+                    Id = sg.Id,
+                    Name = sg.Name,
+                    Order = sg.Order,
+                    ResumeId = sg.ResumeId,
+                    SkillElements: (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                    {
+                        Id = se.Id,
+                        Name = se.Name,
+                        Order = se.Order,
+                        SkillGroupId = se.SkillGroupId
+                    }).ToList(),
+                }).ToList(),
+            }
+        };
     }
 
     public ResponseCore<List<ResumeResponse>> ReadAllForUser(int userId)
     {
-        throw new NotImplementedException();
+        var resume = resumeRepository.ReadAllForUser(userId);
+        var body = resume.Body;
+        return new ResponseCore<List<ResumeResponse>>
+        {
+            Success = resume.Success,
+            Message = resume.Message,
+            Body = body == null ? null : body
+                .Select(r => new ResumeResponse
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    JobTitle = r.JobTitle,
+                    Description = r.Description,
+                    UserId = r.UserId,
+                    SocialMedias = (socialMediaRepository.ReadAllForResume(r.Id).Body ?? []).Select(s => new ResumeResponse.SocialMediaResponse
+                    {
+                        Id = s.Id,
+                        Label = s.Label,
+                        Link = s.Link,
+                        Order = s.Order,
+                        ResumeId = s.ResumeId
+                    }).ToList(),
+                    Educations = (educationRepository.ReadAllForResume(r.Id).Body ?? []).Select(e => new ResumeResponse.EducationResponse
+                    {
+                        Id = e.Id,
+                        InstitutionName = e.InstitutionName,
+                        FieldOfStudy = e.FieldOfStudy,
+                        Degree = e.Degree,
+                        GraduationYear = e.GraduationYear,
+                        ResumeId = e.ResumeId
+                    }).ToList(),
+                    Experiences = (experienceRepository.ReadAllForResume(r.Id).Body ?? []).Select(ex => new ResumeResponse.ExperienceResponse
+                    {
+                        Id = ex.Id,
+                        CompanyName = ex.CompanyName,
+                        JobTitle = ex.JobTitle,
+                        StartDate = ex.StartDate,
+                        EndDate = ex.EndDate,
+                        ResumeId = ex.ResumeId,
+                        ExperienceDescriptions: (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                        {
+                            Id = ed.Id,
+                            Description = ed.Description,
+                            Order = ed.Order,
+                            ExperienceId = ed.ExperienceId
+                        }).ToList(),
+                    }).ToList(),
+                    SkillGroups = (skillGroupRepository.ReadAllForResume(r.Id).Body ?? []).Select(sg => new ResumeResponse.SkillGroupResponse
+                    {
+                        Id = sg.Id,
+                        Name = sg.Name,
+                        Order = sg.Order,
+                        ResumeId = sg.ResumeId,
+                        SkillElements: (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                        {
+                            Id = se.Id,
+                            Name = se.Name,
+                            Order = se.Order,
+                            SkillGroupId = se.SkillGroupId
+                        }).ToList(),
+                    }).ToList(),
+                })
+                .ToList()
+        };
     }
 
     public ResponseCore<ResumeResponse> Update(int id, ResumeRequest request)
