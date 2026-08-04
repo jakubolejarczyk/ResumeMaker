@@ -97,12 +97,7 @@ public class ResumeService(
 
     public ResponseCore<ResumeResponse> Delete(int id)
     {
-        var resume = resumeRepository.Delete(id);
-        return new ResponseCore<ResumeResponse>
-        {
-            Success = resume.Success,
-            Message = resume.Message
-        };
+        throw new NotImplementedException();
     }
 
     private List<ResumeResponse.SocialMediaResponse> ProcessSocialMedias(List<ResumeRequest.SocialMediaRequest> socialMediaRequests)
