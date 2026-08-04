@@ -11,7 +11,7 @@ public interface IUserRepository
 
     ResponseCore<List<User>> ReadAll();
 
-    ResponseCore<User> Update(User user);
+    ResponseCore<User> Update(int id, User user);
 
     ResponseCore<User> Delete(int id);
 }

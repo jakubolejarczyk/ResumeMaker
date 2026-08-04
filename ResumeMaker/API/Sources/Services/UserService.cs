@@ -94,7 +94,7 @@ public class UserService(IUserRepository repository) : IUserService
             Country = request.Country,
             PhoneNumber = request.PhoneNumber
         };
-        var user = repository.Update(userToUpdate);
+        var user = repository.Update(id, userToUpdate);
         var body = user.Body;
         return new ResponseCore<UserResponse>
         {

@@ -65,9 +65,9 @@ public class UserRepository(AppDbContext context) : IUserRepository
         };
     }
 
-    public ResponseCore<User> Update(User user)
+    public ResponseCore<User> Update(int id, User user)
     {
-        var userById = context.Users.FirstOrDefault(u => u.Id == user.Id);
+        var userById = context.Users.FirstOrDefault(u => u.Id == id);
         if (userById == null)
         {
             return new ResponseCore<User>
