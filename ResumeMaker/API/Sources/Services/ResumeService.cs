@@ -3,7 +3,6 @@ using API.Sources.Entities;
 using API.Sources.Repositories;
 using API.Sources.Requests;
 using API.Sources.Responses;
-using static API.Sources.Responses.ResumeResponse;
 
 namespace API.Sources.Services;
 
@@ -91,7 +90,7 @@ public class ResumeService(
                     StartDate = ex.StartDate,
                     EndDate = ex.EndDate,
                     ResumeId = ex.ResumeId,
-                    ExperienceDescriptions: (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                    ExperienceDescriptions = (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
                     {
                         Id = ed.Id,
                         Description = ed.Description,
@@ -105,7 +104,7 @@ public class ResumeService(
                     Name = sg.Name,
                     Order = sg.Order,
                     ResumeId = sg.ResumeId,
-                    SkillElements: (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                    SkillElements = (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
                     {
                         Id = se.Id,
                         Name = se.Name,
@@ -158,7 +157,7 @@ public class ResumeService(
                         StartDate = ex.StartDate,
                         EndDate = ex.EndDate,
                         ResumeId = ex.ResumeId,
-                        ExperienceDescriptions: (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
+                        ExperienceDescriptions = (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
                         {
                             Id = ed.Id,
                             Description = ed.Description,
@@ -172,7 +171,7 @@ public class ResumeService(
                         Name = sg.Name,
                         Order = sg.Order,
                         ResumeId = sg.ResumeId,
-                        SkillElements: (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
+                        SkillElements = (skillElementRepository.ReadAllForSkillGroup(sg.Id).Body ?? []).Select(se => new ResumeResponse.SkillGroupResponse.SkillElementResponse
                         {
                             Id = se.Id,
                             Name = se.Name,
