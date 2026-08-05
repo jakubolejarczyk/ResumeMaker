@@ -4,10 +4,11 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 
 import { UserState } from "./state/user.state";
 import { CompanyState } from "./state/company.state";
+import { ResumeState } from "./state/resume.state";
 
 @NgModule({
   imports: [
-    NgxsModule.forRoot([UserState, CompanyState]),
+    NgxsModule.forRoot([UserState, CompanyState, ResumeState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   exports: [NgxsModule],
