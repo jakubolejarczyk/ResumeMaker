@@ -7,6 +7,7 @@ import { UserViewComponent } from "./user/user-view.component";
 import { CompaniesViewComponent } from "./companies/companies-view.component";
 import { CompanyViewComponent } from "./company/company-view.component";
 import { ResumesViewComponent } from "./resumes/resumes-view.component";
+import { ResumeViewComponent } from "./resume/resume-view.component";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ResumesViewComponent } from "./resumes/resumes-view.component";
     UserViewComponent,
     CompaniesViewComponent,
     CompanyViewComponent,
-    ResumesViewComponent
+    ResumesViewComponent,
+    ResumeViewComponent
   ],
   imports: [
     FormModule,
@@ -25,7 +27,8 @@ import { ResumesViewComponent } from "./resumes/resumes-view.component";
     UserViewComponent,
     CompaniesViewComponent,
     CompanyViewComponent,
-    ResumesViewComponent
+    ResumesViewComponent,
+    ResumeViewComponent
   ]
 })
 export class ViewModule { }

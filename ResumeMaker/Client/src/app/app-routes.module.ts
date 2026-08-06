@@ -11,6 +11,8 @@ import { CompanyViewComponent } from './component/view/company/company-view.comp
 import { companyIsSelectedGuard } from './guard/company-is-selected.guard';
 import { ResumesViewComponent } from './component/view/resumes/resumes-view.component';
 import { companyToUpdateExists } from './guard/company-to-update-exists.guard';
+import { ResumeViewComponent } from './component/view/resume/resume-view.component';
+import { resumeToUpdateExists } from './guard/resume-to-update-exists.guard';
 
 const routes: Routes = [
   {
@@ -42,6 +44,11 @@ const routes: Routes = [
     path: 'resumes',
     component: ResumesViewComponent,
     canActivate: [initGuard, userIsSelectedGuard, companyIsSelectedGuard]
+  },
+  {
+    path: 'resume/:id',
+    component: ResumeViewComponent,
+    canActivate: [initGuard, userIsSelectedGuard, companyIsSelectedGuard, resumeToUpdateExists]
   },
   {
     path: '**',

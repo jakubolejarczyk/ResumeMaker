@@ -6,6 +6,7 @@ import { UpdateUserFormComponent } from "./update-user/update-user-form.componen
 import { CreateCompanyFormComponent } from "./create-company/create-company-form.component";
 import { UpdateCompanyFormComponent } from "./update-company/update-company-form.component";
 import { CreateResumeFormComponent } from "./create-resume/create-resume-form.component";
+import { UpdateResumeFormComponent } from "./update-resume/update-resume-form.component";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CreateResumeFormComponent } from "./create-resume/create-resume-form.co
     UpdateUserFormComponent,
     CreateCompanyFormComponent,
     UpdateCompanyFormComponent,
-    CreateResumeFormComponent
+    CreateResumeFormComponent,
+    UpdateResumeFormComponent
   ],
   imports: [ReactiveFormsModule],
   exports: [
@@ -21,7 +23,8 @@ import { CreateResumeFormComponent } from "./create-resume/create-resume-form.co
     UpdateUserFormComponent,
     CreateCompanyFormComponent,
     UpdateCompanyFormComponent,
-    CreateResumeFormComponent
+    CreateResumeFormComponent,
+    UpdateResumeFormComponent
   ]
 })
 export class FormModule {}
