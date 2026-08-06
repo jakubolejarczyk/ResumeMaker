@@ -3,6 +3,7 @@ import { map } from "rxjs";
 
 import { UserService } from "../../service/user.service";
 import { CompanyService } from "../../service/company.service";
+import { ResumeService } from "../../service/resume.service";
 
 @Component({
   selector: 'app-nav-component',
@@ -13,6 +14,7 @@ import { CompanyService } from "../../service/company.service";
 export class NavComponent {
   userService = inject(UserService);
   companyService = inject(CompanyService);
+  resumeService = inject(ResumeService);
 
   selectedUser$ = this.userService.getSelectedUser$().pipe(
     map(selectedUser => {
@@ -27,6 +29,15 @@ export class NavComponent {
     map(selectedCompany => {
       if (selectedCompany) {
         return selectedCompany.companyName;
+      }
+      return 'Nothing';
+    })
+  );
+
+  selectedResume$ = this.resumeService.getSelectedResume$().pipe(
+    map(selectedResume => {
+      if (selectedResume) {
+        return selectedResume.name;
       }
       return 'Nothing';
     })
