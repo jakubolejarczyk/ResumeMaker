@@ -342,20 +342,27 @@ export class UpdateResumeFormComponent implements OnInit {
           })
         );
       }),
+      tap(() => {
+        this.updateResumeForm.reset();
+        this.getSocialMedias().clear();
+        this.getEducations().clear();
+        this.getExperience().clear();
+        this.getSkillGroup().clear();
+      }),
       map(resumeToUpdate => {
         this.updateResumeForm.controls.name.setValue(resumeToUpdate.name);
         this.updateResumeForm.controls.jobTitle.setValue(resumeToUpdate.jobTitle);
         this.updateResumeForm.controls.description.setValue(resumeToUpdate.description);
         resumeToUpdate.socialMedias.forEach(socialMedia => {
           this.getSocialMedias().push(this.formBuilder.group({
-            id: [socialMedia.id, Validators.required],
+            id: [socialMedia.id],
             label: [socialMedia.label, Validators.required],
             link: [socialMedia.link, Validators.required]
           }));
         });
         resumeToUpdate.educations.forEach(education => {
           this.getEducations().push(this.formBuilder.group({
-            id: [education.id, Validators.required],
+            id: [education.id],
             institutionName: [education.institutionName, Validators.required],
             fieldOfStudy: [education.fieldOfStudy, Validators.required],
             degree: [education.degree, Validators.required],
@@ -364,7 +371,7 @@ export class UpdateResumeFormComponent implements OnInit {
         });
         resumeToUpdate.experiences.forEach(experience => {
           this.getExperience().push(this.formBuilder.group({
-            id: [experience.id, Validators.required],
+            id: [experience.id],
             companyName: [experience.companyName, Validators.required],
             jobTitle: [experience.jobTitle, Validators.required],
             startDate: [experience.startDate, Validators.required],
@@ -373,20 +380,20 @@ export class UpdateResumeFormComponent implements OnInit {
           }));
           experience.experienceDescriptions.forEach((experienceDescription, index) => {
             this.getExperienceDescription(index).push(this.formBuilder.group({
-              id: [experienceDescription.id, Validators.required],
+              id: [experienceDescription.id],
               description: [experienceDescription.description, Validators.required]
             }));
           });
         });
         resumeToUpdate.skillGroups.forEach(skillGroup => {
           this.getSkillGroup().push(this.formBuilder.group({
-            id: [skillGroup.id, Validators.required],
+            id: [skillGroup.id],
             name: [skillGroup.name, Validators.required],
             skillElements: this.formBuilder.array([])
           }));
           skillGroup.skillElements.forEach((skillElement, index) => {
             this.getSkillElement(index).push(this.formBuilder.group({
-              id: [skillElement.id, Validators.required],
+              id: [skillElement.id],
               name: [skillElement.name, Validators.required]
             }));
           });
