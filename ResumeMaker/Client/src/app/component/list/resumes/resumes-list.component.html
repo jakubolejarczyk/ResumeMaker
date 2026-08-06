@@ -1,34 +1,40 @@
-<!--<div class="list">
-  @if (resumes.length > 0) {
-    @for (resume of resumes; track resume.id) {
-      <div class="list-item">
-        <table class="table">
-          <tbody>
+<div class="list">
+  @if (resumes$ | async; as resumes) {
+    @if (resumes.length > 0) {
+      @for (resume of resumes; track resume.id) {
+        <div class="list-item">
+          <table class="table">
             <tr>
-              <th>Name</th>
-              <td>{{ resume.name}}</td>
+              <th class="table-header">Id</th>
+              <td class="table-data">{{ resume.id }}</td>
             </tr>
             <tr>
-              <th>Job title</th>
-              <td>{{ resume.jobTitle }}</td>
+              <th class="table-header">Name</th>
+              <td class="table-data">{{ resume.name }}</td>
             </tr>
             <tr>
-              <th>Description</th>
-              <td>{{ resume.description }}</td>
+              <th class="table-header">Job title</th>
+              <td class="table-data">{{ resume.jobTitle }}</td>
             </tr>
             <tr>
-              <th>Actions</th>
-              <td>
+              <th class="table-header">Description</th>
+              <td class="table-data">{{ resume.description }}</td>
+            </tr>
+            <tr>
+              <th class="table-header">Actions</th>
+              <td class="table-data">
                 <button (click)="onSelect(resume)">Select</button>
-                <button (click)="onUpdate(resume.id)">Update</button>
-                <button (click)="onDelete(resume.id)">Delete</button>
+                <button (click)="onUpdate(resume)">Update</button>
+                <button (click)="onDelete(resume)">Delete</button>
               </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
+      }
+    } @else {
+      <p class="list-empty">No resumes found.</p>
     }
   } @else {
-  <p class="list-empty">No companies found.</p>
+    <p class="list-empty">Failed to load resumes. An internal error occurred.</p>
   }
-</div>-->
+</div>

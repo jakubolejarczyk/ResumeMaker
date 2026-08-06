@@ -1,9 +1,14 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { filter, tap } from "rxjs";
+import { concatMap, filter, of, take, tap } from "rxjs";
 
 import { ResumeDal } from "../dal/resume.dal";
 import { ResumeRequestModel } from "../model/request/resume-request.model";
+import { UserState } from "../store/state/user.state";
+import { ResponseModel } from "../model/response/response.model";
+import { ResumeEntityModel } from "../model/entity/resume-entity.model";
+import { SetResumes } from "../store/actions/resume.actions";
+import { ResumeState } from "../store/state/resume.state";
 
 @Injectable({ providedIn: 'root' })
 export class ResumeService {
@@ -14,9 +19,9 @@ export class ResumeService {
   //   return this.store.select(CompanyState.getSelectedCompany);
   // }
 
-  // getCompanies$() {
-  //   return this.store.select(CompanyState.getCompanies);
-  // }
+  getResumes$() {
+    return this.store.select(ResumeState.getResumes);
+  }
 
   // select(company: CompanyEntityModel) {
   //   this.store.dispatch(new SelectCompany(company));
@@ -55,31 +60,31 @@ export class ResumeService {
     return this.dal.create$(request).pipe(
       tap(response => alert(response.message)),
       filter(response => response.success),
-      // concatMap(() => this.readAllForUser$())
+      concatMap(() => this.readAllForUser$())
     );
   }
 
-  // readAllForUser$() {
-  //   return this.store.select(UserState.getSelectedUser).pipe(
-  //     take(1),
-  //     concatMap(selectedUser => {
-  //       if (selectedUser) {
-  //         return this.dal.readAllForUser$(selectedUser.id);
-  //       }
-  //       const response: ResponseModel<CompanyEntityModel[]> = {
-  //         success: false,
-  //         message: 'No companies found.',
-  //         body: []
-  //       };
-  //       return of(response);
-  //     }),
-  //     concatMap(response => {
-  //       const { success, body } = response;
-  //       const companies = success ? body : [];
-  //       return this.store.dispatch(new SetCompanies(companies));
-  //     })
-  //   );
-  // }
+  readAllForUser$() {
+    return this.store.select(UserState.getSelectedUser).pipe(
+      take(1),
+      concatMap(selectedUser => {
+        if (selectedUser) {
+          return this.dal.readAllForUser$(selectedUser.id);
+        }
+        const response: ResponseModel<ResumeEntityModel[]> = {
+          success: false,
+          message: 'No resumes found.',
+          body: []
+        };
+        return of(response);
+      }),
+      concatMap(response => {
+        const { success, body } = response;
+        const companies = success ? body : [];
+        return this.store.dispatch(new SetResumes(companies));
+      })
+    );
+  }
 
   // update$(id: number, request: CompanyRequestModel) {
   //   return this.dal.update$(id, request).pipe(
