@@ -45,6 +45,8 @@ public class ResumeResponse
 
         public required int GraduationYear { get; set; }
 
+        public required int Order { get; set; }
+
         public required int ResumeId { get; set; }
     }
     public class ExperienceResponse
@@ -58,6 +60,8 @@ public class ResumeResponse
         public required DateOnly StartDate { get; set; }
 
         public DateOnly? EndDate { get; set; }
+
+        public required int Order { get; set; }
 
         public required int ResumeId { get; set; }
 

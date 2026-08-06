@@ -27,15 +27,24 @@ public class ResumeService(
         };
         var resume = resumeRepository.Create(resumeToCreate);
         var resumeBody = resume.Body;
-        var socialMediaResponses = ProcessSocialMedias(request.SocialMedias);
-        var educationResponses = ProcessEducations(request.Educations);
-        var experienceResponses = ProcessExperiences(request.Experiences);
-        var skillGroupResponses = ProcessSkillGroups(request.SkillGroups);
+        if (resumeBody == null)
+        {
+            return new ResponseCore<ResumeResponse>
+            {
+                Success = resume.Success,
+                Message = resume.Message,
+                Body = null
+            };
+        }
+        var socialMediaResponses = ProcessSocialMedias(request.SocialMedias, resumeBody.Id);
+        var educationResponses = ProcessEducations(request.Educations, resumeBody.Id);
+        var experienceResponses = ProcessExperiences(request.Experiences, resumeBody.Id);
+        var skillGroupResponses = ProcessSkillGroups(request.SkillGroups, resumeBody.Id);
         return new ResponseCore<ResumeResponse>
         {
             Success = resume.Success,
             Message = resume.Message,
-            Body = resumeBody == null ? null : new ResumeResponse
+            Body = new ResumeResponse
             {
                 Id = resumeBody.Id,
                 Name = resumeBody.Name,
@@ -80,6 +89,7 @@ public class ResumeService(
                     FieldOfStudy = e.FieldOfStudy,
                     Degree = e.Degree,
                     GraduationYear = e.GraduationYear,
+                    Order = e.Order,
                     ResumeId = e.ResumeId
                 }).ToList(),
                 Experiences = (experienceRepository.ReadAllForResume(body.Id).Body ?? []).Select(ex => new ResumeResponse.ExperienceResponse
@@ -89,6 +99,7 @@ public class ResumeService(
                     JobTitle = ex.JobTitle,
                     StartDate = ex.StartDate,
                     EndDate = ex.EndDate,
+                    Order = ex.Order,
                     ResumeId = ex.ResumeId,
                     ExperienceDescriptions = (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
                     {
@@ -147,6 +158,7 @@ public class ResumeService(
                         FieldOfStudy = e.FieldOfStudy,
                         Degree = e.Degree,
                         GraduationYear = e.GraduationYear,
+                        Order = e.Order,
                         ResumeId = e.ResumeId
                     }).ToList(),
                     Experiences = (experienceRepository.ReadAllForResume(r.Id).Body ?? []).Select(ex => new ResumeResponse.ExperienceResponse
@@ -156,6 +168,7 @@ public class ResumeService(
                         JobTitle = ex.JobTitle,
                         StartDate = ex.StartDate,
                         EndDate = ex.EndDate,
+                        Order = ex.Order,
                         ResumeId = ex.ResumeId,
                         ExperienceDescriptions = (experienceDescriptionRepository.ReadAllForExperience(ex.Id).Body ?? []).Select(ed => new ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse
                         {
@@ -196,15 +209,24 @@ public class ResumeService(
         };
         var resume = resumeRepository.Update(id, resumeToUpdate);
         var resumeBody = resume.Body;
-        var socialMediaResponses = ProcessSocialMedias(request.SocialMedias);
-        var educationResponses = ProcessEducations(request.Educations);
-        var experienceResponses = ProcessExperiences(request.Experiences);
-        var skillGroupResponses = ProcessSkillGroups(request.SkillGroups);
+        if (resumeBody == null)
+        {
+            return new ResponseCore<ResumeResponse>
+            {
+                Success = resume.Success,
+                Message = resume.Message,
+                Body = null
+            };
+        }
+        var socialMediaResponses = ProcessSocialMedias(request.SocialMedias, resumeBody.Id);
+        var educationResponses = ProcessEducations(request.Educations, resumeBody.Id);
+        var experienceResponses = ProcessExperiences(request.Experiences, resumeBody.Id);
+        var skillGroupResponses = ProcessSkillGroups(request.SkillGroups, resumeBody.Id);
         return new ResponseCore<ResumeResponse>
         {
             Success = resume.Success,
             Message = resume.Message,
-            Body = resumeBody == null ? null : new ResumeResponse
+            Body = new ResumeResponse
             {
                 Id = resumeBody.Id,
                 Name = resumeBody.Name,
@@ -229,7 +251,7 @@ public class ResumeService(
         };
     }
 
-    private List<ResumeResponse.SocialMediaResponse> ProcessSocialMedias(List<ResumeRequest.SocialMediaRequest> socialMediaRequests)
+    private List<ResumeResponse.SocialMediaResponse> ProcessSocialMedias(List<ResumeRequest.SocialMediaRequest> socialMediaRequests, int resumeId)
     {
         List<ResumeResponse.SocialMediaResponse> socialMediaResponses = [];
         foreach (var socialMediaRequest in socialMediaRequests)
@@ -239,22 +261,16 @@ public class ResumeService(
                 Label = socialMediaRequest.Label,
                 Link = socialMediaRequest.Link,
                 Order = socialMediaRequest.Order,
-                ResumeId = socialMediaRequest.ResumeId
+                ResumeId = resumeId
             };
             ResponseCore<SocialMedia> socialMediaResponse;
-            switch (socialMediaRequest.Operation.ToLower())
+            if (socialMediaRequest.Id.HasValue)
             {
-                case "create":
-                    socialMediaResponse = socialMediaRepository.Create(socialMedia);
-                    break;
-                case "update":
-                    socialMediaResponse = socialMediaRepository.Update(socialMediaRequest.Id, socialMedia);
-                    break;
-                case "delete":
-                    socialMediaResponse = socialMediaRepository.Delete(socialMediaRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {socialMediaRequest.Operation}");
+                socialMediaResponse = socialMediaRepository.Update(socialMediaRequest.Id.Value, socialMedia);
+            }
+            else
+            {
+                socialMediaResponse = socialMediaRepository.Create(socialMedia);
             }
             if (socialMediaResponse.Success && socialMediaResponse.Body != null)
             {
@@ -268,10 +284,18 @@ public class ResumeService(
                 });
             }
         }
+        foreach (var socialMediaRequest in socialMediaRequests)
+        {
+            var body = socialMediaRepository.ReadAllForResume(resumeId).Body;
+            if (body == null) continue;
+            body.Where(b => !socialMediaResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(s => socialMediaRepository.Delete(s.Id));
+        }
         return socialMediaResponses;
     }
 
-    private List<ResumeResponse.EducationResponse> ProcessEducations(List<ResumeRequest.EducationRequest> educationRequests)
+    private List<ResumeResponse.EducationResponse> ProcessEducations(List<ResumeRequest.EducationRequest> educationRequests, int resumeId)
     {
         List<ResumeResponse.EducationResponse> educationResponses = [];
         foreach (var educationRequest in educationRequests)
@@ -282,22 +306,17 @@ public class ResumeService(
                 FieldOfStudy = educationRequest.FieldOfStudy,
                 Degree = educationRequest.Degree,
                 GraduationYear = educationRequest.GraduationYear,
-                ResumeId = educationRequest.ResumeId
+                Order = educationRequest.Order,
+                ResumeId = resumeId
             };
             ResponseCore<Education> educationResponse;
-            switch (educationRequest.Operation.ToLower())
+            if (educationRequest.Id.HasValue)
             {
-                case "create":
-                    educationResponse = educationRepository.Create(education);
-                    break;
-                case "update":
-                    educationResponse = educationRepository.Update(educationRequest.Id, education);
-                    break;
-                case "delete":
-                    educationResponse = educationRepository.Delete(educationRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {educationRequest.Operation}");
+                educationResponse = educationRepository.Update(educationRequest.Id.Value, education);
+            }
+            else
+            {
+                educationResponse = educationRepository.Create(education);
             }
             if (educationResponse.Success && educationResponse.Body != null)
             {
@@ -308,14 +327,23 @@ public class ResumeService(
                     FieldOfStudy = educationResponse.Body.FieldOfStudy,
                     Degree = educationResponse.Body.Degree,
                     GraduationYear = educationResponse.Body.GraduationYear,
+                    Order = educationResponse.Body.Order,
                     ResumeId = educationResponse.Body.ResumeId
                 });
             }
         }
+        foreach (var educationRequest in educationRequests)
+        {
+            var body = educationRepository.ReadAllForResume(resumeId).Body;
+            if (body == null) continue;
+            body.Where(b => !educationResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(e => educationRepository.Delete(e.Id));
+        }
         return educationResponses;
     }
 
-    private List<ResumeResponse.ExperienceResponse> ProcessExperiences(List<ResumeRequest.ExperienceRequest> experienceRequests)
+    private List<ResumeResponse.ExperienceResponse> ProcessExperiences(List<ResumeRequest.ExperienceRequest> experienceRequests, int resumeId)
     {
         List<ResumeResponse.ExperienceResponse> experienceResponses = [];
         foreach (var experienceRequest in experienceRequests)
@@ -326,22 +354,17 @@ public class ResumeService(
                 JobTitle = experienceRequest.JobTitle,
                 StartDate = experienceRequest.StartDate,
                 EndDate = experienceRequest.EndDate,
-                ResumeId = experienceRequest.ResumeId
+                Order = experienceRequest.Order,
+                ResumeId = resumeId
             };
             ResponseCore<Experience> experienceResponse;
-            switch (experienceRequest.Operation.ToLower())
+            if (experienceRequest.Id.HasValue)
             {
-                case "create":
-                    experienceResponse = experienceRepository.Create(experience);
-                    break;
-                case "update":
-                    experienceResponse = experienceRepository.Update(experienceRequest.Id, experience);
-                    break;
-                case "delete":
-                    experienceResponse = experienceRepository.Delete(experienceRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {experienceRequest.Operation}");
+                experienceResponse = experienceRepository.Update(experienceRequest.Id.Value, experience);
+            }
+            else
+            {
+                experienceResponse = experienceRepository.Create(experience);
             }
             if (experienceResponse.Success && experienceResponse.Body != null)
             {
@@ -353,14 +376,23 @@ public class ResumeService(
                     StartDate = experienceResponse.Body.StartDate,
                     EndDate = experienceResponse.Body.EndDate,
                     ResumeId = experienceResponse.Body.ResumeId,
-                    ExperienceDescriptions = ProcessExperienceDescriptions(experienceRequest.ExperienceDescriptions)
+                    Order = experienceResponse.Body.Order,
+                    ExperienceDescriptions = ProcessExperienceDescriptions(experienceRequest.ExperienceDescriptions, experienceResponse.Body.Id)
                 });
             }
+        }
+        foreach (var experienceRequest in experienceRequests)
+        {
+            var body = experienceRepository.ReadAllForResume(resumeId).Body;
+            if (body == null) continue;
+            body.Where(b => !experienceResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(e => experienceRepository.Delete(e.Id));
         }
         return experienceResponses;
     }
 
-    private List<ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse> ProcessExperienceDescriptions(List<ResumeRequest.ExperienceRequest.ExperienceDescriptionRequest> experienceDescriptionRequests)
+    private List<ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse> ProcessExperienceDescriptions(List<ResumeRequest.ExperienceRequest.ExperienceDescriptionRequest> experienceDescriptionRequests, int experienceId)
     {
         List<ResumeResponse.ExperienceResponse.ExperienceDescriptionResponse> experienceDescriptionResponses = [];
         foreach (var experienceDescriptionRequest in experienceDescriptionRequests)
@@ -369,22 +401,16 @@ public class ResumeService(
             {
                 Description = experienceDescriptionRequest.Description,
                 Order = experienceDescriptionRequest.Order,
-                ExperienceId = experienceDescriptionRequest.ExperienceId
+                ExperienceId = experienceId
             };
             ResponseCore<ExperienceDescription> experienceDescriptionResponse;
-            switch (experienceDescriptionRequest.Operation.ToLower())
+            if (experienceDescriptionRequest.Id.HasValue)
             {
-                case "create":
-                    experienceDescriptionResponse = experienceDescriptionRepository.Create(experienceDescription);
-                    break;
-                case "update":
-                    experienceDescriptionResponse = experienceDescriptionRepository.Update(experienceDescriptionRequest.Id, experienceDescription);
-                    break;
-                case "delete":
-                    experienceDescriptionResponse = experienceDescriptionRepository.Delete(experienceDescriptionRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {experienceDescriptionRequest.Operation}");
+                experienceDescriptionResponse = experienceDescriptionRepository.Update(experienceDescriptionRequest.Id.Value, experienceDescription);
+            }
+            else
+            {
+                experienceDescriptionResponse = experienceDescriptionRepository.Create(experienceDescription);
             }
             if (experienceDescriptionResponse.Success && experienceDescriptionResponse.Body != null)
             {
@@ -397,10 +423,20 @@ public class ResumeService(
                 });
             }
         }
+        foreach (var experienceDescriptionRequest in experienceDescriptionRequests)
+        {
+            var body = experienceDescriptionRepository
+                .ReadAllForExperience(experienceId)
+                .Body;
+            if (body == null) continue;
+            body.Where(b => !experienceDescriptionResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(d => experienceDescriptionRepository.Delete(d.Id));
+        }
         return experienceDescriptionResponses;
     }
 
-    private List<ResumeResponse.SkillGroupResponse> ProcessSkillGroups(List<ResumeRequest.SkillGroupRequest> skillGroupRequests)
+    private List<ResumeResponse.SkillGroupResponse> ProcessSkillGroups(List<ResumeRequest.SkillGroupRequest> skillGroupRequests, int resumeId)
     {
         List<ResumeResponse.SkillGroupResponse> skillGroupResponses = [];
         foreach (var skillGroupRequest in skillGroupRequests)
@@ -409,22 +445,16 @@ public class ResumeService(
             {
                 Name = skillGroupRequest.Name,
                 Order = skillGroupRequest.Order,
-                ResumeId = skillGroupRequest.ResumeId
+                ResumeId = resumeId
             };
             ResponseCore<SkillGroup> skillGroupResponse;
-            switch (skillGroupRequest.Operation.ToLower())
+            if (skillGroupRequest.Id.HasValue)
             {
-                case "create":
-                    skillGroupResponse = skillGroupRepository.Create(skillGroup);
-                    break;
-                case "update":
-                    skillGroupResponse = skillGroupRepository.Update(skillGroupRequest.Id, skillGroup);
-                    break;
-                case "delete":
-                    skillGroupResponse = skillGroupRepository.Delete(skillGroupRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {skillGroupRequest.Operation}");
+                skillGroupResponse = skillGroupRepository.Update(skillGroupRequest.Id.Value, skillGroup);
+            }
+            else
+            {
+                skillGroupResponse = skillGroupRepository.Create(skillGroup);
             }
             if (skillGroupResponse.Success && skillGroupResponse.Body != null)
             {
@@ -434,14 +464,22 @@ public class ResumeService(
                     Name = skillGroupResponse.Body.Name,
                     Order = skillGroupResponse.Body.Order,
                     ResumeId = skillGroupResponse.Body.ResumeId,
-                    SkillElements = ProcessSkillElements(skillGroupRequest.SkillElements)
+                    SkillElements = ProcessSkillElements(skillGroupRequest.SkillElements, skillGroupResponse.Body.Id)
                 });
             }
+        }
+        foreach (var skillGroupRequest in skillGroupRequests)
+        {
+            var body = skillGroupRepository.ReadAllForResume(resumeId).Body;
+            if (body == null) continue;
+            body.Where(b => !skillGroupResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(s => skillGroupRepository.Delete(s.Id));
         }
         return skillGroupResponses;
     }
 
-    private List<ResumeResponse.SkillGroupResponse.SkillElementResponse> ProcessSkillElements(List<ResumeRequest.SkillGroupRequest.SkillElementRequest> skillElementRequests)
+    private List<ResumeResponse.SkillGroupResponse.SkillElementResponse> ProcessSkillElements(List<ResumeRequest.SkillGroupRequest.SkillElementRequest> skillElementRequests, int skillGroupId)
     {
         List<ResumeResponse.SkillGroupResponse.SkillElementResponse> skillElementResponses = [];
         foreach (var skillElementRequest in skillElementRequests)
@@ -450,22 +488,16 @@ public class ResumeService(
             {
                 Name = skillElementRequest.Name,
                 Order = skillElementRequest.Order,
-                SkillGroupId = skillElementRequest.SkillGroupId
+                SkillGroupId = skillGroupId
             };
             ResponseCore<SkillElement> skillElementResponse;
-            switch (skillElementRequest.Operation.ToLower())
+            if (skillElementRequest.Id.HasValue)
             {
-                case "create":
-                    skillElementResponse = skillElementRepository.Create(skillElement);
-                    break;
-                case "update":
-                    skillElementResponse = skillElementRepository.Update(skillElementRequest.Id, skillElement);
-                    break;
-                case "delete":
-                    skillElementResponse = skillElementRepository.Delete(skillElementRequest.Id);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid operation: {skillElementRequest.Operation}");
+                skillElementResponse = skillElementRepository.Update(skillElementRequest.Id.Value, skillElement);
+            }
+            else
+            {
+                skillElementResponse = skillElementRepository.Create(skillElement);
             }
             if (skillElementResponse.Success && skillElementResponse.Body != null)
             {
@@ -477,6 +509,15 @@ public class ResumeService(
                     SkillGroupId = skillElementResponse.Body.SkillGroupId,
                 });
             }
+        }
+        foreach (var skillElementRequest in skillElementRequests)
+        {
+            var body = skillElementRepository.ReadAllForSkillGroup(skillGroupId).Body;
+            if (body == null) continue;
+
+            body.Where(b => !skillElementResponses.Any(r => r.Id == b.Id))
+                .ToList()
+                .ForEach(s => skillElementRepository.Delete(s.Id));
         }
         return skillElementResponses;
     }

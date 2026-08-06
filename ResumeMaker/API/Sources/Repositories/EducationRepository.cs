@@ -71,6 +71,7 @@ public class EducationRepository(AppDbContext context) : IEducationRepository
         educationById.FieldOfStudy = education.FieldOfStudy;
         educationById.Degree = education.Degree;
         educationById.GraduationYear = education.GraduationYear;
+        educationById.Order = education.Order;
         context.Educations.Update(educationById);
         context.SaveChanges();
         return new ResponseCore<Education>

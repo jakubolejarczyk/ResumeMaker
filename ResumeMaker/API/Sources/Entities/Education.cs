@@ -12,6 +12,8 @@ public class Education
 
     public int GraduationYear { get; set; }
 
+    public int Order { get; set; }
+
     public int ResumeId { get; set; }
 
     public Resume Resume { get; set; } = null!;

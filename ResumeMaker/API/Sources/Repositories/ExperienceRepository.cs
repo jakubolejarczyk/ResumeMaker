@@ -71,6 +71,7 @@ public class ExperienceRepository(AppDbContext context) : IExperienceRepository
         experienceById.JobTitle = experience.JobTitle;
         experienceById.StartDate = experience.StartDate;
         experienceById.EndDate = experience.EndDate;
+        experienceById.Order = experience.Order;
         context.Experiences.Update(experienceById);
         context.SaveChanges();
         return new ResponseCore<Experience>

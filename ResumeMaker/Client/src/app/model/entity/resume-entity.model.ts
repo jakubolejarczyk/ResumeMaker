@@ -1,55 +1,51 @@
 export interface ResumeSocialMediaEntityModel {
-  id: number;
+  id?: number;
   label: string;
   link: string;
   order: number;
-  resumeId: number;
-  operation: string;
+  resumeId?: number;
 }
 
 export interface ResumeEducationEntityModel {
-  id: number;
+  id?: number;
   institutionName: string;
   fieldOfStudy: string;
   degree: string;
   graduationYear: number;
-  resumeId: number;
-  operation: string;
+  order: number;
+  resumeId?: number;
 }
 
 export interface ResumeExperienceDescriptionEntityModel {
-  id: number;
+  id?: number;
   description: string;
-  order: string;
-  experienceId: number;
-  operation: string;
+  order: number;
+  experienceId?: number;
 }
 
 export interface ResumeExperienceEntityModel {
-  id: number;
+  id?: number;
   companyName: string;
   jobTitle: string;
   startDate: Date;
   endDate?: Date;
-  resumeId: number;
-  operation: string;
+  order: number;
+  resumeId?: number;
   experienceDescriptions: ResumeExperienceDescriptionEntityModel[];
 }
 
 export interface ResumeSkillElementEntityModel {
-  id: number;
+  id?: number;
   name: string;
-  order: string;
-  skillGroupId: number;
-  operation: string;
+  order: number;
+  skillGroupId?: number;
 }
 
 export interface ResumeSkillGroupEntityModel {
-  id: number;
+  id?: number;
   name: string;
-  order: string;
-  resumeId: number;
-  operation: string;
+  order: number;
+  resumeId?: number;
   skillElements: ResumeSkillElementEntityModel[];
 }
 

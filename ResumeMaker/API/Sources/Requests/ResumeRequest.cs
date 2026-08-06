@@ -20,22 +20,18 @@ public class ResumeRequest
 
     public class SocialMediaRequest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public required string Label { get; set; }
 
         public required string Link { get; set; }
 
         public required int Order { get; set; }
-
-        public required int ResumeId { get; set; }
-
-        public string Operation { get; set; } = string.Empty;
     }
 
     public class EducationRequest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public required string InstitutionName { get; set; }
 
@@ -45,14 +41,12 @@ public class ResumeRequest
 
         public required int GraduationYear { get; set; }
 
-        public required int ResumeId { get; set; }
-
-        public string Operation { get; set; } = string.Empty;
+        public required int Order { get; set; }
     }
 
     public class ExperienceRequest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public required string CompanyName { get; set; }
 
@@ -62,51 +56,37 @@ public class ResumeRequest
 
         public DateOnly? EndDate { get; set; }
 
-        public required int ResumeId { get; set; }
-
-        public string Operation { get; set; } = string.Empty;
+        public required int Order { get; set; }
 
         public required List<ExperienceDescriptionRequest> ExperienceDescriptions { get; set; }
 
         public class ExperienceDescriptionRequest
         {
-            public int Id { get; set; }
+            public int? Id { get; set; }
 
             public required string Description { get; set; }
 
             public required int Order { get; set; }
-
-            public required int ExperienceId { get; set; }
-
-            public string Operation { get; set; } = string.Empty;
         }
     }
 
     public class SkillGroupRequest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public required string Name { get; set; }
 
         public required int Order { get; set; }
 
-        public required int ResumeId { get; set; }
-
-        public string Operation { get; set; } = string.Empty;
-
         public required List<SkillElementRequest> SkillElements { get; set; }
 
         public class SkillElementRequest
         {
-            public int Id { get; set; }
+            public int? Id { get; set; }
 
             public required string Name { get; set; }
 
             public required int Order { get; set; }
-
-            public required int SkillGroupId { get; set; }
-
-            public string Operation { get; set; } = string.Empty;
         }
     }
 }
