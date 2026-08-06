@@ -85,6 +85,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<int>("ResumeId")
                         .HasColumnType("int");
 
@@ -113,6 +116,9 @@ namespace API.Migrations
                     b.Property<string>("JobTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
                     b.Property<int>("ResumeId")
                         .HasColumnType("int");
@@ -172,15 +178,10 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ResumeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
 
                     b.HasIndex("UserId");
 
@@ -349,10 +350,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Sources.Entities.Resume", b =>
                 {
-                    b.HasOne("API.Sources.Entities.Resume", null)
-                        .WithMany("Resumes")
-                        .HasForeignKey("ResumeId");
-
                     b.HasOne("API.Sources.Entities.User", "User")
                         .WithMany("Resumes")
                         .HasForeignKey("UserId")
@@ -387,7 +384,7 @@ namespace API.Migrations
             modelBuilder.Entity("API.Sources.Entities.SocialMedia", b =>
                 {
                     b.HasOne("API.Sources.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("SocialMedias")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -406,9 +403,9 @@ namespace API.Migrations
 
                     b.Navigation("Experiences");
 
-                    b.Navigation("Resumes");
-
                     b.Navigation("SkillGroups");
+
+                    b.Navigation("SocialMedias");
                 });
 
             modelBuilder.Entity("API.Sources.Entities.SkillGroup", b =>

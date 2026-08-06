@@ -63,17 +63,11 @@ namespace API.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ResumeId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resumes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Resumes_Resumes_ResumeId",
-                        column: x => x.ResumeId,
-                        principalTable: "Resumes",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Resumes_Users_UserId",
                         column: x => x.UserId,
@@ -92,6 +86,7 @@ namespace API.Migrations
                     FieldOfStudy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Degree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GraduationYear = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
                     ResumeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -115,6 +110,7 @@ namespace API.Migrations
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
                     ResumeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -231,11 +227,6 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Experiences_ResumeId",
                 table: "Experiences",
-                column: "ResumeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Resumes_ResumeId",
-                table: "Resumes",
                 column: "ResumeId");
 
             migrationBuilder.CreateIndex(
