@@ -3,7 +3,7 @@
     <a routerLink="/users">Users</a>
     <a routerLink="/companies">Companies</a>
     <a routerLink="/resumes">Resumes</a>
-    <a (click)="aaa()">Generate</a>
+    <a class="link" (click)="generate()">Generate</a>
   </nav>
   <div>
     <p>Selected user: {{ selectedUser$ | async }}</p>

@@ -1,10 +1,10 @@
 import { Component, inject } from "@angular/core";
-import { concatMap, filter, map, of, take } from "rxjs";
+import { combineLatest, concatMap, filter, map, of, take, tap } from "rxjs";
 
 import { UserService } from "../../service/user.service";
 import { CompanyService } from "../../service/company.service";
 import { ResumeService } from "../../service/resume.service";
-import { GenerateDal } from "../../dal/generate.dal";
+import { GenerateService } from "../../service/generate.service";
 
 @Component({
   selector: 'app-nav-component',
@@ -16,7 +16,7 @@ export class NavComponent {
   userService = inject(UserService);
   companyService = inject(CompanyService);
   resumeService = inject(ResumeService);
-  asd = inject(GenerateDal);
+  generateService = inject(GenerateService);
 
   selectedUser$ = this.userService.getSelectedUser$().pipe(
     map(selectedUser => {
@@ -45,27 +45,39 @@ export class NavComponent {
     })
   );
 
-  aaa() {
-    this.resumeService.getSelectedResume$().pipe(
+  generate() {
+    combineLatest({
+      user: this.userService.getSelectedUser$(),
+      company: this.companyService.getSelectedCompany$(),
+      resume: this.resumeService.getSelectedResume$()
+    }).pipe(
       take(1),
-      filter(bbb => !!bbb),
-      concatMap(bbb => this.asd.create$(bbb.id))
-    ).subscribe(blob => {
-
-      const file = new Blob([blob], {
-        type: 'application/pdf'
-      });
-
-      const url = window.URL.createObjectURL(file);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CV.pdf';
-
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-
-    });
+      concatMap(({ user, company, resume }) => {
+        if (!user || !company || !resume) {
+          alert("Please select a user, company, and resume.");
+          return of(null);
+        }
+        return this.generateService.create$(
+          user.id,
+          company.id,
+          resume.id
+        );
+      }),
+      filter(response => response !== null),
+      tap(response => {
+        const blob = response.body;
+        if (!blob) return;
+        const disposition = response.headers.get('content-disposition');
+        const fileName = disposition
+          ? disposition.split('filename=')[1].replaceAll('"', '')
+          : 'CV.pdf';
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+    ).subscribe();
   }
 }

@@ -11,3 +11,9 @@
   display: flex;
   gap: 0.5rem;
 }
+
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
