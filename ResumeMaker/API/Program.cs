@@ -24,9 +24,6 @@ app.UseCors("AllowAll");
 
 SourcesProvider.GetApp(app);
 
-app.Map("/", () =>
-{
-    return "API works!";
-});
+app.Map("/", () => "API works!");
 
 app.Run();

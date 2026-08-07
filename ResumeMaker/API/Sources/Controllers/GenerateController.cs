@@ -1,40 +1,17 @@
-﻿using API.Sources.Cores;
-using API.Sources.Responses;
-using API.Sources.Services;
+﻿using API.Sources.Services;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace API.Sources.Controllers;
 
 
 [ApiController]
 [Route("api/[controller]")]
-public class GenerateController(
-    IResumeService service,
-    IResumePdfService pdfService
-) : ControllerBase
+public class GenerateController(IGenerateService service) : ControllerBase
 {
 
-    [HttpPost("{id}")]
-    public IActionResult Create(int id)
+    [HttpPost("{userId}/{companyId}/{resumeId}")]
+    public IActionResult Generate(int userId, int companyId, int resumeId)
     {
-
-        ResponseCore<ResumeResponse> response = service.Read(id);
-
-
-        if (!response.Success || response.Body == null)
-        {
-            return BadRequest(response.Message);
-        }
-
-
-        var pdf = pdfService.Generate(response.Body);
-
-
-        return File(
-            pdf,
-            "application/pdf",
-            $"CV-{response.Body.Name}.pdf"
-        );
+        return service.Generate(userId, companyId, resumeId);
     }
 }

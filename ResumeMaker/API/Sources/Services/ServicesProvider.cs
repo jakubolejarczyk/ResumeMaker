@@ -7,6 +7,6 @@ public static class ServicesProvider
         builder.Services.AddScoped<ICompanyService, CompanyService>();
         builder.Services.AddScoped<IResumeService, ResumeService>();
         builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<IResumePdfService, ResumePdfService>();
+        builder.Services.AddScoped<IGenerateService, GenerateService>();
     }
 }
