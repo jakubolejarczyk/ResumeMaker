@@ -68,13 +68,14 @@ export class NavComponent {
         const blob = response.body;
         if (!blob) return;
         const disposition = response.headers.get('content-disposition');
-        const fileName = disposition
-          ? disposition.split('filename=')[1].replaceAll('"', '')
-          : 'CV.pdf';
+        const fileName =
+          disposition?.match(/filename\*=(?:UTF-8'')?([^;]+)/i)?.[1] ??
+          disposition?.match(/filename="?([^"]+)"?/i)?.[1] ??
+          'CV.pdf';
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = fileName;
+        a.download = decodeURIComponent(fileName);
         a.click();
         URL.revokeObjectURL(url);
       })
