@@ -1,6 +1,7 @@
 ﻿using API.Sources.Contexts;
 using API.Sources.Cores;
 using API.Sources.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Sources.Repositories;
 
@@ -20,7 +21,14 @@ public class ResumeRepository(AppDbContext context) : IResumeRepository
 
     public ResponseCore<Resume> Read(int id)
     {
-        var resume = context.Resumes.FirstOrDefault(r => r.Id == id);
+        var resume = context.Resumes
+            .Include(r => r.SocialMedias)
+            .Include(r => r.Educations)
+            .Include(r => r.Experiences)
+                .ThenInclude(e => e.ExperienceDescriptions)
+            .Include(r => r.SkillGroups)
+                .ThenInclude(sg => sg.SkillElements)
+            .FirstOrDefault(r => r.Id == id);
         if (resume == null)
         {
             return new ResponseCore<Resume>
